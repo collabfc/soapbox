@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, NavLink , Redirect } from 'react-router-dom';
 
 import { logIn, verifyCredentials } from 'soapbox/actions/auth';
 import { fetchInstance } from 'soapbox/actions/instance';
@@ -10,7 +10,7 @@ import { openSidebar } from 'soapbox/actions/sidebar';
 import SiteLogo from 'soapbox/components/site-logo';
 import { Avatar, Button, Form, HStack, IconButton, Input, Tooltip } from 'soapbox/components/ui';
 import Search from 'soapbox/features/compose/components/search';
-import { useAppDispatch, useFeatures, useOwnAccount, useRegistrationStatus } from 'soapbox/hooks';
+import { useAppDispatch, useInstance , useFeatures, useOwnAccount, useRegistrationStatus } from 'soapbox/hooks';
 
 import ProfileDropdown from './profile-dropdown';
 
@@ -25,6 +25,7 @@ const messages = defineMessages({
 });
 
 const Navbar = () => {
+  const instance = useInstance();
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const features = useFeatures();
@@ -74,7 +75,8 @@ const Navbar = () => {
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
         <div className='relative flex h-12 justify-between lg:h-16'>
           {account && (
-            <div className='absolute inset-y-0 left-0 flex items-center lg:hidden rtl:left-auto rtl:right-0'>
+            <div className='absolute inset-y-0 left-0 flex items-center lg:hidden rtl:left-auto rtl:right-0 lg:hidden'>
+
               <button onClick={onOpenSidebar}>
                 <Avatar src={account.avatar} size={34} />
               </button>
@@ -89,10 +91,13 @@ const Navbar = () => {
               'justify-start': !account,
             })}
           >
-            <Link key='logo' to='/' data-preview-title-id='column.home' className='ml-4 flex shrink-0 items-center'>
-              <SiteLogo alt='Logo' className='h-5 w-auto cursor-pointer' />
-              <span className='hidden'><FormattedMessage id='tabs_bar.home' defaultMessage='Home' /></span>
-            </Link>
+
+            <h1 className='pt-3'>
+              <a key='logo' href='https://www.collabfc.com' data-preview-title-id='column.home' className='ml-4 flex shrink-0 items-center'>
+                <SiteLogo alt='Logo' className='h-10 w-auto cursor-pointer'  />
+                <span className='hidden'><FormattedMessage id='tabs_bar.home' defaultMessage='Home' /></span>
+              </a>
+            </h1>
 
             {account && (
               <div className='hidden flex-1 items-center justify-center px-2 lg:ml-6 lg:flex lg:justify-start'>
@@ -182,6 +187,42 @@ const Navbar = () => {
           </HStack>
         </div>
       </div>
+      <div className='mx-auto max-w-7xl mt-3 px-4 sm:px-8 md:px-10 lg:px-12 border-b dark:border-gray-800'>
+        <div className='relative flex h-8 justify-between '>
+          <HStack space={3} alignItems='center' className=''>
+              <div className='relative flex items-center'>
+                  {account && (
+                  <NavLink 
+                    to='/' 
+                    exact
+                    data-preview-title-id='column.home' 
+                    className='mr-5 pb-2 font-normal dark:text-gray-100'
+                    activeClassName='border-b-4 border-primary-500' >
+                    <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
+                  </NavLink>
+                  )}
+                  <NavLink 
+                    to='/timeline/local' 
+                    data-preview-title-id='column.local' 
+                    className='mr-5 pb-2 font-normal dark:text-gray-100'
+                    activeClassName='border-b-4 border-primary-500 ' >
+                    <FormattedMessage id="teeam_tab" defaultMessage='{site_title}' values={{ site_title: instance.title }} />
+                  </NavLink>
+                  <NavLink 
+                    to='/timeline/fediverse' 
+                    data-preview-title-id='column.fediverse' 
+                    className='mr-5 pb-2 font-normal dark:text-gray-100'
+                    activeClassName='border-b-4 border-primary-500' >
+                    <FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />
+                  </NavLink>
+     
+                  <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>
+                    Teams
+                  </a>
+                </div>         
+            </HStack>
+        </div>
+      </div>      
     </nav>
   );
 };

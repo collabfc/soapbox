@@ -24,7 +24,7 @@ const config: Config = {
         'inset-ring': `inset 0 0 0 2px ${theme('colors.accent-blue')}`,
       }),
       fontSize: {
-        base: '0.9375rem',
+        base: '0.8575rem',
       },
       fontFamily: {
         'sans': [

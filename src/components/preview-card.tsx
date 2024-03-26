@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import he from 'he';
 import { List as ImmutableList } from 'immutable';
 import React, { useState, useEffect } from 'react';
 
@@ -7,6 +8,7 @@ import { HStack, Stack, Text, Icon } from 'soapbox/components/ui';
 import { normalizeAttachment } from 'soapbox/normalizers';
 import { addAutoPlay } from 'soapbox/utils/media';
 import { getTextDirection } from 'soapbox/utils/rtl';
+
 
 import type { Card as CardEntity, Attachment } from 'soapbox/types/entities';
 
@@ -42,7 +44,7 @@ const PreviewCard: React.FC<IPreviewCard> = ({
 
   const direction = getTextDirection(card.title + card.description);
 
-  const trimmedTitle = trim(card.title, maxTitle);
+  const trimmedTitle = he.decode(trim(card.title, maxTitle));
   const trimmedDescription = trim(card.description, maxDescription);
 
   const handlePhotoClick = () => {
@@ -125,22 +127,16 @@ const PreviewCard: React.FC<IPreviewCard> = ({
     <span title={trimmedTitle} dir={direction}>{trimmedTitle}</span>
   );
 
+
   const description = (
     <Stack space={2} className='flex-1 overflow-hidden p-4'>
       {trimmedTitle && (
+
         <Text weight='bold' direction={direction}>{title}</Text>
       )}
       {trimmedDescription && (
-        <Text direction={direction}>{trimmedDescription}</Text>
+        <Text className='hidden md:block' direction={direction}>{trimmedDescription}</Text>
       )}
-      <HStack space={1} alignItems='center'>
-        <Text tag='span' theme='muted'>
-          <Icon src={require('@tabler/icons/link.svg')} />
-        </Text>
-        <Text tag='span' theme='muted' size='sm' direction={direction}>
-          {card.provider_name}
-        </Text>
-      </HStack>
     </Stack>
   );
 
