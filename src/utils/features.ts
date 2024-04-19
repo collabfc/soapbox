@@ -187,10 +187,30 @@ const getInstanceFeatures = (instance: Instance) => {
     accountWebsite: v.software === TRUTHSOCIAL,
 
     /**
+     * Ability to manage announcements by admins.
+     * @see GET /api/v1/pleroma/admin/announcements
+     * @see GET /api/v1/pleroma/admin/announcements/:id
+     * @see POST /api/v1/pleroma/admin/announcements
+     * @see PATCH /api/v1/pleroma/admin/announcements/:id
+     * @see DELETE /api/v1/pleroma/admin/announcements/:id
+     * @see {@link https://docs.pleroma.social/backend/development/API/admin_api/#get-apiv1pleromaadminannouncements}
+     */
+    adminAnnouncements: v.software === PLEROMA && gte(v.version, '2.2.49'),
+
+    /**
      * An additional moderator interface is available on the domain.
      * @see /pleroma/admin
      */
     adminFE: v.software === PLEROMA,
+
+    /**
+     * Ability to manage instance rules by admins.
+     * @see GET /api/v1/pleroma/admin/rules
+     * @see POST /api/v1/pleroma/admin/rules
+     * @see PATCH /api/v1/pleroma/admin/rules/:id
+     * @see DELETE /api/v1/pleroma/admin/rules/:id
+     */
+    adminRules: v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.51'),
 
     /**
      * Can display announcements set by admins.
@@ -211,7 +231,7 @@ const getInstanceFeatures = (instance: Instance) => {
      * @see DELETE /api/v1/announcements/:id/reactions/:name
      * @see {@link https://docs.joinmastodon.org/methods/announcements/}
      */
-    announcementsReactions: v.software === MASTODON && gte(v.compatVersion, '3.1.0'),
+    announcementsReactions: true, // v.software === MASTODON && gte(v.compatVersion, '3.1.0'),
 
     /**
      * Pleroma backups.
@@ -371,6 +391,15 @@ const getInstanceFeatures = (instance: Instance) => {
      * @see GET  /api/friendica/statuses/:id/disliked_by
      */
     dislikes: v.software === FRIENDICA && gte(v.version, '2023.3.0'),
+
+    /**
+     * Allow to register on a given domain
+     * @see GET /api/v1/pleroma/admin/domains
+     * @see POST /api/v1/pleroma/admin/domains
+     * @see PATCH /api/v1/pleroma/admin/domains/:id
+     * @see DELETE /api/v1/pleroma/admin/domains/:id
+     */
+    domains: instance.pleroma.metadata.multitenancy.enabled,
 
     /**
      * Ability to edit profile information.
@@ -736,6 +765,9 @@ const getInstanceFeatures = (instance: Instance) => {
      * @see PATCH /api/v1/accounts/update_credentials
      */
     nip05: v.software === DITTO,
+
+    /** Has a Nostr relay. */
+    nostr: !!instance.nostr?.relay,
 
     /**
      * Ability to sign Nostr events over websocket.

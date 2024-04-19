@@ -1,8 +1,6 @@
 import {
   AdminAccountRecord,
   AdminReportRecord,
-  AnnouncementRecord,
-  AnnouncementReactionRecord,
   AttachmentRecord,
   ChatRecord,
   ChatMessageRecord,
@@ -20,17 +18,13 @@ import {
   StatusRecord,
   TagRecord,
 } from 'soapbox/normalizers';
-import { LogEntryRecord } from 'soapbox/reducers/admin-log';
 import { Account as SchemaAccount } from 'soapbox/schemas';
 
 import type { Record as ImmutableRecord } from 'immutable';
 import type { LegacyMap } from 'soapbox/utils/legacy';
 
 type AdminAccount = ReturnType<typeof AdminAccountRecord>;
-type AdminLog = ReturnType<typeof LogEntryRecord>;
 type AdminReport = ReturnType<typeof AdminReportRecord>;
-type Announcement = ReturnType<typeof AnnouncementRecord>;
-type AnnouncementReaction = ReturnType<typeof AnnouncementReactionRecord>;
 type Attachment = ReturnType<typeof AttachmentRecord>;
 type Chat = ReturnType<typeof ChatRecord>;
 type ChatMessage = ReturnType<typeof ChatMessageRecord>;
@@ -62,10 +56,7 @@ type EmbeddedEntity<T extends object> = null | string | ReturnType<ImmutableReco
 export {
   Account,
   AdminAccount,
-  AdminLog,
   AdminReport,
-  Announcement,
-  AnnouncementReaction,
   Attachment,
   Chat,
   ChatMessage,

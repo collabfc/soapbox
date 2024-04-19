@@ -57,7 +57,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
             avatarSize={42}
             icon={
               <Icon
-                src={require('@tabler/icons/circles.svg')}
+                src={require('@tabler/icons/outline/circles.svg')}
                 className='h-4 w-4 text-primary-600 dark:text-accent-blue'
               />
             }
@@ -100,7 +100,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
     if (actualStatus.pleroma.get('quote_visible', true) === false) {
       quote = (
         <div className='quoted-actualStatus-tombstone'>
-          <p><FormattedMessage id='actualStatuses.quote_tombstone' defaultMessage='Post is unavailable.' /></p>
+          <p><FormattedMessage id='status.quote_tombstone' defaultMessage='Post is unavailable.' /></p>
         </div>
       );
     } else {
@@ -109,9 +109,9 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   }
 
   if (actualStatus.visibility === 'direct') {
-    statusTypeIcon = <Icon className='h-4 w-4 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/mail.svg')} />;
+    statusTypeIcon = <Icon className='h-4 w-4 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/outline/mail.svg')} />;
   } else if (actualStatus.visibility === 'private') {
-    statusTypeIcon = <Icon className='h-4 w-4 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/lock.svg')} />;
+    statusTypeIcon = <Icon className='h-4 w-4 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/outline/lock.svg')} />;
   }
 
   return (
@@ -190,7 +190,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
                     tabIndex={0}
                   >
                     <Text tag='span' theme='muted' size='sm'>
-                      <FormattedMessage id='actualStatus.edited' defaultMessage='Edited {date}' values={{ date: intl.formatDate(new Date(actualStatus.edited_at), { hour12: true, month: 'short', day: '2-digit', hour: 'numeric', minute: '2-digit' }) }} />
+                      <FormattedMessage id='status.edited' defaultMessage='Edited {date}' values={{ date: intl.formatDate(new Date(actualStatus.edited_at), { hour12: true, month: 'short', day: '2-digit', hour: 'numeric', minute: '2-digit' }) }} />
                     </Text>
                   </div>
                 </>

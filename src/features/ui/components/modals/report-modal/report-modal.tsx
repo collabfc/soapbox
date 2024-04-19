@@ -11,7 +11,7 @@ import List, { ListItem } from 'soapbox/components/list';
 import StatusContent from 'soapbox/components/status-content';
 import { Avatar, HStack, Icon, Modal, ProgressBar, Stack, Text } from 'soapbox/components/ui';
 import AccountContainer from 'soapbox/containers/account-container';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks';
+import { useAppDispatch, useAppSelector, useInstance } from 'soapbox/hooks';
 
 import ConfirmationStep from './steps/confirmation-step';
 import OtherActionsStep from './steps/other-actions-step';
@@ -22,8 +22,8 @@ const messages = defineMessages({
   done: { id: 'report.done', defaultMessage: 'Done' },
   next: { id: 'report.next', defaultMessage: 'Next' },
   submit: { id: 'report.submit', defaultMessage: 'Submit' },
-  reportContext: { id: 'report.chatMessage.context', defaultMessage: 'When reporting a user’s message, the five messages before and five messages after the one selected will be passed along to our moderation team for context.' },
-  reportMessage: { id: 'report.chatMessage.title', defaultMessage: 'Report message' },
+  reportContext: { id: 'report.chat_message.context', defaultMessage: 'When reporting a user’s message, the five messages before and five messages after the one selected will be passed along to our moderation team for context.' },
+  reportMessage: { id: 'report.chat_message.title', defaultMessage: 'Report message' },
   reportGroup: { id: 'report.group.title', defaultMessage: 'Report Group' },
   cancel: { id: 'common.cancel', defaultMessage: 'Cancel' },
   previous: { id: 'report.previous', defaultMessage: 'Previous' },
@@ -104,7 +104,7 @@ const ReportModal = ({ onClose }: IReportModal) => {
   const entityType = useAppSelector((state) => state.reports.new.entityType);
   const isBlocked = useAppSelector((state) => state.reports.new.block);
   const isSubmitting = useAppSelector((state) => state.reports.new.isSubmitting);
-  const rules = useAppSelector((state) => state.rules.items);
+  const { rules } = useInstance();
   const ruleIds = useAppSelector((state) => state.reports.new.rule_ids);
   const selectedStatusIds = useAppSelector((state) => state.reports.new.status_ids);
   const selectedChatMessage = useAppSelector((state) => state.reports.new.chat_message);
@@ -226,7 +226,7 @@ const ReportModal = ({ onClose }: IReportModal) => {
 
           <List>
             <ListItem
-              label={<Icon src={require('@tabler/icons/info-circle.svg')} className='text-gray-600' />}
+              label={<Icon src={require('@tabler/icons/outline/info-circle.svg')} className='text-gray-600' />}
             >
               <Text size='sm'>{intl.formatMessage(messages.reportContext)}</Text>
             </ListItem>

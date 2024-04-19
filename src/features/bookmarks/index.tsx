@@ -83,18 +83,20 @@ const Bookmarks: React.FC<IBookmarks> = ({ params }) => {
     }));
   };
 
-  const emptyMessage = <FormattedMessage id='empty_column.bookmarks' defaultMessage="You don't have any bookmarks yet. When you add one, it will show up here." />;
+  const emptyMessage = folderId
+    ? <FormattedMessage id='empty_column.bookmarks.folder' defaultMessage="You don't have any bookmarks in this folder yet. When you add one, it will show up here." />
+    : <FormattedMessage id='empty_column.bookmarks' defaultMessage="You don't have any bookmarks yet. When you add one, it will show up here." />;
 
   const items = folderId ? [
     {
       text: intl.formatMessage(messages.editFolder),
       action: handleEditFolder,
-      icon: require('@tabler/icons/edit.svg'),
+      icon: require('@tabler/icons/outline/edit.svg'),
     },
     {
       text: intl.formatMessage(messages.deleteFolder),
       action: handleDeleteFolder,
-      icon: require('@tabler/icons/trash.svg'),
+      icon: require('@tabler/icons/outline/trash.svg'),
     },
   ] : [];
 
@@ -102,7 +104,7 @@ const Bookmarks: React.FC<IBookmarks> = ({ params }) => {
     <Column
       label={folder ? folder.name : intl.formatMessage(messages.heading)}
       action={
-        <DropdownMenu items={items} src={require('@tabler/icons/dots-vertical.svg')} />
+        <DropdownMenu items={items} src={require('@tabler/icons/outline/dots-vertical.svg')} />
       }
       transparent
     >

@@ -1,9 +1,8 @@
 import { OrderedSet } from 'immutable';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
 import { changeReportBlock, changeReportForward } from 'soapbox/actions/reports';
-import { fetchRules } from 'soapbox/actions/rules';
 import { Button, FormGroup, HStack, Stack, Text, Toggle } from 'soapbox/components/ui';
 import StatusCheckBox from 'soapbox/features/report/components/status-check-box';
 import { useAppDispatch, useAppSelector, useFeatures } from 'soapbox/hooks';
@@ -12,11 +11,11 @@ import { getDomain } from 'soapbox/utils/accounts';
 import type { Account } from 'soapbox/schemas';
 
 const messages = defineMessages({
-  addAdditionalStatuses: { id: 'report.otherActions.addAdditional', defaultMessage: 'Would you like to add additional statuses to this report?' },
-  addMore: { id: 'report.otherActions.addMore', defaultMessage: 'Add more' },
-  furtherActions: { id: 'report.otherActions.furtherActions', defaultMessage: 'Further actions:' },
-  hideAdditionalStatuses: { id: 'report.otherActions.hideAdditional', defaultMessage: 'Hide additional statuses' },
-  otherStatuses: { id: 'report.otherActions.otherStatuses', defaultMessage: 'Include other statuses?' },
+  addAdditionalStatuses: { id: 'report.other_actions.add_additional', defaultMessage: 'Would you like to add additional statuses to this report?' },
+  addMore: { id: 'report.other_actions.add_more', defaultMessage: 'Add more' },
+  furtherActions: { id: 'report.other_actions.further_actions', defaultMessage: 'Further actions:' },
+  hideAdditionalStatuses: { id: 'report.other_actions.hide_additional', defaultMessage: 'Hide additional statuses' },
+  otherStatuses: { id: 'report.other_actions.other_statuses', defaultMessage: 'Include other statuses?' },
 });
 
 interface IOtherActionsStep {
@@ -44,10 +43,6 @@ const OtherActionsStep = ({ account }: IOtherActionsStep) => {
     dispatch(changeReportForward(event.target.checked));
   };
 
-  useEffect(() => {
-    dispatch(fetchRules());
-  }, []);
-
   return (
     <Stack space={4}>
       {features.reportMultipleStatuses && (
@@ -65,7 +60,7 @@ const OtherActionsStep = ({ account }: IOtherActionsStep) => {
 
                 <div>
                   <Button
-                    icon={require('@tabler/icons/arrows-minimize.svg')}
+                    icon={require('@tabler/icons/outline/arrows-minimize.svg')}
                     theme='tertiary'
                     size='sm'
                     onClick={() => setShowAdditionalStatuses(false)}
@@ -76,7 +71,7 @@ const OtherActionsStep = ({ account }: IOtherActionsStep) => {
               </Stack>
             ) : (
               <Button
-                icon={require('@tabler/icons/plus.svg')}
+                icon={require('@tabler/icons/outline/plus.svg')}
                 theme='tertiary'
                 size='sm'
                 onClick={() => setShowAdditionalStatuses(true)}

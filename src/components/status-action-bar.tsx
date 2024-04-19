@@ -38,6 +38,8 @@ const messages = defineMessages({
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   blockConfirm: { id: 'confirmations.block.confirm', defaultMessage: 'Block' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
+  bookmarkSetFolder: { id: 'status.bookmark_folder', defaultMessage: 'Set bookmark folder' },
+  bookmarkChangeFolder: { id: 'status.bookmark_folder_change', defaultMessage: 'Change bookmark folder' },
   cancel_reblog_private: { id: 'status.cancel_reblog_private', defaultMessage: 'Un-repost' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be reposted' },
   chat: { id: 'status.chat', defaultMessage: 'Chat with @{name}' },
@@ -92,7 +94,7 @@ const messages = defineMessages({
   redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this post and re-draft it? Favorites and reposts will be lost, and replies to the original post will be orphaned.' },
   replies_disabled_group: { id: 'status.disabled_replies.group_membership', defaultMessage: 'Only group members can reply' },
   reply: { id: 'status.reply', defaultMessage: 'Reply' },
-  replyAll: { id: 'status.replyAll', defaultMessage: 'Reply to thread' },
+  replyAll: { id: 'status.reply_all', defaultMessage: 'Reply to thread' },
   replyConfirm: { id: 'confirmations.reply.confirm', defaultMessage: 'Reply' },
   replyMessage: { id: 'confirmations.reply.message', defaultMessage: 'Replying now will overwrite the message you are currently composing. Are you sure you want to proceed?' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' },
@@ -112,6 +114,7 @@ interface IStatusActionBar {
   expandable?: boolean;
   space?: 'sm' | 'md' | 'lg';
   statusActionButtonTheme?: 'default' | 'inverse';
+  fromBookmarks?: boolean;
 }
 
 const StatusActionBar: React.FC<IStatusActionBar> = ({
@@ -120,6 +123,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   expandable = true,
   space = 'sm',
   statusActionButtonTheme = 'default',
+  fromBookmarks = false,
 }) => {
   const intl = useIntl();
   const history = useHistory();
@@ -201,6 +205,12 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
     dispatch(toggleBookmark(status));
   };
 
+  const handleBookmarkFolderClick = () => {
+    dispatch(openModal('SELECT_BOOKMARK_FOLDER', {
+      statusId: status.id,
+    }));
+  };
+
   const handleExternalClick = () => {
     window.open(status.uri, '_blank');
   };
@@ -232,7 +242,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         dispatch(deleteStatus(status.id, withRedraft));
       } else {
         dispatch(openModal('CONFIRM', {
-          icon: withRedraft ? require('@tabler/icons/edit.svg') : require('@tabler/icons/trash.svg'),
+          icon: withRedraft ? require('@tabler/icons/outline/edit.svg') : require('@tabler/icons/outline/trash.svg'),
           heading: intl.formatMessage(withRedraft ? messages.redraftHeading : messages.deleteHeading),
           message: intl.formatMessage(withRedraft ? messages.redraftMessage : messages.deleteMessage),
           confirm: intl.formatMessage(withRedraft ? messages.redraftConfirm : messages.deleteConfirm),
@@ -313,7 +323,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
     const account = status.account;
 
     dispatch(openModal('CONFIRM', {
-      icon: require('@tabler/icons/ban.svg'),
+      icon: require('@tabler/icons/outline/ban.svg'),
       heading: <FormattedMessage id='confirmations.block.heading' defaultMessage='Block @{name}' values={{ name: account.acct }} />,
       message: <FormattedMessage id='confirmations.block.message' defaultMessage='Are you sure you want to block {name}?' values={{ name: <strong className='break-words'>@{account.acct}</strong> }} />,
       confirm: intl.formatMessage(messages.blockConfirm),
@@ -401,7 +411,6 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
     const ownAccount = status.account.id === me;
     const username = status.account.username;
     const account = status.account;
-    const domain = account.fqn.split('@')[1];
 
     const menu: Menu = [];
 
@@ -409,7 +418,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(messages.open),
         action: handleOpen,
-        icon: require('@tabler/icons/arrows-vertical.svg'),
+        icon: require('@tabler/icons/outline/arrows-vertical.svg'),
       });
     }
 
@@ -417,14 +426,14 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(messages.copy),
         action: handleCopy,
-        icon: require('@tabler/icons/clipboard-copy.svg'),
+        icon: require('@tabler/icons/outline/clipboard-copy.svg'),
       });
 
       if (features.embeds && account.local) {
         menu.push({
           text: intl.formatMessage(messages.embed),
           action: handleEmbed,
-          icon: require('@tabler/icons/share.svg'),
+          icon: require('@tabler/icons/outline/share.svg'),
         });
       }
     }
@@ -441,7 +450,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         menu.push({
           text: intl.formatMessage(status.pinned ? messages.unpinFromGroup : messages.pinToGroup),
           action: handleGroupPinClick,
-          icon: status.pinned ? require('@tabler/icons/pinned-off.svg') : require('@tabler/icons/pin.svg'),
+          icon: status.pinned ? require('@tabler/icons/outline/pinned-off.svg') : require('@tabler/icons/outline/pin.svg'),
         });
       }
     }
@@ -450,15 +459,24 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(status.bookmarked ? messages.unbookmark : messages.bookmark),
         action: handleBookmarkClick,
-        icon: status.bookmarked ? require('@tabler/icons/bookmark-off.svg') : require('@tabler/icons/bookmark.svg'),
+        icon: status.bookmarked ? require('@tabler/icons/outline/bookmark-off.svg') : require('@tabler/icons/outline/bookmark.svg'),
+      });
+    }
+
+    if (features.bookmarkFolders && fromBookmarks) {
+      menu.push({
+        text: intl.formatMessage(status.pleroma.get('bookmark_folder') ? messages.bookmarkChangeFolder : messages.bookmarkSetFolder),
+        action: handleBookmarkFolderClick,
+        icon: require('@tabler/icons/outline/folders.svg'),
       });
     }
 
     if (features.federating && !account.local) {
+      const { hostname: domain } = new URL(status.uri);
       menu.push({
         text: intl.formatMessage(messages.external, { domain }),
         action: handleExternalClick,
-        icon: require('@tabler/icons/external-link.svg'),
+        icon: require('@tabler/icons/outline/external-link.svg'),
       });
     }
 
@@ -467,7 +485,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
     menu.push({
       text: intl.formatMessage(mutingConversation ? messages.unmuteConversation : messages.muteConversation),
       action: handleConversationMuteClick,
-      icon: mutingConversation ? require('@tabler/icons/bell.svg') : require('@tabler/icons/bell-off.svg'),
+      icon: mutingConversation ? require('@tabler/icons/outline/bell.svg') : require('@tabler/icons/outline/bell-off.svg'),
     });
 
     menu.push(null);
@@ -477,14 +495,14 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         menu.push({
           text: intl.formatMessage(status.pinned ? messages.unpin : messages.pin),
           action: handlePinClick,
-          icon: status.pinned ? require('@tabler/icons/pinned-off.svg') : require('@tabler/icons/pin.svg'),
+          icon: status.pinned ? require('@tabler/icons/outline/pinned-off.svg') : require('@tabler/icons/outline/pin.svg'),
         });
       } else {
         if (status.visibility === 'private') {
           menu.push({
             text: intl.formatMessage(status.reblogged ? messages.cancel_reblog_private : messages.reblog_private),
             action: handleReblogClick,
-            icon: require('@tabler/icons/repeat.svg'),
+            icon: require('@tabler/icons/outline/repeat.svg'),
           });
         }
       }
@@ -492,20 +510,20 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(messages.delete),
         action: handleDeleteClick,
-        icon: require('@tabler/icons/trash.svg'),
+        icon: require('@tabler/icons/outline/trash.svg'),
         destructive: true,
       });
       if (features.editStatuses) {
         menu.push({
           text: intl.formatMessage(messages.edit),
           action: handleEditClick,
-          icon: require('@tabler/icons/edit.svg'),
+          icon: require('@tabler/icons/outline/edit.svg'),
         });
       } else {
         menu.push({
           text: intl.formatMessage(messages.redraft),
           action: handleRedraftClick,
-          icon: require('@tabler/icons/edit.svg'),
+          icon: require('@tabler/icons/outline/edit.svg'),
           destructive: true,
         });
       }
@@ -513,20 +531,20 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(messages.mention, { name: username }),
         action: handleMentionClick,
-        icon: require('@tabler/icons/at.svg'),
+        icon: require('@tabler/icons/outline/at.svg'),
       });
 
       if (status.account.pleroma?.accepts_chat_messages === true) {
         menu.push({
           text: intl.formatMessage(messages.chat, { name: username }),
           action: handleChatClick,
-          icon: require('@tabler/icons/messages.svg'),
+          icon: require('@tabler/icons/outline/messages.svg'),
         });
       } else if (features.privacyScopes) {
         menu.push({
           text: intl.formatMessage(messages.direct, { name: username }),
           action: handleDirectClick,
-          icon: require('@tabler/icons/mail.svg'),
+          icon: require('@tabler/icons/outline/mail.svg'),
         });
       }
 
@@ -534,7 +552,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       if (features.groupsMuting && status.group) {
         menu.push({
           text: isMutingGroup ? intl.formatMessage(messages.unmuteGroup) : intl.formatMessage(messages.muteGroup),
-          icon: require('@tabler/icons/volume-3.svg'),
+          icon: require('@tabler/icons/outline/volume-3.svg'),
           action: isMutingGroup ? handleUnmuteGroupClick : handleMuteGroupClick,
         });
         menu.push(null);
@@ -543,17 +561,17 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(messages.mute, { name: username }),
         action: handleMuteClick,
-        icon: require('@tabler/icons/volume-3.svg'),
+        icon: require('@tabler/icons/outline/volume-3.svg'),
       });
       menu.push({
         text: intl.formatMessage(messages.block, { name: username }),
         action: handleBlockClick,
-        icon: require('@tabler/icons/ban.svg'),
+        icon: require('@tabler/icons/outline/ban.svg'),
       });
       menu.push({
         text: intl.formatMessage(messages.report, { name: username }),
         action: handleReport,
-        icon: require('@tabler/icons/flag.svg'),
+        icon: require('@tabler/icons/outline/flag.svg'),
       });
     }
 
@@ -575,7 +593,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         menu.push({
           text: 'Ban from Group',
           action: handleBlockFromGroup,
-          icon: require('@tabler/icons/ban.svg'),
+          icon: require('@tabler/icons/outline/ban.svg'),
           destructive: true,
         });
       }
@@ -584,7 +602,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         menu.push({
           text: intl.formatMessage(messages.groupModDelete),
           action: handleDeleteFromGroup,
-          icon: require('@tabler/icons/trash.svg'),
+          icon: require('@tabler/icons/outline/trash.svg'),
           destructive: true,
         });
       }
@@ -596,28 +614,28 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       menu.push({
         text: intl.formatMessage(messages.adminAccount, { name: username }),
         action: onModerate,
-        icon: require('@tabler/icons/gavel.svg'),
+        icon: require('@tabler/icons/outline/gavel.svg'),
       });
 
       if (isAdmin) {
         menu.push({
           text: intl.formatMessage(messages.admin_status),
           href: `/pleroma/admin/#/statuses/${status.id}/`,
-          icon: require('@tabler/icons/pencil.svg'),
+          icon: require('@tabler/icons/outline/pencil.svg'),
         });
       }
 
       menu.push({
         text: intl.formatMessage(status.sensitive === false ? messages.markStatusSensitive : messages.markStatusNotSensitive),
         action: handleToggleStatusSensitivity,
-        icon: require('@tabler/icons/alert-triangle.svg'),
+        icon: require('@tabler/icons/outline/alert-triangle.svg'),
       });
 
       if (!ownAccount) {
         menu.push({
           text: intl.formatMessage(messages.deleteStatus),
           action: handleDeleteStatus,
-          icon: require('@tabler/icons/trash.svg'),
+          icon: require('@tabler/icons/outline/trash.svg'),
           destructive: true,
         });
       }
@@ -655,14 +673,14 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   const meEmojiTitle = intl.formatMessage(reactMessages[meEmojiName || ''] || messages.favourite);
 
   const menu = _makeMenu(publicStatus);
-  let reblogIcon = require('@tabler/icons/repeat.svg');
+  let reblogIcon = require('@tabler/icons/outline/repeat.svg');
   let replyTitle;
   let replyDisabled = false;
 
   if (status.visibility === 'direct') {
-    reblogIcon = require('@tabler/icons/mail.svg');
+    reblogIcon = require('@tabler/icons/outline/mail.svg');
   } else if (status.visibility === 'private') {
-    reblogIcon = require('@tabler/icons/lock.svg');
+    reblogIcon = require('@tabler/icons/outline/lock.svg');
   }
 
   if ((status.group as Group)?.membership_required && !groupRelationship?.member) {
@@ -673,11 +691,11 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   const reblogMenu = [{
     text: intl.formatMessage(status.reblogged ? messages.cancel_reblog_private : messages.reblog),
     action: handleReblogClick,
-    icon: require('@tabler/icons/repeat.svg'),
+    icon: require('@tabler/icons/outline/repeat.svg'),
   }, {
     text: intl.formatMessage(messages.quotePost),
     action: handleQuoteClick,
-    icon: require('@tabler/icons/quote.svg'),
+    icon: require('@tabler/icons/outline/quote.svg'),
   }];
 
   const reblogButton = (
@@ -726,7 +744,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         >
           <StatusActionButton
             title={replyTitle}
-            icon={require('@tabler/icons/message-circle-2.svg')}
+            icon={require('@tabler/icons/outline/message-circle-2.svg')}
             onClick={handleReplyClick}
             count={replyCount}
             text={withLabels ? intl.formatMessage(messages.reply) : undefined}
@@ -751,7 +769,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
           <StatusReactionWrapper statusId={status.id}>
             <StatusActionButton
               title={meEmojiTitle}
-              icon={require('@tabler/icons/heart.svg')}
+              icon={require('@tabler/icons/outline/heart.svg')}
               filled
               color='accent'
               active={Boolean(meEmojiName)}
@@ -764,7 +782,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         ) : (
           <StatusActionButton
             title={intl.formatMessage(messages.favourite)}
-            icon={features.dislikes ? require('@tabler/icons/thumb-up.svg') : require('@tabler/icons/heart.svg')}
+            icon={features.dislikes ? require('@tabler/icons/outline/thumb-up.svg') : require('@tabler/icons/outline/heart.svg')}
             color='accent'
             filled
             onClick={handleFavouriteClick}
@@ -778,7 +796,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         {features.dislikes && (
           <StatusActionButton
             title={intl.formatMessage(messages.disfavourite)}
-            icon={require('@tabler/icons/thumb-down.svg')}
+            icon={require('@tabler/icons/outline/thumb-down.svg')}
             color='accent'
             filled
             onClick={handleDislikeClick}
@@ -792,7 +810,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         {(acceptsZaps && window.webln) && (
           <StatusActionButton
             title={intl.formatMessage(messages.zap)}
-            icon={require('@tabler/icons/bolt.svg')}
+            icon={require('@tabler/icons/outline/bolt.svg')}
             color='accent'
             filled
             onClick={handleZapClick}
@@ -805,7 +823,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         {canShare && (
           <StatusActionButton
             title={intl.formatMessage(messages.share)}
-            icon={require('@tabler/icons/upload.svg')}
+            icon={require('@tabler/icons/outline/upload.svg')}
             onClick={handleShareClick}
             theme={statusActionButtonTheme}
           />
@@ -814,7 +832,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         <DropdownMenu items={menu} status={status}>
           <StatusActionButton
             title={intl.formatMessage(messages.more)}
-            icon={require('@tabler/icons/dots.svg')}
+            icon={require('@tabler/icons/outline/dots.svg')}
             theme={statusActionButtonTheme}
           />
         </DropdownMenu>

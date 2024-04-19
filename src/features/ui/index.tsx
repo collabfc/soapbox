@@ -4,7 +4,6 @@ import { Switch, useHistory, useLocation, Redirect } from 'react-router-dom';
 
 import { fetchFollowRequests } from 'soapbox/actions/accounts';
 import { fetchReports, fetchUsers, fetchConfig } from 'soapbox/actions/admin';
-import { fetchAnnouncements } from 'soapbox/actions/announcements';
 import { fetchCustomEmojis } from 'soapbox/actions/custom-emojis';
 import { fetchFilters } from 'soapbox/actions/filters';
 import { fetchMarker } from 'soapbox/actions/markers';
@@ -137,6 +136,12 @@ import {
   ExternalLogin,
   LandingTimeline,
   BookmarkFolders,
+  EditIdentity,
+  Domains,
+  NostrRelays,
+  Bech32Redirect,
+  Relays,
+  Rules,
 } from './util/async-components';
 import GlobalHotkeys from './util/global-hotkeys';
 import { WrappedRoute } from './util/react-router-helpers';
@@ -281,6 +286,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       {features.events && <WrappedRoute path='/@:username/events/:statusId' publicRoute exact page={EventPage} component={EventInformation} content={children} />}
       {features.events && <WrappedRoute path='/@:username/events/:statusId/discussion' publicRoute exact page={EventPage} component={EventDiscussion} content={children} />}
       <Redirect from='/@:username/:statusId' to='/@:username/posts/:statusId' />
+      <WrappedRoute path='/posts/:statusId' publicRoute exact page={DefaultPage} component={Status} content={children} />
 
       {features.groups && <WrappedRoute path='/groups' exact page={GroupsPage} component={Groups} content={children} />}
       {features.groupsDiscovery && <WrappedRoute path='/groups/discover' exact page={GroupsPage} component={GroupsDiscover} content={children} />}
@@ -305,11 +311,13 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       {features.scheduledStatuses && <WrappedRoute path='/scheduled_statuses' page={DefaultPage} component={ScheduledStatuses} content={children} />}
 
       <WrappedRoute path='/settings/profile' page={DefaultPage} component={EditProfile} content={children} />
+      {features.nip05 && <WrappedRoute path='/settings/identity' page={DefaultPage} component={EditIdentity} content={children} />}
       {features.exportData && <WrappedRoute path='/settings/export' page={DefaultPage} component={ExportData} content={children} />}
       {features.importData && <WrappedRoute path='/settings/import' page={DefaultPage} component={ImportData} content={children} />}
       {features.accountAliases && <WrappedRoute path='/settings/aliases' page={DefaultPage} component={Aliases} content={children} />}
       {features.accountMoving && <WrappedRoute path='/settings/migration' page={DefaultPage} component={Migration} content={children} />}
       {features.backups && <WrappedRoute path='/settings/backups' page={DefaultPage} component={Backups} content={children} />}
+      <WrappedRoute path='/settings/relays' page={DefaultPage} component={NostrRelays} content={children} />
       <WrappedRoute path='/settings/email' page={DefaultPage} component={EditEmail} content={children} />
       <WrappedRoute path='/settings/password' page={DefaultPage} component={EditPassword} content={children} />
       <WrappedRoute path='/settings/account' page={DefaultPage} component={DeleteAccount} content={children} />
@@ -324,7 +332,10 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <WrappedRoute path='/soapbox/admin/log' staffOnly page={AdminPage} component={ModerationLog} content={children} exact />
       <WrappedRoute path='/soapbox/admin/users' staffOnly page={AdminPage} component={UserIndex} content={children} exact />
       <WrappedRoute path='/soapbox/admin/theme' staffOnly page={AdminPage} component={ThemeEditor} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/announcements' staffOnly page={AdminPage} component={Announcements} content={children} exact />
+      <WrappedRoute path='/soapbox/admin/relays' staffOnly page={AdminPage} component={Relays} content={children} exact />
+      {features.adminAnnouncements && <WrappedRoute path='/soapbox/admin/announcements' staffOnly page={AdminPage} component={Announcements} content={children} exact />}
+      {features.domains && <WrappedRoute path='/soapbox/admin/domains' staffOnly page={AdminPage} component={Domains} content={children} exact />}
+      {features.adminRules && <WrappedRoute path='/soapbox/admin/rules' staffOnly page={AdminPage} component={Rules} content={children} exact />}
       <WrappedRoute path='/info' page={EmptyPage} component={ServerInfo} content={children} />
 
       <WrappedRoute path='/developers/apps/create' developerOnly page={DefaultPage} component={CreateApp} content={children} />
@@ -354,6 +365,8 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <WrappedRoute path='/invite/:token' page={DefaultPage} component={RegisterInvite} publicRoute exact />
       <Redirect from='/auth/password/new' to='/reset-password' />
       <Redirect from='/auth/password/edit' to={`/edit-password${search}`} />
+
+      <WrappedRoute path='/:bech32([\x21-\x7E]{1,83}1[023456789acdefghjklmnpqrstuvwxyz]{6,})' publicRoute page={EmptyPage} component={Bech32Redirect} content={children} />
 
       <WrappedRoute page={EmptyPage} component={GenericNotFound} content={children} />
     </Switch>
@@ -403,8 +416,6 @@ const UI: React.FC<IUI> = ({ children }) => {
       // @ts-ignore
       .then(() => dispatch(fetchMarker(['notifications'])))
       .catch(console.error);
-
-    dispatch(fetchAnnouncements());
 
     if (account.staff) {
       dispatch(fetchReports({ resolved: false }));

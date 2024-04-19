@@ -5,10 +5,10 @@ import Icon from 'soapbox/components/icon';
 import { HStack, Stack, Text } from 'soapbox/components/ui';
 import { useInstance } from 'soapbox/hooks';
 
-import type { Map as ImmutableMap } from 'immutable';
+import type { RemoteInstance } from 'soapbox/selectors';
 
-const hasRestrictions = (remoteInstance: ImmutableMap<string, any>): boolean => {
-  const { accept, reject_deletes, report_removal, ...federation } = remoteInstance.get('federation');
+const hasRestrictions = (remoteInstance: RemoteInstance): boolean => {
+  const { accept, reject_deletes, report_removal, ...federation } = remoteInstance.federation;
   return !!Object.values(federation).reduce((acc, value) => Boolean(acc || value), false);
 };
 
@@ -30,7 +30,7 @@ const Restriction: React.FC<IRestriction> = ({ icon, children }) => {
 };
 
 interface IInstanceRestrictions {
-  remoteInstance: ImmutableMap<string, any>;
+  remoteInstance: RemoteInstance;
 }
 
 const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance }) => {
@@ -46,14 +46,14 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
       followers_only,
       media_nsfw,
       media_removal,
-    } = remoteInstance.get('federation').toJS();
+    } = remoteInstance.federation;
 
     const fullMediaRemoval = media_removal && avatar_removal && banner_removal;
     const partialMediaRemoval = media_removal || avatar_removal || banner_removal;
 
     if (followers_only) {
       items.push((
-        <Restriction key='followersOnly' icon={require('@tabler/icons/lock.svg')}>
+        <Restriction key='followersOnly' icon={require('@tabler/icons/outline/lock.svg')}>
           <FormattedMessage
             id='federation_restriction.followers_only'
             defaultMessage='Hidden except to followers'
@@ -62,7 +62,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
       ));
     } else if (federated_timeline_removal) {
       items.push((
-        <Restriction key='federatedTimelineRemoval' icon={require('@tabler/icons/lock-open.svg')}>
+        <Restriction key='federatedTimelineRemoval' icon={require('@tabler/icons/outline/lock-open.svg')}>
           <FormattedMessage
             id='federation_restriction.federated_timeline_removal'
             defaultMessage='Fediverse timeline removal'
@@ -73,7 +73,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
 
     if (fullMediaRemoval) {
       items.push((
-        <Restriction key='fullMediaRemoval' icon={require('@tabler/icons/photo-off.svg')}>
+        <Restriction key='fullMediaRemoval' icon={require('@tabler/icons/outline/photo-off.svg')}>
           <FormattedMessage
             id='federation_restriction.full_media_removal'
             defaultMessage='Full media removal'
@@ -82,7 +82,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
       ));
     } else if (partialMediaRemoval) {
       items.push((
-        <Restriction key='partialMediaRemoval' icon={require('@tabler/icons/photo-off.svg')}>
+        <Restriction key='partialMediaRemoval' icon={require('@tabler/icons/outline/photo-off.svg')}>
           <FormattedMessage
             id='federation_restriction.partial_media_removal'
             defaultMessage='Partial media removal'
@@ -93,7 +93,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
 
     if (!fullMediaRemoval && media_nsfw) {
       items.push((
-        <Restriction key='mediaNsfw' icon={require('@tabler/icons/eye-off.svg')}>
+        <Restriction key='mediaNsfw' icon={require('@tabler/icons/outline/eye-off.svg')}>
           <FormattedMessage
             id='federation_restriction.media_nsfw'
             defaultMessage='Attachments marked NSFW'
@@ -108,12 +108,12 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
   const renderContent = () => {
     if (!instance || !remoteInstance) return null;
 
-    const host = remoteInstance.get('host');
+    const host = remoteInstance.host;
     const siteTitle = instance.title;
 
-    if (remoteInstance.getIn(['federation', 'reject']) === true) {
+    if (remoteInstance.federation.reject === true) {
       return (
-        <Restriction icon={require('@tabler/icons/shield-x.svg')}>
+        <Restriction icon={require('@tabler/icons/outline/shield-x.svg')}>
           <FormattedMessage
             id='remote_instance.federation_panel.restricted_message'
             defaultMessage='{siteTitle} blocks all activities from {host}.'
@@ -124,7 +124,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
     } else if (hasRestrictions(remoteInstance)) {
       return (
         <>
-          <Restriction icon={require('@tabler/icons/shield-lock.svg')}>
+          <Restriction icon={require('@tabler/icons/outline/shield-lock.svg')}>
             <FormattedMessage
               id='remote_instance.federation_panel.some_restrictions_message'
               defaultMessage='{siteTitle} has placed some restrictions on {host}.'
@@ -137,7 +137,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
       );
     } else {
       return (
-        <Restriction icon={require('@tabler/icons/shield-check.svg')}>
+        <Restriction icon={require('@tabler/icons/outline/shield-check.svg')}>
           <FormattedMessage
             id='remote_instance.federation_panel.no_restrictions_message'
             defaultMessage='{siteTitle} has placed no restrictions on {host}.'

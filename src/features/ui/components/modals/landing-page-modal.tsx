@@ -8,7 +8,7 @@ import { useRegistrationStatus, useSoapboxConfig } from 'soapbox/hooks';
 
 const messages = defineMessages({
   download: { id: 'landing_page_modal.download', defaultMessage: 'Download' },
-  helpCenter: { id: 'landing_page_modal.helpCenter', defaultMessage: 'Help Center' },
+  helpCenter: { id: 'landing_page_modal.help_center', defaultMessage: 'Help Center' },
   login: { id: 'header.login.label', defaultMessage: 'Log in' },
   register: { id: 'header.register.label', defaultMessage: 'Register' },
 });
@@ -38,7 +38,7 @@ const LandingPageModal: React.FC<ILandingPageModal> = ({ onClose }) => {
               target='_blank'
               className='flex items-center space-x-3 rounded-md p-3 hover:bg-gray-50 dark:hover:bg-gray-900/50'
             >
-              <Icon src={require('@tabler/icons/lifebuoy.svg')} className='h-6 w-6 shrink-0 text-gray-600 dark:text-gray-700' />
+              <Icon src={require('@tabler/icons/outline/lifebuoy.svg')} className='h-6 w-6 shrink-0 text-gray-600 dark:text-gray-700' />
 
               <Text weight='medium'>
                 {intl.formatMessage(messages.helpCenter)}
