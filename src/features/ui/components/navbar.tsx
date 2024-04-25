@@ -71,12 +71,11 @@ const Navbar = () => {
   if (mfaToken) return <Redirect to={`/login?token=${encodeURIComponent(mfaToken)}`} />;
 
   return (
-    <nav className='sticky top-0 z-50 bg-white shadow black:border-b black:border-b-gray-800 black:bg-black dark:bg-primary-900' ref={node} data-testid='navbar'>
+    <nav className='sticky top-0 z-50 bg-white shadow black:border-b black:border-b-gray-900 black:bg-black dark:bg-primary-900' ref={node} data-testid='navbar'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
         <div className='relative flex h-12 justify-between lg:h-16'>
           {account && (
-            <div className='absolute inset-y-0 left-0 flex items-center lg:hidden rtl:left-auto rtl:right-0 lg:hidden'>
-
+            <div className='absolute inset-y-0 left-0 flex items-center lg:hidden rtl:left-auto rtl:right-0'>
               <button onClick={onOpenSidebar}>
                 <Avatar src={account.avatar} size={34} />
               </button>
@@ -86,7 +85,7 @@ const Navbar = () => {
           <HStack
             space={4}
             alignItems='center'
-            className={clsx('enter flex-1 lg:items-stretch', {
+            className={clsx('flex-1 lg:items-stretch', {
               'justify-center lg:justify-start': account,
               'justify-start': !account,
             })}
@@ -187,42 +186,42 @@ const Navbar = () => {
           </HStack>
         </div>
       </div>
-      <div className='mx-auto max-w-7xl mt-3 px-4 sm:px-8 md:px-10 lg:px-12 border-b dark:border-gray-800'>
-        <div className='relative flex h-8 justify-between '>
+      <div className='mx-auto mt-3 max-w-7xl px-4 sm:px-8 md:px-10 lg:px-12 file:dark:border-gray-800'>
+        <div className='relative flex h-8 justify-between'>
           <HStack space={3} alignItems='center' className=''>
-              <div className='relative flex items-center'>
-                  {account && (
-                  <NavLink 
-                    to='/' 
-                    exact
-                    data-preview-title-id='column.home' 
-                    className='mr-5 pb-2 font-normal dark:text-gray-100'
-                    activeClassName='border-b-4 border-primary-500' >
-                    <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
-                  </NavLink>
-                  )}
-                  <NavLink 
-                    to='/timeline/local' 
-                    data-preview-title-id='column.local' 
-                    className='mr-5 pb-2 font-normal dark:text-gray-100'
-                    activeClassName='border-b-4 border-primary-500 ' >
-                    <FormattedMessage id="teeam_tab" defaultMessage='{site_title}' values={{ site_title: instance.title }} />
-                  </NavLink>
-                  <NavLink 
-                    to='/timeline/fediverse' 
-                    data-preview-title-id='column.fediverse' 
-                    className='mr-5 pb-2 font-normal dark:text-gray-100'
-                    activeClassName='border-b-4 border-primary-500' >
-                    <FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />
-                  </NavLink>
-     
-                  <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>
-                    Teams
-                  </a>
-                </div>         
-            </HStack>
+            <div className='relative flex items-center'>
+              {account && (
+                <NavLink 
+                  to='/' 
+                  exact
+                  data-preview-title-id='column.home' 
+                  className='mr-5 pb-2 font-normal dark:text-gray-100'
+                  activeClassName='border-b-4 border-primary-500' 
+                >
+                  <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
+                </NavLink>
+              )}
+              <NavLink 
+                to='/timeline/local' 
+                data-preview-title-id='column.local' 
+                className='mr-5 pb-2 font-normal dark:text-gray-100'
+                activeClassName='border-b-4 border-primary-500' 
+              >
+                <FormattedMessage id='team_tab' defaultMessage='{site_title}' values={{ site_title: instance.title }} />
+              </NavLink>
+              <NavLink 
+                to='/timeline/fediverse' 
+                data-preview-title-id='column.fediverse' 
+                className='mr-5 pb-2 font-normal dark:text-gray-100'
+                activeClassName='border-b-4 border-primary-500' 
+              >
+                <FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />
+              </NavLink>
+              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>Teams</a>
+            </div>
+          </HStack>
         </div>
-      </div>      
+      </div>
     </nav>
   );
 };
