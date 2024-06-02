@@ -1,83 +1,52 @@
-import { type NostrEvent } from '@soapbox/nspec';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useNostr } from 'soapbox/contexts/nostr-context';
-import { connectRequestSchema, nwcRequestSchema } from 'soapbox/schemas/nostr';
-import { jsonSchema } from 'soapbox/schemas/utils';
+import { NConnect } from 'soapbox/features/nostr/NConnect';
+
+const secretStorageKey = 'soapbox:nip46:secret';
+
+sessionStorage.setItem(secretStorageKey, crypto.randomUUID());
 
 function useSignerStream() {
-  const { relay, pubkey, signer } = useNostr();
+  const { relay, signer } = useNostr();
+  const [pubkey, setPubkey] = useState<string | undefined>(undefined);
 
-  async function handleConnectEvent(event: NostrEvent) {
-    if (!relay || !pubkey || !signer) return;
-    const decrypted = await signer.nip04!.decrypt(pubkey, event.content);
-
-    const reqMsg = jsonSchema.pipe(connectRequestSchema).safeParse(decrypted);
-    if (!reqMsg.success) {
-      console.warn(decrypted);
-      console.warn(reqMsg.error);
-      return;
-    }
-
-    const respMsg = {
-      id: reqMsg.data.id,
-      result: await signer.signEvent(reqMsg.data.params[0]),
-    };
-
-    const respEvent = await signer.signEvent({
-      kind: 24133,
-      content: await signer.nip04!.encrypt(pubkey, JSON.stringify(respMsg)),
-      tags: [['p', pubkey]],
-      created_at: Math.floor(Date.now() / 1000),
-    });
-
-    relay.event(respEvent);
-  }
-
-  async function handleWalletEvent(event: NostrEvent) {
-    if (!relay || !pubkey || !signer) return;
-
-    const decrypted = await signer.nip04!.decrypt(pubkey, event.content);
-
-    const reqMsg = jsonSchema.pipe(nwcRequestSchema).safeParse(decrypted);
-    if (!reqMsg.success) {
-      console.warn(decrypted);
-      console.warn(reqMsg.error);
-      return;
-    }
-
-    await window.webln?.enable();
-    await window.webln?.sendPayment(reqMsg.data.params.invoice);
-  }
-
-  async function handleEvent(event: NostrEvent) {
-    switch (event.kind) {
-      case 24133:
-        await handleConnectEvent(event);
-        break;
-      case 23194:
-        await handleWalletEvent(event);
-        break;
-    }
-  }
+  const authStorageKey = `soapbox:nostr:auth:${pubkey}`;
 
   useEffect(() => {
-    if (!relay || !pubkey) return;
+    let isCancelled = false;
 
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    (async() => {
-      for await (const msg of relay.req([{ kinds: [24133, 23194], authors: [pubkey], limit: 0 }], { signal })) {
-        if (msg[0] === 'EVENT') handleEvent(msg[2]);
-      }
-    })();
+    if (signer) {
+      signer.getPublicKey().then((newPubkey) => {
+        if (!isCancelled) {
+          setPubkey(newPubkey);
+        }
+      }).catch(console.warn);
+    }
 
     return () => {
-      controller.abort();
+      isCancelled = true;
     };
+  }, [signer]);
 
-  }, [relay, pubkey, signer]);
+  useEffect(() => {
+    if (!relay || !signer || !pubkey) return;
+
+    const connect = new NConnect({
+      relay,
+      signer,
+      onAuthorize(authorizedPubkey) {
+        localStorage.setItem(authStorageKey, authorizedPubkey);
+        sessionStorage.setItem(secretStorageKey, crypto.randomUUID());
+      },
+      authorizedPubkey: localStorage.getItem(authStorageKey) ?? undefined,
+      getSecret: () => sessionStorage.getItem(secretStorageKey)!,
+    });
+
+    return () => {
+      connect.close();
+    };
+  }, [relay, signer, pubkey]);
 }
 
 export { useSignerStream };

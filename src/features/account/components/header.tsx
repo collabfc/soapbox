@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { List as ImmutableList } from 'immutable';
+import { nip19 } from 'nostr-tools';
 import React from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
@@ -45,6 +46,7 @@ const messages = defineMessages({
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   report: { id: 'account.report', defaultMessage: 'Report @{name}' },
   copy: { id: 'account.copy', defaultMessage: 'Copy link to profile' },
+  npub: { id: 'account.npub', defaultMessage: 'Copy user npub' },
   share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
   media: { id: 'account.media', defaultMessage: 'Media' },
   blockDomain: { id: 'account.block_domain', defaultMessage: 'Hide everything from {domain}' },
@@ -263,10 +265,6 @@ const Header: React.FC<IHeader> = ({ account }) => {
     }
   };
 
-  const handleRssFeedClick = () => {
-    window.open(software === MASTODON ? `${account.url}.rss` : `${account.url}/feed.rss`, '_blank');
-  };
-
   const handleShare = () => {
     navigator.share({
       text: `@${account.acct}`,
@@ -280,6 +278,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
     copy(account.url);
   };
 
+  const handleCopyNpub: React.EventHandler<React.MouseEvent> = (e) => {
+    copy(nip19.npubEncode(account.nostr.pubkey!));
+  };
+
   const makeMenu = () => {
     const menu: Menu = [];
 
@@ -290,8 +292,9 @@ const Header: React.FC<IHeader> = ({ account }) => {
     if (features.rssFeeds && account.local) {
       menu.push({
         text: intl.formatMessage(messages.subscribeFeed),
-        action: handleRssFeedClick,
         icon: require('@tabler/icons/outline/rss.svg'),
+        href: software === MASTODON ? `${account.url}.rss` : `${account.url}/feed.rss`,
+        target: '_blank',
       });
     }
 
@@ -318,6 +321,14 @@ const Header: React.FC<IHeader> = ({ account }) => {
       action: handleCopy,
       icon: require('@tabler/icons/outline/clipboard-copy.svg'),
     });
+
+    if (account.nostr.pubkey) {
+      menu.push({
+        text: intl.formatMessage(messages.npub),
+        action: handleCopyNpub,
+        icon: require('@tabler/icons/outline/clipboard-copy.svg'),
+      });
+    }
 
     if (!ownAccount) return menu;
 
@@ -453,7 +464,7 @@ const Header: React.FC<IHeader> = ({ account }) => {
       });
     }
 
-    if (!account.local) {
+    if (!account.local && features.domainBlocks) {
       const domain = account.fqn.split('@')[1];
 
       menu.push(null);

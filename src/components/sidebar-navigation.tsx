@@ -4,7 +4,7 @@ import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { Stack } from 'soapbox/components/ui';
 import { useStatContext } from 'soapbox/contexts/stat-context';
 import ComposeButton from 'soapbox/features/ui/components/compose-button';
-import { useAppSelector, useGroupsPath, useFeatures, useOwnAccount, useSettings, useInstance } from 'soapbox/hooks';
+import { useAppSelector, useFeatures, useOwnAccount, useSettings, useInstance } from 'soapbox/hooks';
 
 import DropdownMenu, { Menu } from './dropdown-menu';
 import SidebarNavigationLink from './sidebar-navigation-link';
@@ -26,7 +26,6 @@ const SidebarNavigation = () => {
   const features = useFeatures();
   const { isDeveloper } = useSettings();
   const { account } = useOwnAccount();
-  const groupsPath = useGroupsPath();
 
   const notificationCount = useAppSelector((state) => state.notifications.unread);
   const followRequestsCount = useAppSelector((state) => state.user_lists.follow_requests.items.count());
@@ -125,7 +124,7 @@ const SidebarNavigation = () => {
         <SidebarNavigationLink
           to='/search'
           icon={require('@tabler/icons/outline/search.svg')}
-          text={<FormattedMessage id='tabs_bar.search' defaultMessage='Search' />}
+          text={<FormattedMessage id='tabs_bar.search' defaultMessage='Discover' />}
         />
 
         {account && (
@@ -142,7 +141,7 @@ const SidebarNavigation = () => {
 
             {features.groups && (
               <SidebarNavigationLink
-                to={groupsPath}
+                to='/groups'
                 icon={require('@tabler/icons/outline/circles.svg')}
                 activeIcon={require('@tabler/icons/filled/circles.svg')}
                 text={<FormattedMessage id='tabs_bar.groups' defaultMessage='Groups' />}
@@ -179,17 +178,16 @@ const SidebarNavigation = () => {
             {(account || !restrictUnauth.timelines.local) && (
               <SidebarNavigationLink
                 to='/timeline/local'
-                icon={features.federating ? require('@tabler/icons/outline/affiliate.svg') : require('@tabler/icons/outline/world.svg')}
-                activeIcon={features.federating ? require('@tabler/icons/filled/affiliate.svg') : undefined}
-                text={features.federating ? <FormattedMessage id='tabs_bar.local' defaultMessage='Local' /> : <FormattedMessage id='tabs_bar.all' defaultMessage='All' />}
+                icon={features.federating ? require('@tabler/icons/outline/users-group.svg') : require('@tabler/icons/outline/world.svg')}
+                text={features.federating ? instance.title : <FormattedMessage id='tabs_bar.global' defaultMessage='Global' />}
               />
             )}
 
             {(features.federating && (account || !restrictUnauth.timelines.federated)) && (
               <SidebarNavigationLink
-                to='/timeline/fediverse'
-                icon={require('@tabler/icons/outline/topology-star-ring-3.svg')}
-                text={<FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />}
+                to='/timeline/global'
+                icon={require('@tabler/icons/outline/world.svg')}
+                text={<FormattedMessage id='tabs_bar.global' defaultMessage='Global' />}
               />
             )}
           </>

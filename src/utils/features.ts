@@ -184,7 +184,7 @@ const getInstanceFeatures = (instance: Instance) => {
      * Ability to set one's website on their profile.
      * @see PATCH /api/v1/accounts/update_credentials
      */
-    accountWebsite: v.software === TRUTHSOCIAL,
+    accountWebsite: v.software === TRUTHSOCIAL || v.software === DITTO,
 
     /**
      * Ability to manage announcements by admins.
@@ -231,7 +231,7 @@ const getInstanceFeatures = (instance: Instance) => {
      * @see DELETE /api/v1/announcements/:id/reactions/:name
      * @see {@link https://docs.joinmastodon.org/methods/announcements/}
      */
-    announcementsReactions: true, // v.software === MASTODON && gte(v.compatVersion, '3.1.0'),
+    announcementsReactions: v.software === MASTODON && gte(v.compatVersion, '3.1.0'),
 
     /**
      * Pleroma backups.
@@ -250,6 +250,14 @@ const getInstanceFeatures = (instance: Instance) => {
 
     /** Whether people who blocked you are visible through the API. */
     blockersVisible: features.includes('blockers_visible'),
+
+    /**
+     * Ability to block users.
+     * @see POST /api/v1/accounts/:id/block
+     * @see POST /api/v1/accounts/:id/unblock
+     * @see GET /api/v1/blocks
+     */
+    blocks: v.software !== DITTO,
 
     /**
      * Can group bookmarks in folders.
@@ -393,6 +401,17 @@ const getInstanceFeatures = (instance: Instance) => {
     dislikes: v.software === FRIENDICA && gte(v.version, '2023.3.0'),
 
     /**
+     * Ability to block users by domain.
+     * @see GET /api/v1/domain_blocks
+     * @see POST /api/v1/domain_blocks
+     * @see DELETE /api/v1/domain_blocks
+     */
+    domainBlocks: federation.enabled && any([
+      v.software === MASTODON && gte(v.compatVersion, '1.4.0'),
+      v.software === PLEROMA,
+    ]),
+
+    /**
      * Allow to register on a given domain
      * @see GET /api/v1/pleroma/admin/domains
      * @see POST /api/v1/pleroma/admin/domains
@@ -455,7 +474,10 @@ const getInstanceFeatures = (instance: Instance) => {
      * @see GET /api/v1/pleroma/statuses/:id/reactions/:emoji?
      * @see DELETE /api/v1/pleroma/statuses/:id/reactions/:emoji
      */
-    emojiReacts: v.software === PLEROMA && gte(v.version, '2.0.0'),
+    emojiReacts: any([
+      v.software === PLEROMA && gte(v.version, '2.0.0'),
+      features.includes('pleroma_emoji_reactions'),
+    ]),
 
     /**
      * Ability to add emoji reactions to a status available in Mastodon forks.
@@ -493,6 +515,7 @@ const getInstanceFeatures = (instance: Instance) => {
     explicitAddressing: any([
       v.software === PLEROMA && gte(v.version, '1.0.0'),
       v.software === TRUTHSOCIAL,
+      v.software === DITTO,
     ]),
 
     /** Whether to allow exporting follows/blocks/mutes to CSV by paginating the API. */
@@ -517,6 +540,7 @@ const getInstanceFeatures = (instance: Instance) => {
       v.software === MASTODON && gte(v.version, '3.5.0'),
       v.software === PLEROMA && gte(v.version, '2.5.51') && v.build === REBASED,
       v.software === TAKAHE,
+      v.software === DITTO,
     ]),
 
     /** Whether the instance federates. */
@@ -688,6 +712,12 @@ const getInstanceFeatures = (instance: Instance) => {
       v.software === MASTODON && gte(v.compatVersion, '4.0.0'),
       v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.5.54'),
     ]),
+
+    /**
+     * Ability to set one's lightning address on their profile.
+     * @see PATCH /api/v1/accounts/update_credentials
+     */
+    lightning: v.software === DITTO,
 
     /**
      * Can create, view, and manage lists.
@@ -1022,6 +1052,7 @@ const getInstanceFeatures = (instance: Instance) => {
       v.software === ICESHRIMP,
       v.software === FRIENDICA && gte(v.version, '2022.12.0'),
       v.software === MASTODON && gte(v.compatVersion, '3.5.0'),
+      v.software === DITTO,
     ]),
 
     /**

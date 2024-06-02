@@ -8,7 +8,7 @@ import { useAccount } from 'soapbox/api/hooks';
 import Hashtag from 'soapbox/components/hashtag';
 import IconButton from 'soapbox/components/icon-button';
 import ScrollableList from 'soapbox/components/scrollable-list';
-import { HStack, Tabs, Text } from 'soapbox/components/ui';
+import { HStack, Spinner, Tabs, Text } from 'soapbox/components/ui';
 import AccountContainer from 'soapbox/containers/account-container';
 import StatusContainer from 'soapbox/containers/status-container';
 import PlaceholderAccount from 'soapbox/features/placeholder/components/placeholder-account';
@@ -52,14 +52,14 @@ const SearchResults = () => {
     const items = [];
     items.push(
       {
-        text: intl.formatMessage(messages.accounts),
-        action: () => selectFilter('accounts'),
-        name: 'accounts',
-      },
-      {
         text: intl.formatMessage(messages.statuses),
         action: () => selectFilter('statuses'),
         name: 'statuses',
+      },
+      {
+        text: intl.formatMessage(messages.accounts),
+        action: () => selectFilter('accounts'),
+        name: 'accounts',
       },
     );
 
@@ -172,6 +172,8 @@ const SearchResults = () => {
           />
         </div>
       );
+    } else {
+      noResultsMessage = <Spinner />;
     }
   }
 
@@ -224,7 +226,7 @@ const SearchResults = () => {
           onLoadMore={handleLoadMore}
           placeholderComponent={placeholderComponent}
           placeholderCount={20}
-          className={clsx({
+          listClassName={clsx({
             'divide-gray-200 dark:divide-gray-800 divide-solid divide-y': selectedFilter === 'statuses',
           })}
           itemClassName={clsx({
