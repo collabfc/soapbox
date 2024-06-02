@@ -223,7 +223,7 @@ const Navbar = () => {
                 <FormattedMessage id='team_tab' defaultMessage='{site_title}' values={{ site_title: instance.title }} />
               </NavLink>
               <NavLink 
-                to='/timeline/fediverse' 
+                to='/timeline/global' 
                 data-preview-title-id='column.fediverse' 
                 className='mr-5 pb-2 font-normal dark:text-gray-100'
                 activeClassName='border-b-4 border-primary-500' 
