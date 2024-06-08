@@ -41,7 +41,7 @@ const Quotes: React.FC = () => {
   return (
     <Column label={intl.formatMessage(messages.heading)} transparent={!isMobile}>
       <StatusList
-        className='black:p-4 black:sm:p-5'
+        className='black:p-0 black:lg:p-5'
         statusIds={statusIds as ImmutableOrderedSet<string>}
         scrollKey={`quotes:${statusId}`}
         hasMore={hasMore}

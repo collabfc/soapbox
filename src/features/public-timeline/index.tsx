@@ -92,7 +92,7 @@ const PublicTimeline = () => {
       )}
       <PullToRefresh onRefresh={handleRefresh}>
         <Timeline
-          className='black:p-4 black:sm:p-5'
+          className='black:p-0 black:lg:p-5'
           scrollKey={`${timelineId}_timeline`}
           timelineId={`${timelineId}${onlyMedia ? ':media' : ''}`}
           prefix='home'
