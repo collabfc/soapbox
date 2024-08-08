@@ -2,11 +2,12 @@ import { RootState, type AppDispatch } from 'soapbox/store';
 
 import { authLoggedIn, verifyCredentials } from './auth';
 import { obtainOAuthToken } from './oauth';
+import { startOnboarding } from './onboarding';
 
 const NOSTR_PUBKEY_SET = 'NOSTR_PUBKEY_SET';
 
 /** Log in with a Nostr pubkey. */
-function logInNostr(pubkey: string) {
+function logInNostr(pubkey: string, onboard = false) {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(setNostrPubkey(pubkey));
 
@@ -27,6 +28,12 @@ function logInNostr(pubkey: string) {
       secret,
     }));
 
+    if (onboard) {
+      dispatch(startOnboarding());
+    }
+
+    dispatch(setNostrPubkey(undefined));
+
     const { access_token } = dispatch(authLoggedIn(token));
     return await dispatch(verifyCredentials(access_token as string));
   };
@@ -43,7 +50,7 @@ function nostrExtensionLogIn() {
   };
 }
 
-function setNostrPubkey(pubkey: string) {
+function setNostrPubkey(pubkey: string | undefined) {
   return {
     type: NOSTR_PUBKEY_SET,
     pubkey,
