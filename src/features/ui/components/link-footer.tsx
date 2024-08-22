@@ -62,28 +62,12 @@ const LinkFooter: React.FC = (): JSX.Element => {
           {account.locked && (
             <FooterLink to='/follow_requests'><FormattedMessage id='navigation_bar.follow_requests' defaultMessage='Follow requests' /></FooterLink>
           )}
+          <div><a className='text-gray-700 hover:text-gray-800 hover:underline dark:text-gray-600 dark:hover:text-gray-500' href='https://www.collabfc.com/privacy'>Privacy Policy</a></div>
+          <div><a className='text-gray-700 hover:text-gray-800 hover:underline dark:text-gray-600 dark:hover:text-gray-500' href='https://www.collabfc.com/#about'>About</a></div>
+          <div><a className='text-gray-700 hover:text-gray-800 hover:underline dark:text-gray-600 dark:hover:text-gray-500' href='https://github.com/collabfc/soapbox'>Source</a></div>
           <FooterLink to='/logout' onClick={onClickLogOut}><FormattedMessage id='navigation_bar.logout' defaultMessage='Logout' /></FooterLink>
         </>}
       </div>
-
-      <Text theme='muted' size='sm'>
-        {soapboxConfig.linkFooterMessage ? (
-          <span
-            className='inline-block align-middle'
-            dangerouslySetInnerHTML={{ __html: emojify(soapboxConfig.linkFooterMessage) }}
-          />
-        ) : (
-          <FormattedMessage
-            id='getting_started.open_source_notice'
-            defaultMessage='{code_name} is open source software. You can contribute or report issues at {code_link} (v{code_version}).'
-            values={{
-              code_name: sourceCode.displayName,
-              code_link: <Text theme='subtle' tag='span'><a className='underline' href={sourceCode.url} rel='noopener' target='_blank'>{sourceCode.repository}</a></Text>,
-              code_version: sourceCode.version,
-            }}
-          />
-        )}
-      </Text>
     </div>
   );
 };

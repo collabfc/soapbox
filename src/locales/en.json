@@ -1313,7 +1313,7 @@
   "registration.fields.username_placeholder": "Username",
   "registration.newsletter": "Subscribe to newsletter.",
   "registration.password_mismatch": "Passwords don't match.",
-  "registration.reason": "Why is your favourite player?",
+  "registration.reason": "Who is your favourite player?",
   "registration.reason_hint": "This will check you're not a bot",
   "registration.sign_up": "Sign up",
   "registration.tos": "Terms of Service",

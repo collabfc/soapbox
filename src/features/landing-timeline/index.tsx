@@ -8,7 +8,6 @@ import { Column } from 'soapbox/components/ui';
 import { useAppSelector, useAppDispatch, useInstance, useTheme } from 'soapbox/hooks';
 import { useIsMobile } from 'soapbox/hooks/useIsMobile';
 
-import AboutPage from '../about';
 import Timeline from '../ui/components/timeline';
 
 import { SiteBanner } from './components/site-banner';
@@ -50,21 +49,18 @@ const LandingTimeline = () => {
         <SiteBanner />
       </div>
 
-      {timelineEnabled ? (
-        <PullToRefresh onRefresh={handleRefresh}>
-          <Timeline
-            className='black:p-0 black:lg:p-5'
-            scrollKey={`${timelineId}_timeline`}
-            timelineId={timelineId}
-            prefix='home'
-            onLoadMore={handleLoadMore}
-            emptyMessage={<FormattedMessage id='empty_column.community' defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!' />}
-            divideType={(theme === 'black' || isMobile) ? 'border' : 'space'}
-          />
-        </PullToRefresh>
-      ) : (
-        <AboutPage />
-      )}
+      <PullToRefresh onRefresh={handleRefresh}>
+        <Timeline
+          className='black:p-0 black:lg:p-5'
+          scrollKey={`${timelineId}_timeline`}
+          timelineId={timelineId}
+          prefix='home'
+          onLoadMore={handleLoadMore}
+          emptyMessage={<FormattedMessage id='empty_column.community' defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!' />}
+          divideType={(theme === 'black' || isMobile) ? 'border' : 'space'}
+        />
+      </PullToRefresh>
+
     </Column>
   );
 };

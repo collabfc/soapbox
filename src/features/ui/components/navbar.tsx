@@ -203,17 +203,15 @@ const Navbar = () => {
         <div className='relative flex h-8 justify-between'>
           <HStack space={3} alignItems='center' className=''>
             <div className='relative flex items-center'>
-              {account && (
-                <NavLink 
-                  to='/' 
-                  exact
-                  data-preview-title-id='column.home' 
-                  className='mr-5 pb-2 font-normal dark:text-gray-100'
-                  activeClassName='border-b-4 border-primary-500' 
-                >
-                  <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
-                </NavLink>
-              )}
+              <NavLink 
+                to='/' 
+                exact
+                data-preview-title-id='column.home' 
+                className='mr-5 pb-2 font-normal dark:text-gray-100'
+                activeClassName='border-b-4 border-primary-500' 
+              >
+                <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
+              </NavLink>
               <NavLink 
                 to='/timeline/local' 
                 data-preview-title-id='column.local' 

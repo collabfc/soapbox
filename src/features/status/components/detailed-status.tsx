@@ -174,7 +174,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
             {statusTypeIcon}
 
             <span>
-              <a href={actualStatus.url} target='_blank' rel='noopener' className='hover:underline'>
+              <a href={actualStatus.url} target='_blank' rel='nofollow noopener' className='hover:underline'>
                 <Text tag='span' theme='muted' size='sm'>
                   <FormattedDate value={new Date(actualStatus.created_at)} hour12 year='numeric' month='short' day='2-digit' hour='numeric' minute='2-digit' />
                 </Text>

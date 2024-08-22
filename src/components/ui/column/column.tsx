@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Helmet from 'soapbox/components/helmet';
-import { useSoapboxConfig } from 'soapbox/hooks';
+import { useSoapboxConfig, useInstance } from 'soapbox/hooks';
 
 import { Card, CardBody, CardHeader, CardTitle, type CardSizes } from '../card/card';
 
@@ -63,11 +63,83 @@ export interface IColumn {
   size?: CardSizes;
 }
 
+// Utility to format the instance title into a suitable filename
+const formatFilename = (title: string): string => {
+  return title.toLowerCase().replace(/ /g, '');
+};
+
 /** A backdrop for the main section of the UI. */
 const Column: React.FC<IColumn> = React.forwardRef((props, ref: React.ForwardedRef<HTMLDivElement>): JSX.Element => {
   const { backHref, children, label, transparent = false, withHeader = true, className, bodyClassName, action, size } = props;
   const soapboxConfig = useSoapboxConfig();
   const [isScrolled, setIsScrolled] = useState(false);
+  const instance = useInstance();
+
+  interface InstanceType {
+    title: string;
+  }
+  
+  const useMetaTags = (instance: InstanceType): { title: string; metaTags: JSX.Element[] } => {
+    let title: string, description: string;
+    const metaTags: JSX.Element[] = [];
+
+    // Format the instance title to use as a filename
+    const imageName = formatFilename(instance.title) + '.jpg';
+    const imageUrl = `https://www.collabfc.com/img/og/teams/${imageName}`;
+  
+    switch (window.location.pathname) {
+      case '/':
+        title = 'CollabFC Team Hub Home';
+        description = `Join ${instance.title}'s fediverse fan community on CollabFC. Connect with other supporters, explore team-specific hubs, and engage in real-time football discussions.`;
+        break;
+      case '/timeline/local':
+        title = 'CollabFC Local Timeline';
+        description = `Explore the latest local posts and discussions from ${instance.title} fans on CollabFC. Stay connected with the community's thoughts, insights, and updates about ${instance.title}.`;
+        break;
+      case '/timeline/global':
+        title = 'CollabFC Global Timeline';
+        description = 'Explore posts from all over the CollabFC network. Discover global perspectives and news from different fanbases around the world.';
+        break;
+      default:
+        title = instance.title;
+        description = '';
+    }
+  
+    const titleAppend = title + ` | ${instance.title}`;
+  
+    if (description) {
+      metaTags.push(
+        <meta key='description' name='description' content={description} />,
+        <meta key='og:title' property='og:title' content={titleAppend} />,
+        <meta key='og:description' property='og:description' content={description} />,
+        <meta key='og:image' property='og:image' content={imageUrl} />,
+        <meta key='twitter:title' name='twitter:title' content={titleAppend} />,
+        <meta key='twitter:description' name='twitter:description' content={description} />,
+        <meta key='twitter:image' name='twitter:image' content={imageUrl} />,
+      );
+  
+      if (window.location.pathname === '/') {
+        const schemaOrgJSON = {
+          '@context': 'http://schema.org',
+          '@type': 'WebSite',
+          'name': titleAppend,
+          'description': description,
+          'sameAs': [
+            'https://x.com/collabfc',
+            'https://www.threads.net/@thecollabfc',
+          ],
+        };
+        metaTags.push(
+          <script key='schema-org' type='application/ld+json'>{JSON.stringify(schemaOrgJSON)}</script>,
+        );
+      }
+    }
+  
+    return { title: title, metaTags };
+  };
+  
+
+  const { title, metaTags } = useMetaTags(instance);
 
   const handleScroll = useCallback(throttle(() => {
     setIsScrolled(window.pageYOffset > 32);
@@ -84,7 +156,14 @@ const Column: React.FC<IColumn> = React.forwardRef((props, ref: React.ForwardedR
   return (
     <div role='region' className='relative' ref={ref} aria-label={label} column-type={transparent ? 'transparent' : 'filled'}>
       <Helmet>
-        <title>{label}</title>
+        <link rel='apple-touch-icon' sizes='180x180' href='https://www.collabfc.com/img/icons/favicon/apple-touch-icon.png' />
+        <link rel='icon' type='image/png' sizes='32x32' href='https://www.collabfc.com/img/icons/favicon/favicon-32x32.png' />
+        <link rel='icon' type='image/png' sizes='16x16' href='https://www.collabfc.com/img/icons/favicon/favicon-16x16.png' />
+        <link rel='manifest' href='https://www.collabfc.com/img/icons/favicon/site.webmanifest' />
+
+        {metaTags}
+
+        <title>{title}</title>
 
         {soapboxConfig.appleAppId && (
           <meta
@@ -94,6 +173,8 @@ const Column: React.FC<IColumn> = React.forwardRef((props, ref: React.ForwardedR
           />
         )}
       </Helmet>
+
+
 
       <Card size={size} variant={transparent ? undefined : 'rounded'} className={className}>
         {withHeader && (

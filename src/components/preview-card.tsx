@@ -117,7 +117,7 @@ const PreviewCard: React.FC<IPreviewCard> = ({
       onClick={(e) => e.stopPropagation()}
       href={card.url}
       title={trimmedTitle}
-      rel='noopener'
+      rel='nofollow noopener'
       target='_blank'
       dir={direction}
     >
@@ -198,7 +198,7 @@ const PreviewCard: React.FC<IPreviewCard> = ({
                     onClick={(e) => e.stopPropagation()}
                     href={card.url}
                     target='_blank'
-                    rel='noopener'
+                    rel='nofollow noopener'
                     className='text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-100'
                   >
                     <Icon
@@ -242,7 +242,7 @@ const PreviewCard: React.FC<IPreviewCard> = ({
       href={card.url}
       className={className}
       target='_blank'
-      rel='noopener'
+      rel='nofollow noopener'
       ref={setRef}
       onClick={e => e.stopPropagation()}
     >
