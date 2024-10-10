@@ -55,13 +55,7 @@ export default defineConfig(({ command }) => ({
         },
       },
     }),
-    react({
-      // Use React plugin in all *.jsx and *.tsx files
-      include: '**/*.{jsx,tsx}',
-      babel: {
-        configFile: './babel.config.cjs',
-      },
-    }),
+    react(),
     VitePWA({
       injectRegister: null,
       strategies: 'injectManifest',
@@ -72,7 +66,6 @@ export default defineConfig(({ command }) => ({
           compileTime(),
         ],
       },
-      manifestFilename: 'manifest.json',
       manifest: {
         name: 'Soapbox',
         short_name: 'Soapbox',

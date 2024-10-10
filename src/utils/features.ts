@@ -711,6 +711,7 @@ const getInstanceFeatures = (instance: Instance) => {
     instanceV2: any([
       v.software === MASTODON && gte(v.compatVersion, '4.0.0'),
       v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.5.54'),
+      v.software === DITTO,
     ]),
 
     /**
@@ -899,6 +900,9 @@ const getInstanceFeatures = (instance: Instance) => {
       v.software === WILDEBEEST,
       v.software === DITTO,
     ]),
+
+    /** Ability to filter the public timeline by language. */
+    publicTimelineLanguage: v.software === DITTO,
 
     /**
      * Ability to quote posts in statuses.
