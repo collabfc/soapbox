@@ -10,7 +10,7 @@ import { LogoText } from './logo-text';
 
 // Custom hook to format the instance title into a suitable filename
 const useFormattedFilename = (): string => {
-  const instance = useInstance();
+  const { instance } = useInstance();
   const imageName = instance.title.toLowerCase().replace(/ /g, '-');
   const imageUrl = `https://www.collabfc.com/img/og/teams/${imageName}.jpg`;
   return imageUrl;

@@ -1,4 +1,3 @@
-import he from 'he';
 import debounce from 'lodash/debounce';
 import React, { useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -110,22 +109,14 @@ const StatusDetails: React.FC<IStatusDetails> = (props) => {
     }
   }
 
-  const titleMessage = (): string => {
-    
-    if (status && status.card) {
-      return  '' + status.account.display_name + ' on CollabFC: "' + status.card.title + '"' ;
-    }  else if (status && status.search_index) {
-      return  '' + status.account.display_name + ' on CollabFC: "' +  status.search_index + '"' ;
-    } else if (status && status.visibility === 'direct') {
-      return intl.formatMessage(messages.titleDirect);
-    }
-
-    return intl.formatMessage(messages.title);
+  const titleMessage = () => {
+    if (status.visibility === 'direct') return messages.titleDirect;
+    return messages.title;
   };
 
   return (
     <Stack space={4}>
-      <Column label={he.decode(titleMessage())}>
+      <Column label={intl.formatMessage(titleMessage())}>
         <PullToRefresh onRefresh={handleRefresh}>
           <Thread
             status={status}

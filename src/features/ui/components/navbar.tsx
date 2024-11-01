@@ -13,6 +13,10 @@ import { useAppDispatch, useFeatures, useInstance, useOwnAccount, useRegistratio
 import { useIsMobile } from 'soapbox/hooks/useIsMobile';
 import { useSettingsNotifications } from 'soapbox/hooks/useSettingsNotifications';
 
+import { useInstanceV1 } from 'soapbox/api/hooks/instance/useInstanceV1';
+import { useInstanceV2 } from 'soapbox/api/hooks/instance/useInstanceV2';
+
+
 import ProfileDropdown from './profile-dropdown';
 
 import type { AxiosError } from 'axios';
@@ -26,10 +30,19 @@ const messages = defineMessages({
 });
 
 const Navbar = () => {
-  const instance = useInstance();
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const features = useFeatures();
+  const instance = useInstance();
+
+  const v2 = useInstanceV2();
+  const v1 = useInstanceV1({ enabled: v2.isError });
+
+  // Access the original v1 properties when v2 is in error state
+  const isSuccess = instance.isSuccess ?? false;
+  const title = v2.instance ? v2.instance.title : v1.instance?.title;
+
+
   const { isOpen } = useRegistrationStatus();
   const { account } = useOwnAccount();
   const node = useRef(null);
@@ -100,18 +113,15 @@ const Navbar = () => {
           <HStack
             space={4}
             alignItems='center'
-            className={clsx('flex-1 lg:items-stretch', {
+            className={clsx('enter flex-1 lg:items-stretch', {
               'justify-center lg:justify-start': account,
               'justify-start': !account,
             })}
           >
-
-            <h1 className='pt-3'>
-              <a key='logo' href='https://www.collabfc.com' data-preview-title-id='column.home' className='ml-4 flex shrink-0 items-center'>
-                <SiteLogo alt='Logo' className='h-10 w-auto cursor-pointer'  />
-                <span className='hidden'><FormattedMessage id='tabs_bar.home' defaultMessage='Home' /></span>
-              </a>
-            </h1>
+            <Link key='logo' to='/' data-preview-title-id='column.home' className='ml-4 flex shrink-0 items-center'>
+              <SiteLogo alt='Logo' className='h-5 w-auto cursor-pointer' />
+              <span className='hidden'><FormattedMessage id='tabs_bar.home' defaultMessage='Home' /></span>
+            </Link>
 
             {account && (
               <div className='hidden flex-1 items-center justify-center px-2 lg:ml-6 lg:flex lg:justify-start'>
@@ -122,7 +132,7 @@ const Navbar = () => {
             )}
           </HStack>
 
-          {instance.isSuccess && (
+          {isSuccess && (
             <HStack space={3} alignItems='center' className='absolute inset-y-0 right-0 pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0'>
               {account ? (
                 <div className='relative hidden items-center lg:flex'>
@@ -222,7 +232,7 @@ const Navbar = () => {
                 className='mr-5 pb-2 font-normal dark:text-gray-100'
                 activeClassName='border-b-4 border-primary-500' 
               >
-                <FormattedMessage id='team_tab' defaultMessage='{site_title}' values={{ site_title: instance.title }} />
+                <FormattedMessage id='team_tab' defaultMessage='{site_title}' values={{ site_title: title }} />
               </NavLink>
               <NavLink 
                 to='/timeline/global' 

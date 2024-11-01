@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Helmet from 'soapbox/components/helmet';
-import { useSoapboxConfig, useInstance } from 'soapbox/hooks';
+import { useSoapboxConfig } from 'soapbox/hooks';
 
 import { Card, CardBody, CardHeader, CardTitle, type CardSizes } from '../card/card';
 
@@ -68,9 +68,6 @@ const Column = React.forwardRef<HTMLDivElement, IColumn>((props, ref): JSX.Eleme
   const { backHref, children, label, transparent = false, withHeader = true, className, bodyClassName, action, size } = props;
   const soapboxConfig = useSoapboxConfig();
   const [isScrolled, setIsScrolled] = useState(false);
-  const instance = useInstance();
-  const [metaTags, setMetaTags] = useState<JSX.Element[]>([]);
-  const [title, setTitle] = useState<string>('');
 
   const handleScroll = useCallback(throttle(() => {
     setIsScrolled(window.pageYOffset > 32);
@@ -82,62 +79,13 @@ const Column = React.forwardRef<HTMLDivElement, IColumn>((props, ref): JSX.Eleme
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [handleScroll]);
-
-  useEffect(() => {
-    let pageTitle: string, description: string;
-    const generatedMetaTags: JSX.Element[] = [];
-
-    //const imageName = formatFilename(instance.title) + '.jpg';
-    //const imageUrl = `https://www.collabfc.com/img/og/teams/${imageName}`;
-
-    switch (window.location.pathname) {
-      case '/':
-        pageTitle = 'CollabFC Team Hub Home';
-        description = 'fill';
-        break;
-      case '/timeline/local':
-        pageTitle = 'CollabFC Local Timeline';
-        description = 'fill';
-        break;
-      case '/timeline/global':
-        pageTitle = 'CollabFC Global Timeline';
-        description = 'fill';
-        break;
-      default:
-        pageTitle = instance.title;
-        description = '';
-    }
-
-    const titleWithInstance = pageTitle + ` | ${instance.title}`;
-
-    if (description) {
-
-      if (window.location.pathname === '/') {
-        const schemaOrgJSON = {
-          '@context': 'http://schema.org',
-          '@type': 'WebSite',
-          'name': titleWithInstance,
-          'sameAs': [
-            'https://x.com/collabfc',
-            'https://www.threads.net/@thecollabfc',
-          ],
-        };
-        generatedMetaTags.push(
-          <script key='schema-org' type='application/ld+json'>{JSON.stringify(schemaOrgJSON)}</script>,
-        );
-      }
-    }
-
-    setTitle(pageTitle);
-    setMetaTags(generatedMetaTags);
-  }, [instance, window.location.pathname]);  // Recalculate meta tags when instance or pathname changes
+  }, []);
 
   return (
     <div role='region' className='relative' ref={ref} aria-label={label} column-type={transparent ? 'transparent' : 'filled'}>
       <Helmet>
-        {metaTags}
-        <title>{title}</title>
+        <title>{label}</title>
+
         {soapboxConfig.appleAppId && (
           <meta
             data-react-helmet='true'
