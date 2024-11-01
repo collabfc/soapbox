@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { Link, NavLink , Redirect } from 'react-router-dom';
-
 import { logIn, verifyCredentials } from 'soapbox/actions/auth';
 import { fetchInstance } from 'soapbox/actions/instance';
 import { openModal } from 'soapbox/actions/modals';
@@ -10,10 +9,9 @@ import { openSidebar } from 'soapbox/actions/sidebar';
 import SiteLogo from 'soapbox/components/site-logo';
 import { Avatar, Button, Counter, Form, HStack, IconButton, Input, Tooltip } from 'soapbox/components/ui';
 import Search from 'soapbox/features/compose/components/search';
-import { useAppDispatch, useInstance ,useAppSelector, useFeatures, useOwnAccount, useRegistrationStatus } from 'soapbox/hooks';
+import { useAppDispatch, useFeatures, useInstance, useOwnAccount, useRegistrationStatus } from 'soapbox/hooks';
 import { useIsMobile } from 'soapbox/hooks/useIsMobile';
 import { useSettingsNotifications } from 'soapbox/hooks/useSettingsNotifications';
-import { isStandalone } from 'soapbox/utils/state';
 
 import ProfileDropdown from './profile-dropdown';
 
@@ -32,7 +30,6 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const features = useFeatures();
-  const standalone = useAppSelector(isStandalone);
   const { isOpen } = useRegistrationStatus();
   const { account } = useOwnAccount();
   const node = useRef(null);
@@ -125,7 +122,7 @@ const Navbar = () => {
             )}
           </HStack>
 
-          {!standalone && (
+          {instance.isSuccess && (
             <HStack space={3} alignItems='center' className='absolute inset-y-0 right-0 pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0'>
               {account ? (
                 <div className='relative hidden items-center lg:flex'>
