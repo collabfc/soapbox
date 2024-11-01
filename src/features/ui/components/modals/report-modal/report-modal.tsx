@@ -104,13 +104,13 @@ const ReportModal = ({ onClose }: IReportModal) => {
   const entityType = useAppSelector((state) => state.reports.new.entityType);
   const isBlocked = useAppSelector((state) => state.reports.new.block);
   const isSubmitting = useAppSelector((state) => state.reports.new.isSubmitting);
-  const { rules } = useInstance();
+  const { instance } = useInstance();
   const ruleIds = useAppSelector((state) => state.reports.new.rule_ids);
   const selectedStatusIds = useAppSelector((state) => state.reports.new.status_ids);
   const selectedChatMessage = useAppSelector((state) => state.reports.new.chat_message);
   const selectedGroup = useAppSelector((state) => state.reports.new.group);
 
-  const shouldRequireRule = rules.length > 0;
+  const shouldRequireRule = instance.rules.length > 0;
 
   const isReportingAccount = entityType === ReportableEntities.ACCOUNT;
   const isReportingStatus = entityType === ReportableEntities.STATUS;
@@ -216,7 +216,7 @@ const ReportModal = ({ onClose }: IReportModal) => {
         <Stack space={4}>
           <HStack alignItems='center' space={4} className='rounded-md border border-solid border-gray-400 p-4 dark:border-2 dark:border-gray-800'>
             <div>
-              <Avatar src={account.avatar} className='h-8 w-8' />
+              <Avatar src={account.avatar} className='size-8' />
             </div>
 
             <div className='grow rounded-md bg-gray-200 p-4 dark:bg-primary-800'>
@@ -266,6 +266,7 @@ const ReportModal = ({ onClose }: IReportModal) => {
       case ReportableEntities.GROUP:
         return intl.formatMessage(messages.reportGroup);
       default:
+        // eslint-disable-next-line formatjs/no-literal-string-in-jsx
         return <FormattedMessage id='report.target' defaultMessage='Reporting {target}' values={{ target: <strong>@{account?.acct}</strong> }} />;
     }
   };

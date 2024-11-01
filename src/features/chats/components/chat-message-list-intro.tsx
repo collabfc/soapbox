@@ -74,13 +74,13 @@ const ChatMessageListIntro = () => {
         <Text size='lg' align='center'>
           {needsAcceptance ? (
             <>
-              <Text tag='span' weight='semibold'>@{chat.account.acct}</Text>
+              <Text tag='span' weight='semibold'>@{chat.account.acct}</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
               {' '}
               <Text tag='span'>{intl.formatMessage(messages.intro)}</Text>
             </>
           ) : (
             <Link to={`/@${chat.account.acct}`}>
-              <Text tag='span' theme='inherit' weight='semibold'>@{chat.account.acct}</Text>
+              <Text tag='span' theme='inherit' weight='semibold'>@{chat.account.acct}</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
             </Link>
           )}
         </Text>
@@ -107,7 +107,7 @@ const ChatMessageListIntro = () => {
         </HStack>
       ) : (
         <HStack justifyContent='center' alignItems='center' space={1} className='shrink-0'>
-          <Icon src={require('@tabler/icons/outline/clock.svg')} className='h-4 w-4 text-gray-600' />
+          <Icon src={require('@tabler/icons/outline/clock.svg')} className='size-4 text-gray-600' />
           {chat.message_expiration && (
             <Text size='sm' theme='muted'>
               {intl.formatMessage(messages.messageLifespan, { day: secondsToDays(chat.message_expiration) })}

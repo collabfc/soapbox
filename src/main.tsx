@@ -1,3 +1,4 @@
+import { enableMapSet } from 'immer';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -14,8 +15,7 @@ import '@fontsource/inter/700.css';
 import '@fontsource/inter/900.css';
 import '@fontsource/roboto-mono/400.css';
 import 'line-awesome/dist/font-awesome-line-awesome/css/all.css';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'soapbox/features/nostr/keys';
+import 'soapbox/features/nostr/keyring';
 
 import './iframe';
 import './styles/i18n/arabic.css';
@@ -23,9 +23,10 @@ import './styles/i18n/javanese.css';
 import './styles/application.scss';
 import './styles/tailwind.css';
 
-import './precheck';
 import ready from './ready';
 import { registerSW, lockSW } from './utils/sw';
+
+enableMapSet();
 
 if (BuildConfig.NODE_ENV === 'production') {
   printConsoleWarning();

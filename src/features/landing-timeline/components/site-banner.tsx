@@ -17,7 +17,7 @@ const useFormattedFilename = (): string => {
 };
 
 const SiteBanner: React.FC = () => {
-  const instance = useInstance();
+  const { instance } = useInstance();
   const description = DOMPurify.sanitize(instance.description);
   const imageName = useFormattedFilename();  // Using the custom hook here
 

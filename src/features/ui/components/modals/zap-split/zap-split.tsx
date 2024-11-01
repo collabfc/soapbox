@@ -37,7 +37,7 @@ const ZapSplit = ({ zapData, zapAmount, invoice, onNext, isLastStep, onFinish }:
 
   return (
     <div className='flex w-full flex-col items-center justify-center sm:flex-row'>
-      <Stack space={10} alignItems='center' className='relative flex w-full pb-4 pt-2 sm:w-[80%]'>
+      <Stack space={10} alignItems='center' className='relative flex w-full pb-4 pt-2 sm:w-4/5'>
 
         <Stack space={4} justifyContent='center' className='w-full' alignItems='center'>
           <Stack justifyContent='center' alignItems='center' className='w-3/5'>
@@ -48,6 +48,7 @@ const ZapSplit = ({ zapData, zapAmount, invoice, onNext, isLastStep, onFinish }:
           <div className='bg-grey-500 dark:border-grey-800 -mx-4 w-full border-b border-solid sm:-mx-10' />
 
           <Stack justifyContent='center' alignItems='center' className='min-w-72 text-center' space={4}>
+            {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
             <h3 className='text-xl font-bold'>
               Help this community grow!
             </h3>
@@ -65,6 +66,7 @@ const ZapSplit = ({ zapData, zapAmount, invoice, onNext, isLastStep, onFinish }:
 
         <div className='flex justify-center'>
           <div className='box-shadow:none rounded-none border-0 border-b-2 p-0.5 text-center !ring-0 dark:bg-transparent'>
+            {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
             <span className='!text-5xl font-bold'>{zapAmount}</span> sats
           </div>
         </div>

@@ -31,8 +31,11 @@ const ReasonStep: React.FC<IReasonStep> = () => {
 
   const entityType = useAppSelector((state) => state.reports.new.entityType);
   const comment = useAppSelector((state) => state.reports.new.comment);
-  const { rules } = useInstance();
   const ruleIds = useAppSelector((state) => state.reports.new.rule_ids);
+
+  const { instance } = useInstance();
+  const { rules } = instance;
+
   const shouldRequireRule = rules.length > 0;
 
   const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -141,7 +144,7 @@ const ReasonStep: React.FC<IReasonStep> = () => {
                       value={rule.id}
                       checked={isSelected}
                       readOnly
-                      className='h-4 w-4 rounded border-2 border-gray-300 text-primary-600 checked:bg-primary-500 focus:ring-primary-500 dark:border-gray-800 dark:bg-gray-900 dark:checked:bg-primary-500 dark:focus:ring-primary-500'
+                      className='size-4 rounded border-2 border-gray-300 text-primary-600 checked:bg-primary-500 focus:ring-primary-500 dark:border-gray-800 dark:bg-gray-900 dark:checked:bg-primary-500 dark:focus:ring-primary-500'
                     />
                   </button>
                 );

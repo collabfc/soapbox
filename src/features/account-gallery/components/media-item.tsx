@@ -68,7 +68,7 @@ const MediaItem: React.FC<IMediaItem> = ({ attachment, onOpenMedia }) => {
         src={attachment.preview_url}
         alt={attachment.description}
         style={{ objectPosition: `${x}% ${y}%` }}
-        className='h-full w-full overflow-hidden rounded-lg'
+        className='size-full overflow-hidden rounded-lg'
       />
     );
   } else if (['gifv', 'video'].indexOf(attachment.type) !== -1) {
@@ -94,7 +94,7 @@ const MediaItem: React.FC<IMediaItem> = ({ attachment, onOpenMedia }) => {
           {...conditionalAttributes}
         />
 
-        <span className='media-gallery__gifv__label'>GIF</span>
+        <span className='media-gallery__gifv__label'>GIF</span> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
       </div>
     );
   } else if (attachment.type === 'audio') {

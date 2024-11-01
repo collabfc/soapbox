@@ -9,11 +9,10 @@ import {
   fromJS,
 } from 'immutable';
 
-import type { ReducerAccount } from 'soapbox/reducers/accounts';
 import type { Account, EmbeddedEntity } from 'soapbox/types/entities';
 
 export const AdminAccountRecord = ImmutableRecord({
-  account: null as EmbeddedEntity<Account | ReducerAccount>,
+  account: null as EmbeddedEntity<Account>,
   approved: false,
   confirmed: false,
   created_at: new Date(),
@@ -34,12 +33,18 @@ export const AdminAccountRecord = ImmutableRecord({
 
 const normalizePleromaAccount = (account: ImmutableMap<string, any>) => {
   if (!account.get('account')) {
+
+    const isAdmin = account.getIn(['roles', 'admin']);
+    const isModerator = account.getIn(['roles', 'moderator']) ? 'moderator' : null;
+
+    const accountRole = isAdmin ? 'admin' : isModerator;
+
     return account.withMutations(account => {
       account.set('approved', account.get('is_approved'));
       account.set('confirmed', account.get('is_confirmed'));
       account.set('disabled', !account.get('is_active'));
       account.set('invite_request', account.get('registration_reason'));
-      account.set('role', account.getIn(['roles', 'admin']) ? 'admin' : (account.getIn(['roles', 'moderator']) ? 'moderator' : null));
+      account.set('role', accountRole);
     });
   }
 

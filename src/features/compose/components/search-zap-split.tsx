@@ -96,8 +96,6 @@ const SearchZapSplit = (props: ISearchZapSplit) => {
 
   const getAccount = (accountId: string) => (dispatch: any, getState: () => RootState) => {
     const account = selectAccount(getState(), accountId);
-    console.log(account);
-
     props.onChange(account!);
   };
 
@@ -156,7 +154,7 @@ const SearchZapSplit = (props: ISearchZapSplit) => {
 
           <SvgIcon
             src={require('@tabler/icons/outline/x.svg')}
-            className={clsx('h-4 w-4 text-gray-600', { hidden: !hasValue })}
+            className={clsx('size-4 text-gray-600', { hidden: !hasValue })}
             aria-label={intl.formatMessage(messages.placeholder)}
           />
         </div>

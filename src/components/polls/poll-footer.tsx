@@ -7,7 +7,6 @@ import { useAppDispatch } from 'soapbox/hooks';
 import RelativeTimestamp from '../relative-timestamp';
 import { Button, HStack, Stack, Text, Tooltip } from '../ui';
 
-import type { Selected } from './poll';
 import type { Poll as PollEntity } from 'soapbox/types/entities';
 
 const messages = defineMessages({
@@ -18,7 +17,7 @@ const messages = defineMessages({
 interface IPollFooter {
   poll: PollEntity;
   showResults: boolean;
-  selected: Selected;
+  selected: Record<number, boolean>;
 }
 
 const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX.Element => {
@@ -64,7 +63,7 @@ const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX
               </Text>
             </Tooltip>
 
-            <Text theme='muted'>&middot;</Text>
+            <Text theme='muted'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
           </>
         )}
 
@@ -76,7 +75,7 @@ const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX
               </Text>
             </button>
 
-            <Text theme='muted'>&middot;</Text>
+            <Text theme='muted'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
           </>
         )}
 
@@ -86,7 +85,7 @@ const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX
 
         {poll.expires_at !== null && (
           <>
-            <Text theme='muted'>&middot;</Text>
+            <Text theme='muted'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
             <Text weight='medium' theme='muted' data-testid='poll-expiration'>{timeRemaining}</Text>
           </>
         )}

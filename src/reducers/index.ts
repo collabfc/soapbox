@@ -1,12 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { AUTH_LOGGED_OUT } from 'soapbox/actions/auth';
-import * as BuildConfig from 'soapbox/build-config';
 import entities from 'soapbox/entity-store/reducer';
 
 import accounts_meta from './accounts-meta';
 import admin from './admin';
-import admin_user_index from './admin-user-index';
 import aliases from './aliases';
 import auth from './auth';
 import backups from './backups';
@@ -41,7 +38,6 @@ import patron from './patron';
 import pending_statuses from './pending-statuses';
 import polls from './polls';
 import profile_hover_card from './profile-hover-card';
-import push_notifications from './push-notifications';
 import relationships from './relationships';
 import reports from './reports';
 import scheduled_statuses from './scheduled-statuses';
@@ -60,10 +56,9 @@ import trending_statuses from './trending-statuses';
 import trends from './trends';
 import user_lists from './user-lists';
 
-const reducers = {
+export default combineReducers({
   accounts_meta,
   admin,
-  admin_user_index,
   aliases,
   auth,
   backups,
@@ -99,7 +94,6 @@ const reducers = {
   pending_statuses,
   polls,
   profile_hover_card,
-  push_notifications,
   relationships,
   reports,
   scheduled_statuses,
@@ -117,31 +111,4 @@ const reducers = {
   trending_statuses,
   trends,
   user_lists,
-};
-
-const appReducer = combineReducers(reducers);
-
-type AppState = ReturnType<typeof appReducer>;
-
-// Clear the state (mostly) when the user logs out
-const logOut = (state: AppState): ReturnType<typeof appReducer> => {
-  if (BuildConfig.NODE_ENV === 'production') {
-    location.href = '/login';
-  }
-
-  const newState = rootReducer(undefined, { type: '' });
-
-  const { instance, soapbox, custom_emojis, auth } = state;
-  return { ...newState, instance, soapbox, custom_emojis, auth };
-};
-
-const rootReducer: typeof appReducer = (state, action) => {
-  switch (action.type) {
-    case AUTH_LOGGED_OUT:
-      return appReducer(logOut(state as AppState), action);
-    default:
-      return appReducer(state, action);
-  }
-};
-
-export default appReducer;
+});

@@ -120,7 +120,6 @@ export const CreateApp = lazy(() => import('soapbox/features/developers/apps/cre
 export const SettingsStore = lazy(() => import('soapbox/features/developers/settings-store'));
 export const TestTimeline = lazy(() => import('soapbox/features/test-timeline'));
 export const ServiceWorkerInfo = lazy(() => import('soapbox/features/developers/service-worker-info'));
-export const DatePicker = lazy(() => import('soapbox/features/birthdays/date-picker'));
 export const CompareHistoryModal = lazy(() => import('soapbox/features/ui/components/modals/compare-history-modal'));
 export const AuthTokenList = lazy(() => import('soapbox/features/auth-token-list'));
 export const FamiliarFollowersModal = lazy(() => import('soapbox/features/ui/components/modals/familiar-followers-modal'));
@@ -180,3 +179,5 @@ export const ZapPayRequestModal = lazy(() => import('soapbox/features/ui/compone
 export const ZapInvoiceModal = lazy(() => import('soapbox/features/ui/components/modals/zap-invoice'));
 export const ZapsModal = lazy(() => import('soapbox/features/ui/components/modals/zaps-modal'));
 export const ZapSplitModal = lazy(() => import('soapbox/features/ui/components/modals/zap-split/zap-split-modal'));
+export const CaptchaModal = lazy(() => import('soapbox/features/ui/components/modals/captcha-modal/captcha-modal'));
+export const NostrBunkerLogin = lazy(() => import('soapbox/features/nostr/nostr-bunker-login'));

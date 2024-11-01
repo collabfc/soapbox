@@ -45,7 +45,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
               title={acct}
               className='-mt-12 block'
             >
-              <Avatar src={account.avatar} size={80} className='h-20 w-20 overflow-hidden bg-gray-50 ring-2 ring-white' />
+              <Avatar src={account.avatar} size={80} className='size-20 overflow-hidden bg-gray-50 ring-2 ring-white' />
             </Link>
 
             {action && (
@@ -70,6 +70,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
           </Link>
 
           <HStack>
+            {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
             <Text size='sm' theme='muted' direction='ltr' truncate>
               @{getAcct(account, fqn)}
             </Text>

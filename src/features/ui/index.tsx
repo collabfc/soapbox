@@ -8,7 +8,7 @@ import { fetchCustomEmojis } from 'soapbox/actions/custom-emojis';
 import { fetchFilters } from 'soapbox/actions/filters';
 import { fetchMarker } from 'soapbox/actions/markers';
 import { expandNotifications } from 'soapbox/actions/notifications';
-import { register as registerPushNotifications } from 'soapbox/actions/push-notifications';
+import { registerPushNotifications } from 'soapbox/actions/push-notifications/registerer';
 import { fetchScheduledStatuses } from 'soapbox/actions/scheduled-statuses';
 import { fetchSuggestionsForTimeline } from 'soapbox/actions/suggestions';
 import { expandHomeTimeline } from 'soapbox/actions/timelines';
@@ -16,7 +16,7 @@ import { useUserStream } from 'soapbox/api/hooks';
 import SidebarNavigation from 'soapbox/components/sidebar-navigation';
 import ThumbNavigation from 'soapbox/components/thumb-navigation';
 import { Layout } from 'soapbox/components/ui';
-import { useAppDispatch, useAppSelector, useOwnAccount, useSoapboxConfig, useFeatures, useDraggedFiles, useInstance, useLoggedIn } from 'soapbox/hooks';
+import { useAppDispatch, useAppSelector, useOwnAccount, useSoapboxConfig, useFeatures, useDraggedFiles, useInstance, useLoggedIn, useApi } from 'soapbox/hooks';
 import AdminPage from 'soapbox/pages/admin-page';
 import ChatsPage from 'soapbox/pages/chats-page';
 import DefaultPage from 'soapbox/pages/default-page';
@@ -34,8 +34,6 @@ import ProfilePage from 'soapbox/pages/profile-page';
 import RemoteInstancePage from 'soapbox/pages/remote-instance-page';
 import SearchPage from 'soapbox/pages/search-page';
 import StatusPage from 'soapbox/pages/status-page';
-import { getVapidKey } from 'soapbox/utils/auth';
-import { isStandalone } from 'soapbox/utils/state';
 
 import BackgroundShapes from './components/background-shapes';
 import FloatingActionButton from './components/floating-action-button';
@@ -144,6 +142,7 @@ import {
   ManageZapSplit,
   Rules,
   AdminNostrRelays,
+  NostrBunkerLogin,
 } from './util/async-components';
 import GlobalHotkeys from './util/global-hotkeys';
 import { WrappedRoute } from './util/react-router-helpers';
@@ -157,11 +156,10 @@ interface ISwitchingColumnsArea {
 }
 
 const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => {
-  const instance = useInstance();
+  const { instance, isNotFound } = useInstance();
   const features = useFeatures();
   const { search } = useLocation();
   const { isLoggedIn } = useLoggedIn();
-  const standalone = useAppSelector(isStandalone);
 
   const { authenticatedProfile, cryptoAddresses } = useSoapboxConfig();
   const hasCrypto = cryptoAddresses.size > 0;
@@ -173,7 +171,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
   // Ex: use /login instead of /auth, but redirect /auth to /login
   return (
     <Switch>
-      {standalone && <Redirect from='/' to='/login/external' exact />}
+      {isNotFound && <Redirect from='/' to='/login/external' exact />}
 
       <WrappedRoute path='/email-confirmation' page={EmptyPage} component={EmailConfirmation} publicRoute exact />
       <WrappedRoute path='/logout' page={EmptyPage} component={LogoutPage} publicRoute exact />
@@ -362,6 +360,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
         <WrappedRoute path='/signup' page={EmptyPage} component={RegistrationPage} publicRoute exact />
       )}
 
+      <WrappedRoute path='/login/nostr' page={DefaultPage} component={NostrBunkerLogin} publicRoute exact />
       <WrappedRoute path='/login/external' page={DefaultPage} component={ExternalLogin} publicRoute exact />
       <WrappedRoute path='/login/add' page={DefaultPage} component={LoginPage} publicRoute exact />
       <WrappedRoute path='/login' page={DefaultPage} component={LoginPage} publicRoute exact />
@@ -383,16 +382,17 @@ interface IUI {
 }
 
 const UI: React.FC<IUI> = ({ children }) => {
+  const api = useApi();
   const history = useHistory();
   const dispatch = useAppDispatch();
   const node = useRef<HTMLDivElement | null>(null);
   const me = useAppSelector(state => state.me);
   const { account } = useOwnAccount();
+  const instance = useInstance();
   const features = useFeatures();
-  const vapidKey = useAppSelector(state => getVapidKey(state));
+  const vapidKey = instance.instance.configuration.vapid.public_key;
 
   const dropdownMenuIsOpen = useAppSelector(state => state.dropdown_menu.isOpen);
-  const standalone = useAppSelector(isStandalone);
 
   const { isDragging } = useDraggedFiles(node);
 
@@ -424,7 +424,7 @@ const UI: React.FC<IUI> = ({ children }) => {
 
     if (account.staff) {
       dispatch(fetchReports({ resolved: false }));
-      dispatch(fetchUsers(['local', 'need_approval']));
+      dispatch(fetchUsers({ pending: true }));
     }
 
     if (account.admin) {
@@ -472,7 +472,9 @@ const UI: React.FC<IUI> = ({ children }) => {
   }, [!!account]);
 
   useEffect(() => {
-    dispatch(registerPushNotifications());
+    if (vapidKey) {
+      registerPushNotifications(api, vapidKey).catch(console.warn);
+    }
   }, [vapidKey]);
 
   const shouldHideFAB = (): boolean => {
@@ -503,7 +505,7 @@ const UI: React.FC<IUI> = ({ children }) => {
 
           <Layout>
             <Layout.Sidebar>
-              {!standalone && <SidebarNavigation />}
+              {instance.isSuccess && <SidebarNavigation />}
             </Layout.Sidebar>
 
             <SwitchingColumnsArea>
@@ -525,7 +527,7 @@ const UI: React.FC<IUI> = ({ children }) => {
 
           {me && features.chats && (
             <div className='hidden xl:block'>
-              <Suspense fallback={<div className='fixed bottom-0 z-[99] flex h-16 w-96 animate-pulse flex-col rounded-t-lg bg-white shadow-3xl ltr:right-5 rtl:left-5 dark:bg-gray-900' />}>
+              <Suspense fallback={<div className='fixed bottom-0 z-[99] flex h-16 w-96 animate-pulse flex-col rounded-t-lg bg-white shadow-3xl dark:bg-gray-900 ltr:right-5 rtl:left-5' />}>
                 <ChatWidget />
               </Suspense>
             </div>

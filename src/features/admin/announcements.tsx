@@ -52,7 +52,7 @@ const Announcement: React.FC<IAnnouncement> = ({ announcement }) => {
                 <Text tag='span' size='sm' weight='medium'>
                   <FormattedMessage id='admin.announcements.starts_at' defaultMessage='Starts at:' />
                 </Text>
-                {' '}
+                {' '} {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
                 <FormattedDate value={announcement.starts_at} year='2-digit' month='short' day='2-digit' weekday='short' />
               </Text>
             )}
@@ -61,7 +61,7 @@ const Announcement: React.FC<IAnnouncement> = ({ announcement }) => {
                 <Text tag='span' size='sm' weight='medium'>
                   <FormattedMessage id='admin.announcements.ends_at' defaultMessage='Ends at:' />
                 </Text>
-                {' '}
+                {' '} {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
                 <FormattedDate value={announcement.ends_at} year='2-digit' month='short' day='2-digit' weekday='short' />
               </Text>
             )}
@@ -115,7 +115,7 @@ const Announcements: React.FC = () => {
           emptyMessage={emptyMessage}
           itemClassName='py-3 first:pt-0 last:pb-0'
           isLoading={isLoading}
-          showLoading={isLoading && !announcements?.length}
+          showLoading={isLoading}
         >
           {announcements!.map((announcement) => (
             <Announcement key={announcement.id} announcement={announcement} />

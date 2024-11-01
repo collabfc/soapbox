@@ -1,7 +1,7 @@
 import { useFloating } from '@floating-ui/react';
 import clsx from 'clsx';
 import throttle from 'lodash/throttle';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -9,11 +9,11 @@ import { fetchOwnAccounts, logOut, switchAccount } from 'soapbox/actions/auth';
 import Account from 'soapbox/components/account';
 import { MenuDivider } from 'soapbox/components/ui';
 import { useAppDispatch, useAppSelector, useClickOutside, useFeatures } from 'soapbox/hooks';
-import { makeGetAccount } from 'soapbox/selectors';
+import { makeGetOtherAccounts } from 'soapbox/selectors';
 
 import ThemeToggle from './theme-toggle';
 
-import type { Account as AccountEntity } from 'soapbox/types/entities';
+import type { Account as AccountEntity } from 'soapbox/schemas';
 
 const messages = defineMessages({
   add: { id: 'profile_dropdown.add_account', defaultMessage: 'Add an existing account' },
@@ -34,8 +34,6 @@ type IMenuItem = {
   action?: (event: React.MouseEvent) => void;
 }
 
-const getAccount = makeGetAccount();
-
 const ProfileDropdown: React.FC<IProfileDropdown> = ({ account, children }) => {
   const dispatch = useAppDispatch();
   const features = useFeatures();
@@ -43,8 +41,9 @@ const ProfileDropdown: React.FC<IProfileDropdown> = ({ account, children }) => {
 
   const [visible, setVisible] = useState(false);
   const { x, y, strategy, refs } = useFloating<HTMLButtonElement>({ placement: 'bottom-end' });
-  const authUsers = useAppSelector((state) => state.auth.users);
-  const otherAccounts = useAppSelector((state) => authUsers.map((authUser: any) => getAccount(state, authUser.id)!));
+
+  const getOtherAccounts = useCallback(makeGetOtherAccounts(), []);
+  const otherAccounts = useAppSelector((state) => getOtherAccounts(state));
 
   const handleLogOut = () => {
     dispatch(logOut());
@@ -71,7 +70,7 @@ const ProfileDropdown: React.FC<IProfileDropdown> = ({ account, children }) => {
 
     menu.push({ text: renderAccount(account), to: `/@${account.acct}` });
 
-    otherAccounts.forEach((otherAccount: AccountEntity) => {
+    otherAccounts.forEach((otherAccount) => {
       if (otherAccount && otherAccount.id !== account.id) {
         menu.push({
           text: renderAccount(otherAccount),
@@ -98,13 +97,13 @@ const ProfileDropdown: React.FC<IProfileDropdown> = ({ account, children }) => {
     });
 
     return menu;
-  }, [account, authUsers, features]);
+  }, [account, otherAccounts, features]);
 
   const toggleVisible = () => setVisible(!visible);
 
   useEffect(() => {
     fetchOwnAccountThrottled();
-  }, [account, authUsers]);
+  }, [account, otherAccounts]);
 
   useClickOutside(refs, () => {
     setVisible(false);
@@ -147,7 +146,7 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ className, menuItem }) => {
-  const baseClassName = clsx(className, 'block w-full cursor-pointer truncate px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 rtl:text-right dark:text-gray-500 dark:hover:bg-gray-800');
+  const baseClassName = clsx(className, 'block w-full cursor-pointer truncate px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-500 dark:hover:bg-gray-800 rtl:text-right');
 
   if (menuItem.toggle) {
     return (

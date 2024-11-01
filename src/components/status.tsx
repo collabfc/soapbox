@@ -212,7 +212,7 @@ const Status: React.FC<IStatus> = (props) => {
       return (
         <StatusInfo
           avatarSize={avatarSize}
-          icon={<Icon src={require('@tabler/icons/outline/repeat.svg')} className='h-4 w-4 text-green-600' />}
+          icon={<Icon src={require('@tabler/icons/outline/repeat.svg')} className='size-4 text-green-600' />}
           text={
             <FormattedMessage
               id='status.reblogged_by_with_group'
@@ -252,7 +252,7 @@ const Status: React.FC<IStatus> = (props) => {
       return (
         <StatusInfo
           avatarSize={avatarSize}
-          icon={<Icon src={require('@tabler/icons/outline/repeat.svg')} className='h-4 w-4 text-green-600' />}
+          icon={<Icon src={require('@tabler/icons/outline/repeat.svg')} className='size-4 text-green-600' />}
           text={
             <FormattedMessage
               id='status.reblogged_by'
@@ -279,7 +279,7 @@ const Status: React.FC<IStatus> = (props) => {
       return (
         <StatusInfo
           avatarSize={avatarSize}
-          icon={<Icon src={require('@tabler/icons/outline/pinned.svg')} className='h-4 w-4 text-gray-600 dark:text-gray-400' />}
+          icon={<Icon src={require('@tabler/icons/outline/pinned.svg')} className='size-4 text-gray-600 dark:text-gray-400' />}
           text={
             <FormattedMessage id='status.pinned' defaultMessage='Pinned post' />
           }
@@ -289,7 +289,7 @@ const Status: React.FC<IStatus> = (props) => {
       return (
         <StatusInfo
           avatarSize={avatarSize}
-          icon={<Icon src={require('@tabler/icons/outline/circles.svg')} className='h-4 w-4 text-primary-600 dark:text-accent-blue' />}
+          icon={<Icon src={require('@tabler/icons/outline/circles.svg')} className='size-4 text-primary-600 dark:text-accent-blue' />}
           text={
             <FormattedMessage
               id='status.group'
@@ -334,6 +334,7 @@ const Status: React.FC<IStatus> = (props) => {
     return (
       <HotKeys handlers={minHandlers}>
         <div className={clsx('status__wrapper text-center', { focusable })} tabIndex={focusable ? 0 : undefined} ref={node}>
+          {/* eslint-disable formatjs/no-literal-string-in-jsx */}
           <Text theme='muted'>
             <FormattedMessage id='status.filtered' defaultMessage='Filtered' />: {status.filtered.join(', ')}.
             {' '}
@@ -341,6 +342,7 @@ const Status: React.FC<IStatus> = (props) => {
               <FormattedMessage id='status.show_filter_reason' defaultMessage='Show anyway' />
             </button>
           </Text>
+          {/* eslint-enable formatjs/no-literal-string-in-jsx */}
         </div>
       </HotKeys>
     );

@@ -74,7 +74,7 @@ const Option: React.FC<IOption> = ({
     <HStack alignItems='center' justifyContent='between' space={4}>
       <HStack alignItems='center' space={2} grow>
         <div className='w-6'>
-          <Text weight='bold'>{index + 1}.</Text>
+          <Text weight='bold'>{index + 1}.</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
         </div>
 
         <AutosuggestInput
@@ -110,7 +110,7 @@ interface IPollForm {
 const PollForm: React.FC<IPollForm> = ({ composeId }) => {
   const dispatch = useAppDispatch();
   const intl = useIntl();
-  const { configuration } = useInstance();
+  const { instance } = useInstance();
 
   const compose = useCompose(composeId);
 
@@ -121,7 +121,7 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
   const {
     max_options: maxOptions,
     max_characters_per_option: maxOptionChars,
-  } = configuration.polls;
+  } = instance.configuration.polls;
 
   const onRemoveOption = (index: number) => dispatch(removePollOption(composeId, index));
   const onChangeOption = (index: number, title: string) => dispatch(changePollOption(composeId, index, title));

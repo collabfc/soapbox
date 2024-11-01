@@ -2,9 +2,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { getSubscribersCsv, getUnsubscribersCsv, getCombinedCsv } from 'soapbox/actions/email-list';
+import { useInstanceV1 } from 'soapbox/api/hooks/instance/useInstanceV1';
 import List, { ListItem } from 'soapbox/components/list';
 import { CardTitle, Icon, IconButton, Stack } from 'soapbox/components/ui';
-import { useAppDispatch, useOwnAccount, useFeatures, useInstance } from 'soapbox/hooks';
+import { useAppDispatch, useOwnAccount, useFeatures } from 'soapbox/hooks';
 import sourceCode from 'soapbox/utils/code';
 import { download } from 'soapbox/utils/download';
 import { parseVersion } from 'soapbox/utils/features';
@@ -14,7 +15,7 @@ import RegistrationModePicker from '../components/registration-mode-picker';
 
 const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
-  const instance = useInstance();
+  const { instance } = useInstanceV1();
   const features = useFeatures();
   const { account } = useOwnAccount();
 
@@ -39,15 +40,15 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
   };
 
-  const v = parseVersion(instance.version);
+  const v = parseVersion(instance?.version ?? '0.0.0');
 
   const {
     user_count: userCount,
     status_count: statusCount,
     domain_count: domainCount,
-  } = instance.stats;
+  } = instance?.stats ?? {};
 
-  const mau = instance.pleroma.stats.mau;
+  const mau = instance?.pleroma.stats.mau;
   const retention = (userCount && mau) ? Math.round(mau / userCount * 100) : undefined;
 
   if (!account) return null;
@@ -151,14 +152,14 @@ const Dashboard: React.FC = () => {
             <span>{sourceCode.displayName} {sourceCode.version}</span>
 
             <Icon
-              className='h-4 w-4'
+              className='size-4'
               src={require('@tabler/icons/outline/external-link.svg')}
             />
           </a>
         </ListItem>
 
         <ListItem label={<FormattedMessage id='admin.software.backend' defaultMessage='Backend' />}>
-          <span>{v.software + (v.build ? `+${v.build}` : '')} {v.version}</span>
+          <span>{v.software + (v.build ? `+${v.build}` : '')} {v.version}</span> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
         </ListItem>
       </List>
 

@@ -50,7 +50,7 @@ const InstanceFavicon: React.FC<IInstanceFavicon> = ({ account, disabled }) => {
 
   return (
     <button
-      className='h-4 w-4 flex-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
+      className='size-4 flex-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
       onClick={handleClick}
       disabled={disabled}
     >
@@ -208,7 +208,7 @@ const Account = ({
               <Avatar src={account.avatar} size={avatarSize} />
               {emoji && (
                 <Emoji
-                  className='absolute -right-1.5 bottom-0 h-5 w-5'
+                  className='absolute -right-1.5 bottom-0 size-5'
                   emoji={emoji}
                   src={emojiUrl}
                 />
@@ -239,7 +239,7 @@ const Account = ({
 
             <Stack space={withAccountNote || note ? 1 : 0}>
               <HStack alignItems='center' space={1}>
-                <Text theme='muted' size='sm' direction='ltr' truncate>@{acct ?? username}</Text>
+                <Text theme='muted' size='sm' direction='ltr' truncate>@{acct ?? username}</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
 
                 {account.pleroma?.favicon && (
                   <InstanceFavicon account={account} disabled={!withLinkToProfile} />
@@ -247,7 +247,7 @@ const Account = ({
 
                 {(timestamp) ? (
                   <>
-                    <Text tag='span' theme='muted' size='sm'>&middot;</Text>
+                    <Text tag='span' theme='muted' size='sm'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
 
                     {timestampUrl ? (
                       <Link to={timestampUrl} className='hover:underline' onClick={(event) => event.stopPropagation()}>
@@ -261,7 +261,7 @@ const Account = ({
 
                 {approvalStatus && ['pending', 'rejected'].includes(approvalStatus) && (
                   <>
-                    <Text tag='span' theme='muted' size='sm'>&middot;</Text>
+                    <Text tag='span' theme='muted' size='sm'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
 
                     <Text tag='span' theme='muted' size='sm'>
                       {approvalStatus === 'pending'
@@ -273,15 +273,15 @@ const Account = ({
 
                 {showEdit ? (
                   <>
-                    <Text tag='span' theme='muted' size='sm'>&middot;</Text>
+                    <Text tag='span' theme='muted' size='sm'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
 
-                    <Icon className='h-5 w-5 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/outline/pencil.svg')} />
+                    <Icon className='size-5 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/outline/pencil.svg')} />
                   </>
                 ) : null}
 
                 {actionType === 'muting' && account.mute_expires_at ? (
                   <>
-                    <Text tag='span' theme='muted' size='sm'>&middot;</Text>
+                    <Text tag='span' theme='muted' size='sm'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
 
                     <Text theme='muted' size='sm'><RelativeTimestamp timestamp={account.mute_expires_at} futureDate /></Text>
                   </>

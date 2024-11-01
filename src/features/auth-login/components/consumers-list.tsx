@@ -11,12 +11,12 @@ interface IConsumersList {
 
 /** Displays OAuth consumers to log in with. */
 const ConsumersList: React.FC<IConsumersList> = () => {
-  const instance = useInstance();
+  const { instance } = useInstance();
   const providers = instance.pleroma.oauth_consumer_strategies;
 
   if (providers.length > 0) {
     return (
-      <Card className='bg-gray-50 p-4 black:bg-black sm:rounded-xl dark:bg-primary-800'>
+      <Card className='bg-gray-50 p-4 black:bg-black dark:bg-primary-800 sm:rounded-xl'>
         <Text size='xs' theme='muted'>
           <FormattedMessage id='oauth_consumers.title' defaultMessage='Other ways to sign in' />
         </Text>

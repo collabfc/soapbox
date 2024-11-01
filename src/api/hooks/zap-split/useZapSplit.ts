@@ -18,9 +18,9 @@ interface SplitValue {
 *
 * @param {StatusEntity | undefined} status - The current status entity.
 * @param {AccountEntity} account - The account for which the zap split calculation is done.
-* 
+*
 * @returns {Object} An object containing the zap split arrays, zap split data, and a function to calculate the received amount.
-* 
+*
 * @property {ZapSplitData[]} zapArrays - Array of zap split data returned from the API.
 * @property {Object} zapSplitData - Contains the total split amount, amount to receive, and individual split values.
 * @property {Function} receiveAmount - A function to calculate the zap amount based on the split configuration.
@@ -30,15 +30,14 @@ const useZapSplit = (status: StatusEntity | undefined, account: AccountEntity) =
   const [zapArrays, setZapArrays] = useState<ZapSplitData[]>([]);
   const [zapSplitData, setZapSplitData] = useState<{splitAmount: number; receiveAmount: number; splitValues: SplitValue[]}>({ splitAmount: Number(), receiveAmount: Number(), splitValues: [] });
 
-  const fetchZapSplit = async (id: string) => {
-    return await api.get(`/api/v1/ditto/${id}/zap_splits`);
-  };
+  const fetchZapSplit = (id: string) => api.get(`/api/v1/ditto/${id}/zap_splits`);
 
   const loadZapSplitData = async () => {
     if (status) {
-      const data = (await fetchZapSplit(status.id)).data;
+      const response = await fetchZapSplit(status.id);
+      const data: ZapSplitData[] = await response.json();
       if (data) {
-        const normalizedData = data.map((dataSplit: ZapSplitData) => baseZapAccountSchema.parse(dataSplit));
+        const normalizedData = data.map((dataSplit) => baseZapAccountSchema.parse(dataSplit));
         setZapArrays(normalizedData);
       }
     }
@@ -53,7 +52,7 @@ const useZapSplit = (status: StatusEntity | undefined, account: AccountEntity) =
   const receiveAmount = (zapAmount: number) => {
     if (zapArrays.length > 0) {
       const zapAmountPrincipal = zapArrays.find((zapSplit: ZapSplitData) => zapSplit.account.id === account.id);
-      const formattedZapAmountPrincipal = { 
+      const formattedZapAmountPrincipal = {
         account: zapAmountPrincipal?.account,
         message: zapAmountPrincipal?.message,
         weight: zapArrays.filter((zapSplit: ZapSplitData) => zapSplit.account.id === account.id).reduce((acc:number, zapData: ZapSplitData) => acc + zapData.weight, 0),

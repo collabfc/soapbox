@@ -51,10 +51,10 @@ const Reaction: React.FC<IReaction> = ({ announcementId, reaction, emojiMap, sty
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      title={`:${shortCode}:`}
+      title={`:${shortCode}:`} // eslint-disable-line formatjs/no-literal-string-in-jsx
       style={style}
     >
-      <span className='block h-4 w-4'>
+      <span className='block size-4'>
         <Emoji hovered={hovered} emoji={reaction.name} emojiMap={emojiMap} />
       </span>
       <span className='block min-w-[9px] text-center text-xs font-medium text-primary-600 dark:text-white'>

@@ -20,7 +20,7 @@ interface IRestriction {
 const Restriction: React.FC<IRestriction> = ({ icon, children }) => {
   return (
     <HStack space={3}>
-      <Icon className='h-5 w-5 flex-none' src={icon} />
+      <Icon className='size-5 flex-none' src={icon} />
 
       <Text theme='muted'>
         {children}
@@ -34,7 +34,7 @@ interface IInstanceRestrictions {
 }
 
 const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance }) => {
-  const instance = useInstance();
+  const { instance } = useInstance();
 
   const renderRestrictions = () => {
     const items = [];

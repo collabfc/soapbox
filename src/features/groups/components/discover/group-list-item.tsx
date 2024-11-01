@@ -38,7 +38,7 @@ const GroupListItem = (props: IGroupListItem) => {
 
             <HStack className='text-gray-700 dark:text-gray-600' space={1} alignItems='center'>
               <Icon
-                className='h-4.5 w-4.5'
+                className='size-4.5'
                 src={group.locked ? require('@tabler/icons/outline/lock.svg') : require('@tabler/icons/outline/world.svg')}
               />
 
@@ -52,10 +52,10 @@ const GroupListItem = (props: IGroupListItem) => {
 
               {typeof group.members_count !== 'undefined' && (
                 <>
-                  <span>&bull;</span>
+                  <span>&bull;</span> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
                   <Text theme='inherit' tag='span' size='sm' weight='medium'>
                     {shortNumberFormat(group.members_count)}
-                    {' '}
+                    {' '} {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
                     <FormattedMessage
                       id='groups.discover.search.results.member_count'
                       defaultMessage='{members, plural, one {member} other {members}}'
