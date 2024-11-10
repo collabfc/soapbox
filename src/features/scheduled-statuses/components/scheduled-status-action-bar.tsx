@@ -1,13 +1,13 @@
-import React from 'react';
+import calendarStatsIcon from '@tabler/icons/outline/calendar-stats.svg';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
-import { openModal } from 'soapbox/actions/modals';
-import { cancelScheduledStatus } from 'soapbox/actions/scheduled-statuses';
-import { getSettings } from 'soapbox/actions/settings';
-import { Button, HStack } from 'soapbox/components/ui';
-import { useAppDispatch } from 'soapbox/hooks';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { cancelScheduledStatus } from 'soapbox/actions/scheduled-statuses.ts';
+import { getSettings } from 'soapbox/actions/settings.ts';
+import { Button, HStack } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/index.ts';
 
-import type { Status as StatusEntity } from 'soapbox/types/entities';
+import type { Status as StatusEntity } from 'soapbox/types/entities.ts';
 
 const messages = defineMessages({
   cancel: { id: 'scheduled_status.cancel', defaultMessage: 'Cancel' },
@@ -33,7 +33,7 @@ const ScheduledStatusActionBar: React.FC<IScheduledStatusActionBar> = ({ status 
         dispatch(cancelScheduledStatus(status.id));
       } else {
         dispatch(openModal('CONFIRM', {
-          icon: require('@tabler/icons/outline/calendar-stats.svg'),
+          icon: calendarStatsIcon,
           heading: intl.formatMessage(messages.deleteHeading),
           message: intl.formatMessage(messages.deleteMessage),
           confirm: intl.formatMessage(messages.deleteConfirm),

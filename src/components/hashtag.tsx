@@ -1,13 +1,12 @@
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Sparklines, SparklinesCurve } from 'react-sparklines';
 
-import { shortNumberFormat } from '../utils/numbers';
+import { shortNumberFormat } from '../utils/numbers.tsx';
 
-import { HStack, Stack, Text } from './ui';
+import { HStack, Stack, Text } from './ui/index.ts';
 
-import type { Tag } from 'soapbox/types/entities';
+import type { Tag } from 'soapbox/types/entities.ts';
 
 interface IHashtag {
   hashtag: Tag;

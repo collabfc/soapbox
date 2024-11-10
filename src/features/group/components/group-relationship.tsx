@@ -1,9 +1,10 @@
-import React from 'react';
+import gavelIcon from '@tabler/icons/outline/gavel.svg';
+import usersIcon from '@tabler/icons/outline/users.svg';
 import { FormattedMessage } from 'react-intl';
 
-import { HStack, Icon, Text } from 'soapbox/components/ui';
-import { GroupRoles } from 'soapbox/schemas/group-member';
-import { Group } from 'soapbox/types/entities';
+import { HStack, Icon, Text } from 'soapbox/components/ui/index.ts';
+import { GroupRoles } from 'soapbox/schemas/group-member.ts';
+import { Group } from 'soapbox/types/entities.ts';
 
 interface IGroupRelationship {
   group: Group;
@@ -28,8 +29,8 @@ const GroupRelationship = ({ group }: IGroupRelationship) => {
         className='size-4'
         src={
           isOwner
-            ? require('@tabler/icons/outline/users.svg')
-            : require('@tabler/icons/outline/gavel.svg')
+            ? usersIcon
+            : gavelIcon
         }
       />
 

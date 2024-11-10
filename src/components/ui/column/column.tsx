@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import throttle from 'lodash/throttle';
-import React, { useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Helmet from 'soapbox/components/helmet';
-import { useSoapboxConfig } from 'soapbox/hooks';
+import Helmet from 'soapbox/components/helmet.tsx';
+import { useSoapboxConfig } from 'soapbox/hooks/index.ts';
 
-import { Card, CardBody, CardHeader, CardTitle, type CardSizes } from '../card/card';
+import { Card, CardBody, CardHeader, CardTitle, type CardSizes } from '../card/card.tsx';
 
 type IColumnHeader = Pick<IColumn, 'label' | 'backHref' | 'className' | 'action'>;
 
@@ -64,7 +64,7 @@ export interface IColumn {
 }
 
 /** A backdrop for the main section of the UI. */
-const Column = React.forwardRef<HTMLDivElement, IColumn>((props, ref): JSX.Element => {
+const Column = forwardRef<HTMLDivElement, IColumn>((props, ref): JSX.Element => {
   const { backHref, children, label, transparent = false, withHeader = true, className, bodyClassName, action, size } = props;
   const soapboxConfig = useSoapboxConfig();
   const [isScrolled, setIsScrolled] = useState(false);

@@ -1,8 +1,7 @@
 import clsx from 'clsx';
-import React from 'react';
 import { spring } from 'react-motion';
 
-import Motion from 'soapbox/features/ui/util/optional-motion';
+import Motion from 'soapbox/features/ui/util/optional-motion.tsx';
 
 interface IProgressBar {
   /** Number between 0 and 1 to represent the percentage complete. */

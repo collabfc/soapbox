@@ -1,6 +1,4 @@
-import React from 'react';
-
-import Input from '../input/input';
+import Input from '../input/input.tsx';
 
 interface DatetimeProps {
   value: Date;

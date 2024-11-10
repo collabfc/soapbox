@@ -1,9 +1,7 @@
-import React from 'react';
+import { changeSetting } from 'soapbox/actions/settings.ts';
+import { useAppDispatch, useSettings } from 'soapbox/hooks/index.ts';
 
-import { changeSetting } from 'soapbox/actions/settings';
-import { useAppDispatch, useSettings } from 'soapbox/hooks';
-
-import ThemeSelector from './theme-selector';
+import ThemeSelector from './theme-selector.tsx';
 
 /** Stateful theme selector. */
 const ThemeToggle: React.FC = () => {

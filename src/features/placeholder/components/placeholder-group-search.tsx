@@ -1,8 +1,6 @@
-import React from 'react';
+import { HStack, Stack, Text } from 'soapbox/components/ui/index.ts';
 
-import { HStack, Stack, Text } from 'soapbox/components/ui';
-
-import { generateText, randomIntFromInterval } from '../utils';
+import { generateText, randomIntFromInterval } from '../utils.ts';
 
 export default ({ withJoinAction = true }: { withJoinAction?: boolean }) => {
   const groupNameLength = randomIntFromInterval(12, 20);

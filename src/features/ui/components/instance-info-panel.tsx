@@ -1,10 +1,11 @@
-import React from 'react';
+import pinIcon from '@tabler/icons/outline/pin.svg';
+import pinnedOffIcon from '@tabler/icons/outline/pinned-off.svg';
 import { useIntl, defineMessages } from 'react-intl';
 
-import { pinHost, unpinHost } from 'soapbox/actions/remote-timeline';
-import { Widget } from 'soapbox/components/ui';
-import { useAppSelector, useAppDispatch, useSettings } from 'soapbox/hooks';
-import { makeGetRemoteInstance } from 'soapbox/selectors';
+import { pinHost, unpinHost } from 'soapbox/actions/remote-timeline.ts';
+import { Widget } from 'soapbox/components/ui/index.ts';
+import { useAppSelector, useAppDispatch, useSettings } from 'soapbox/hooks/index.ts';
+import { makeGetRemoteInstance } from 'soapbox/selectors/index.ts';
 
 const getRemoteInstance = makeGetRemoteInstance();
 
@@ -41,7 +42,7 @@ const InstanceInfoPanel: React.FC<IInstanceInfoPanel> = ({ host }) => {
     <Widget
       title={remoteInstance.host}
       onActionClick={handlePinHost}
-      actionIcon={pinned ? require('@tabler/icons/outline/pinned-off.svg') : require('@tabler/icons/outline/pin.svg')}
+      actionIcon={pinned ? pinnedOffIcon : pinIcon}
       actionTitle={intl.formatMessage(pinned ? messages.unpinHost : messages.pinHost, { host })}
     />
   );

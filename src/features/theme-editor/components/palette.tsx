@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { HStack, Stack, Slider } from 'soapbox/components/ui';
-import { usePrevious } from 'soapbox/hooks';
-import { compareId } from 'soapbox/utils/comparators';
-import { hueShift } from 'soapbox/utils/theme';
+import { HStack, Stack, Slider } from 'soapbox/components/ui/index.ts';
+import { usePrevious } from 'soapbox/hooks/index.ts';
+import { compareId } from 'soapbox/utils/comparators.ts';
+import { hueShift } from 'soapbox/utils/theme.ts';
 
-import Color from './color';
+import Color from './color.tsx';
 
 interface ColorGroup {
   [tint: string]: string;
@@ -63,5 +63,5 @@ const Palette: React.FC<IPalette> = ({ palette, onChange, resetKey }) => {
 
 export {
   Palette as default,
-  ColorGroup,
+  type ColorGroup,
 };

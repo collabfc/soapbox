@@ -1,7 +1,8 @@
 import clsx from 'clsx';
-import React from 'react';
 
-import { useSoapboxConfig, useSettings, useTheme } from 'soapbox/hooks';
+import soapboxLogoWhiteSrc from 'soapbox/assets/images/soapbox-logo-white.svg';
+import soapboxLogoSrc from 'soapbox/assets/images/soapbox-logo.svg';
+import { useSoapboxConfig, useSettings, useTheme } from 'soapbox/hooks/index.ts';
 
 interface ISiteLogo extends React.ComponentProps<'img'> {
   /** Extra class names for the <img> element. */
@@ -19,9 +20,7 @@ const SiteLogo: React.FC<ISiteLogo> = ({ className, theme, ...rest }) => {
   if (theme === 'dark') darkMode = true;
 
   /** Soapbox logo. */
-  const soapboxLogo = darkMode
-    ? require('soapbox/assets/images/soapbox-logo-white.svg')
-    : require('soapbox/assets/images/soapbox-logo.svg');
+  const soapboxLogo = darkMode ? soapboxLogoWhiteSrc : soapboxLogoSrc;
 
   // Use the right logo if provided, then use fallbacks.
   const getSrc = () => {

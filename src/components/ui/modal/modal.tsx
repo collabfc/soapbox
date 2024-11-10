@@ -1,11 +1,13 @@
+import arrowLeftIcon from '@tabler/icons/outline/arrow-left.svg';
+import xIcon from '@tabler/icons/outline/x.svg';
 import clsx from 'clsx';
-import React from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
-import Button from '../button/button';
-import { ButtonThemes } from '../button/useButtonStyles';
-import HStack from '../hstack/hstack';
-import IconButton from '../icon-button/icon-button';
+import Button from '../button/button.tsx';
+import { ButtonThemes } from '../button/useButtonStyles.ts';
+import HStack from '../hstack/hstack.tsx';
+import IconButton from '../icon-button/icon-button.tsx';
 
 const messages = defineMessages({
   back: { id: 'card.back.label', defaultMessage: 'Back' },
@@ -68,11 +70,11 @@ interface IModal {
 }
 
 /** Displays a modal dialog box. */
-const Modal = React.forwardRef<HTMLDivElement, IModal>(({
+const Modal = forwardRef<HTMLDivElement, IModal>(({
   cancelAction,
   cancelText,
   children,
-  closeIcon = require('@tabler/icons/outline/x.svg'),
+  closeIcon = xIcon,
   closePosition = 'right',
   confirmationAction,
   confirmationDisabled,
@@ -91,9 +93,9 @@ const Modal = React.forwardRef<HTMLDivElement, IModal>(({
   onBack,
 }, ref) => {
   const intl = useIntl();
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (buttonRef?.current && !skipFocus) {
       buttonRef.current.focus();
     }
@@ -115,7 +117,7 @@ const Modal = React.forwardRef<HTMLDivElement, IModal>(({
             >
               {onBack && (
                 <IconButton
-                  src={require('@tabler/icons/outline/arrow-left.svg')}
+                  src={arrowLeftIcon}
                   title={intl.formatMessage(messages.back)}
                   onClick={onBack}
                   className='text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200 rtl:rotate-180'

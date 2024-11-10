@@ -1,12 +1,13 @@
-import React from 'react';
+import lockIcon from '@tabler/icons/outline/lock.svg';
+import worldIcon from '@tabler/icons/outline/world.svg';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import GroupAvatar from 'soapbox/components/groups/group-avatar';
-import { HStack, Icon, Stack, Text } from 'soapbox/components/ui';
-import GroupActionButton from 'soapbox/features/group/components/group-action-button';
-import { Group as GroupEntity } from 'soapbox/types/entities';
-import { shortNumberFormat } from 'soapbox/utils/numbers';
+import GroupAvatar from 'soapbox/components/groups/group-avatar.tsx';
+import { HStack, Icon, Stack, Text } from 'soapbox/components/ui/index.ts';
+import GroupActionButton from 'soapbox/features/group/components/group-action-button.tsx';
+import { Group as GroupEntity } from 'soapbox/types/entities.ts';
+import { shortNumberFormat } from 'soapbox/utils/numbers.tsx';
 
 interface IGroupListItem {
   group: GroupEntity;
@@ -39,7 +40,7 @@ const GroupListItem = (props: IGroupListItem) => {
             <HStack className='text-gray-700 dark:text-gray-600' space={1} alignItems='center'>
               <Icon
                 className='size-4.5'
-                src={group.locked ? require('@tabler/icons/outline/lock.svg') : require('@tabler/icons/outline/world.svg')}
+                src={group.locked ? lockIcon : worldIcon}
               />
 
               <Text theme='inherit' tag='span' size='sm' weight='medium'>

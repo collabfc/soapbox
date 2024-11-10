@@ -1,15 +1,16 @@
+import trashIcon from '@tabler/icons/outline/trash.svg';
 import clsx from 'clsx';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
-import { cancelReplyCompose, setGroupTimelineVisible, uploadCompose } from 'soapbox/actions/compose';
-import { openModal, closeModal } from 'soapbox/actions/modals';
-import { useGroup } from 'soapbox/api/hooks';
-import { checkComposeContent } from 'soapbox/components/modal-root';
-import { HStack, Modal, Text, Toggle } from 'soapbox/components/ui';
-import { useAppDispatch, useAppSelector, useCompose, useDraggedFiles } from 'soapbox/hooks';
+import { cancelReplyCompose, setGroupTimelineVisible, uploadCompose } from 'soapbox/actions/compose.ts';
+import { openModal, closeModal } from 'soapbox/actions/modals.ts';
+import { useGroup } from 'soapbox/api/hooks/index.ts';
+import { checkComposeContent } from 'soapbox/components/modal-root.tsx';
+import { HStack, Modal, Text, Toggle } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch, useAppSelector, useCompose, useDraggedFiles } from 'soapbox/hooks/index.ts';
 
-import ComposeForm from '../../../compose/components/compose-form';
+import ComposeForm from '../../../compose/components/compose-form.tsx';
 
 const messages = defineMessages({
   confirm: { id: 'confirmations.cancel.confirm', defaultMessage: 'Discard' },
@@ -36,7 +37,7 @@ const ComposeModal: React.FC<IComposeModal> = ({ onClose, composeId = 'compose-m
   const onClickClose = () => {
     if (checkComposeContent(compose)) {
       dispatch(openModal('CONFIRM', {
-        icon: require('@tabler/icons/outline/trash.svg'),
+        icon: trashIcon,
         heading: statusId
           ? <FormattedMessage id='confirmations.cancel_editing.heading' defaultMessage='Cancel post editing' />
           : <FormattedMessage id='confirmations.cancel.heading' defaultMessage='Discard post' />,

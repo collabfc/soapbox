@@ -1,10 +1,10 @@
-import React from 'react';
+import worldIcon from '@tabler/icons/outline/world.svg';
 
-import { openDropdownMenu } from 'soapbox/actions/dropdown-menu';
-import DropdownMenu, { MenuItem } from 'soapbox/components/dropdown-menu';
-import SvgIcon from 'soapbox/components/ui/icon/svg-icon';
-import { languages } from 'soapbox/features/preferences';
-import { useAppDispatch } from 'soapbox/hooks';
+import { openDropdownMenu } from 'soapbox/actions/dropdown-menu.ts';
+import DropdownMenu, { MenuItem } from 'soapbox/components/dropdown-menu/index.ts';
+import SvgIcon from 'soapbox/components/ui/icon/svg-icon.tsx';
+import { languages } from 'soapbox/features/preferences/index.tsx';
+import { useAppDispatch } from 'soapbox/hooks/index.ts';
 
 function formatLanguages(languageMap: Record<string, string>) {
   const langCodes = Object.keys(languageMap).sort().map((sig) => {
@@ -26,7 +26,7 @@ const LanguageDropdown: React.FC<ILanguageDropdown> = ({ language, setLanguage }
   const dispatch = useAppDispatch();
   const formattedLanguages = formatLanguages(languages);
 
-  const newMenu: MenuItem[] = [{ icon: require('@tabler/icons/outline/world.svg'), text: 'Default', action: () => {
+  const newMenu: MenuItem[] = [{ icon: worldIcon, text: 'Default', action: () => {
     setLanguage('');
   } }];
 
@@ -51,7 +51,7 @@ const LanguageDropdown: React.FC<ILanguageDropdown> = ({ language, setLanguage }
           {language.toUpperCase()}
         </button>
       ) : (
-        <SvgIcon src={require('@tabler/icons/outline/world.svg')} className='text-gray-700 hover:cursor-pointer hover:text-gray-500 black:absolute black:right-0 black:top-4 black:text-white black:hover:text-gray-600 dark:text-white sm:mr-4' />
+        <SvgIcon src={worldIcon} className='text-gray-700 hover:cursor-pointer hover:text-gray-500 black:absolute black:right-0 black:top-4 black:text-white black:hover:text-gray-600 dark:text-white sm:mr-4' />
       )}
     </DropdownMenu>
   );

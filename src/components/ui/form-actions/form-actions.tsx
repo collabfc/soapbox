@@ -1,6 +1,4 @@
-import React from 'react';
-
-import HStack from '../hstack/hstack';
+import HStack from '../hstack/hstack.tsx';
 
 interface IFormActions {
   children: React.ReactNode;

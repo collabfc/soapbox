@@ -1,13 +1,15 @@
+import eyeOffIcon from '@tabler/icons/outline/eye-off.svg';
+import eyeIcon from '@tabler/icons/outline/eye.svg';
 import clsx from 'clsx';
-import React from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { useLocale } from 'soapbox/hooks';
-import { getTextDirection } from 'soapbox/utils/rtl';
+import { useLocale } from 'soapbox/hooks/index.ts';
+import { getTextDirection } from 'soapbox/utils/rtl.ts';
 
-import Icon from '../icon/icon';
-import SvgIcon from '../icon/svg-icon';
-import Tooltip from '../tooltip/tooltip';
+import Icon from '../icon/icon.tsx';
+import SvgIcon from '../icon/svg-icon.tsx';
+import Tooltip from '../tooltip/tooltip.tsx';
 
 const messages = defineMessages({
   showPassword: { id: 'input.password.show_password', defaultMessage: 'Show password' },
@@ -45,18 +47,18 @@ interface IInput extends Pick<React.InputHTMLAttributes<HTMLInputElement>, 'maxL
 }
 
 /** Form input element. */
-const Input = React.forwardRef<HTMLInputElement, IInput>(
+const Input = forwardRef<HTMLInputElement, IInput>(
   (props, ref) => {
     const intl = useIntl();
     const locale = useLocale();
 
     const { type = 'text', icon, className, outerClassName, append, prepend, theme = 'normal', ...filteredProps } = props;
 
-    const [revealed, setRevealed] = React.useState(false);
+    const [revealed, setRevealed] = useState(false);
 
     const isPassword = type === 'password';
 
-    const togglePassword = React.useCallback(() => {
+    const togglePassword = useCallback(() => {
       setRevealed((prev) => !prev);
     }, []);
 
@@ -123,7 +125,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
                 className='h-full px-2 text-gray-700 hover:text-gray-500 focus:ring-2 focus:ring-primary-500 dark:text-gray-600 dark:hover:text-gray-400'
               >
                 <SvgIcon
-                  src={revealed ? require('@tabler/icons/outline/eye-off.svg') : require('@tabler/icons/outline/eye.svg')}
+                  src={revealed ? eyeOffIcon : eyeIcon}
                   className='size-4'
                 />
               </button>
@@ -137,5 +139,5 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
 
 export {
   Input as default,
-  InputThemes,
+  type InputThemes,
 };

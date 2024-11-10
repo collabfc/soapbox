@@ -1,10 +1,12 @@
+import checkIcon from '@tabler/icons/outline/check.svg';
+import chevronRightIcon from '@tabler/icons/outline/chevron-right.svg';
 import clsx from 'clsx';
-import React from 'react';
+import { Children, cloneElement, isValidElement, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-import { SelectDropdown } from '../features/forms';
+import { SelectDropdown } from '../features/forms/index.tsx';
 
-import { Icon, HStack, Select } from './ui';
+import { Icon, HStack, Select } from './ui/index.ts';
 
 interface IList {
   children: React.ReactNode;
@@ -36,12 +38,12 @@ const ListItem: React.FC<IListItem> = ({ label, hint, children, to, onClick, onS
 
   const LabelComp = to || onClick || onSelect ? 'span' : 'label';
 
-  const renderChildren = React.useCallback(() => {
-    return React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
+  const renderChildren = useCallback(() => {
+    return Children.map(children, (child) => {
+      if (isValidElement(child)) {
         const isSelect = child.type === SelectDropdown || child.type === Select;
 
-        return React.cloneElement(child, {
+        return cloneElement(child, {
           // @ts-ignore
           id: domId,
           className: clsx({
@@ -72,7 +74,7 @@ const ListItem: React.FC<IListItem> = ({ label, hint, children, to, onClick, onS
         <HStack space={1} alignItems='center' className='overflow-hidden text-gray-700 dark:text-gray-600'>
           {children}
 
-          <Icon src={require('@tabler/icons/outline/chevron-right.svg')} className='ml-1 rtl:rotate-180' />
+          <Icon src={chevronRightIcon} className='ml-1 rtl:rotate-180' />
         </HStack>
       ) : null}
 
@@ -90,7 +92,7 @@ const ListItem: React.FC<IListItem> = ({ label, hint, children, to, onClick, onS
             }
           >
             <Icon
-              src={require('@tabler/icons/outline/check.svg')}
+              src={checkIcon}
               className={
                 clsx({
                   'h-4 w-4 text-white dark:text-white transition-all duration-500': true,

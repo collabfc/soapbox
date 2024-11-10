@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import arrowLeftIcon from '@tabler/icons/outline/arrow-left.svg';
+import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Modal } from 'soapbox/components/ui';
-import { useAppSelector, useCompose, useOwnAccount } from 'soapbox/hooks';
-import { statusToMentionsAccountIdsArray } from 'soapbox/reducers/compose';
-import { makeGetStatus } from 'soapbox/selectors';
+import { Modal } from 'soapbox/components/ui/index.ts';
+import Account from 'soapbox/features/reply-mentions/account.tsx';
+import { useAppSelector, useCompose, useOwnAccount } from 'soapbox/hooks/index.ts';
+import { statusToMentionsAccountIdsArray } from 'soapbox/reducers/compose.ts';
+import { makeGetStatus } from 'soapbox/selectors/index.ts';
 
-import Account from '../../../reply-mentions/account';
-
-import type { Account as AccountEntity, Status as StatusEntity } from 'soapbox/types/entities';
+import type { Account as AccountEntity, Status as StatusEntity } from 'soapbox/types/entities.ts';
 
 interface IReplyMentionsModal {
   composeId: string;
@@ -33,7 +33,7 @@ const ReplyMentionsModal: React.FC<IReplyMentionsModal> = ({ composeId, onClose 
     <Modal
       title={<FormattedMessage id='navigation_bar.in_reply_to' defaultMessage='In reply to' />}
       onClose={onClickClose}
-      closeIcon={require('@tabler/icons/outline/arrow-left.svg')}
+      closeIcon={arrowLeftIcon}
       closePosition='left'
     >
       <div className='reply-mentions-modal__accounts'>

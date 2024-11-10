@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import editIcon from '@tabler/icons/outline/edit.svg';
+import settingsIcon from '@tabler/icons/outline/settings.svg';
+import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
-import { CardTitle, HStack, IconButton, Stack } from 'soapbox/components/ui';
-import { useDebounce, useFeatures } from 'soapbox/hooks';
-import { IChat } from 'soapbox/queries/chats';
+import { CardTitle, HStack, IconButton, Stack } from 'soapbox/components/ui/index.ts';
+import { useDebounce, useFeatures } from 'soapbox/hooks/index.ts';
+import { IChat } from 'soapbox/queries/chats.ts';
 
-import ChatList from '../../chat-list';
-import ChatSearchInput from '../../chat-search-input';
+import ChatList from '../../chat-list.tsx';
+import ChatSearchInput from '../../chat-search-input.tsx';
 
 const messages = defineMessages({
   title: { id: 'column.chats', defaultMessage: 'Chats' },
@@ -42,13 +44,13 @@ const ChatPageSidebar = () => {
 
           <HStack space={1}>
             <IconButton
-              src={require('@tabler/icons/outline/settings.svg')}
+              src={settingsIcon}
               iconClassName='h-5 w-5 text-gray-600'
               onClick={handleSettingsClick}
             />
 
             <IconButton
-              src={require('@tabler/icons/outline/edit.svg')}
+              src={editIcon}
               iconClassName='h-5 w-5 text-gray-600'
               onClick={handleChatCreate}
             />

@@ -1,7 +1,7 @@
-import React from 'react';
+import xIcon from '@tabler/icons/outline/x.svg';
 
-import IconButton from '../icon-button/icon-button';
-import Text from '../text/text';
+import IconButton from '../icon-button/icon-button.tsx';
+import Text from '../text/text.tsx';
 
 interface ITag {
   /** Name of the tag. */
@@ -18,7 +18,7 @@ const Tag: React.FC<ITag> = ({ tag, onDelete }) => {
 
       <IconButton
         iconClassName='h-4 w-4'
-        src={require('@tabler/icons/outline/x.svg')}
+        src={xIcon}
         onClick={() => onDelete(tag)}
       />
     </div>

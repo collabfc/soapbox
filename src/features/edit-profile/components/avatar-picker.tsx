@@ -1,9 +1,10 @@
+import cameraPlusIcon from '@tabler/icons/outline/camera-plus.svg';
 import clsx from 'clsx';
-import React, { useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Avatar, Icon, HStack } from 'soapbox/components/ui';
-import { useDraggedFiles } from 'soapbox/hooks';
+import { Avatar, Icon, HStack } from 'soapbox/components/ui/index.ts';
+import { useDraggedFiles } from 'soapbox/hooks/index.ts';
 
 interface IMediaInput {
   className?: string;
@@ -13,7 +14,7 @@ interface IMediaInput {
   disabled?: boolean;
 }
 
-const AvatarPicker = React.forwardRef<HTMLInputElement, IMediaInput>(({ className, src, onChange, accept, disabled }, ref) => {
+const AvatarPicker = forwardRef<HTMLInputElement, IMediaInput>(({ className, src, onChange, accept, disabled }, ref) => {
   const picker = useRef<HTMLLabelElement>(null);
 
   const { isDragging, isDraggedOver } = useDraggedFiles(picker, (files) => {
@@ -43,7 +44,7 @@ const AvatarPicker = React.forwardRef<HTMLInputElement, IMediaInput>(({ classNam
         })}
       >
         <Icon
-          src={require('@tabler/icons/outline/camera-plus.svg')}
+          src={cameraPlusIcon}
           className='size-5 text-white'
         />
       </HStack>

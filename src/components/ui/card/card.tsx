@@ -1,12 +1,13 @@
+import arrowLeftIcon from '@tabler/icons/outline/arrow-left.svg';
 import clsx from 'clsx';
-import React from 'react';
+import { forwardRef } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import SvgIcon from 'soapbox/components/ui/icon/svg-icon';
+import SvgIcon from 'soapbox/components/ui/icon/svg-icon.tsx';
 
-import HStack from '../hstack/hstack';
-import Text from '../text/text';
+import HStack from '../hstack/hstack.tsx';
+import Text from '../text/text.tsx';
 
 const sizes = {
   md: 'p-4 sm:rounded-xl',
@@ -33,7 +34,7 @@ interface ICard {
 }
 
 /** An opaque backdrop to hold a collection of related elements. */
-const Card = React.forwardRef<HTMLDivElement, ICard>(({ children, variant = 'default', size = 'md', className, ...filteredProps }, ref): JSX.Element => (
+const Card = forwardRef<HTMLDivElement, ICard>(({ children, variant = 'default', size = 'md', className, ...filteredProps }, ref): JSX.Element => (
   <div
     ref={ref}
     {...filteredProps}
@@ -72,7 +73,7 @@ const CardHeader: React.FC<ICardHeader> = ({ className, children, backHref, onBa
 
     return (
       <Comp {...backAttributes} className='rounded-full text-gray-900 focus:ring-2 focus:ring-primary-500 dark:text-gray-100' aria-label={intl.formatMessage(messages.back)}>
-        <SvgIcon src={require('@tabler/icons/outline/arrow-left.svg')} className='size-6 rtl:rotate-180' />
+        <SvgIcon src={arrowLeftIcon} className='size-6 rtl:rotate-180' />
         <span className='sr-only' data-testid='back-button'>{intl.formatMessage(messages.back)}</span>
       </Comp>
     );

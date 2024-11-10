@@ -1,10 +1,9 @@
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import useCaptcha from 'soapbox/api/hooks/captcha/useCaptcha';
-import { Modal, Button, Spinner, Stack, Text } from 'soapbox/components/ui';
+import useCaptcha from 'soapbox/api/hooks/captcha/useCaptcha.ts';
+import { Modal, Button, Spinner, Stack, Text } from 'soapbox/components/ui/index.ts';
 
-import { PuzzleCaptcha } from './components/puzzle';
+import { PuzzleCaptcha } from './components/puzzle.tsx';
 
 interface ICaptchaModal {
   onClose: (type?: string) => void;

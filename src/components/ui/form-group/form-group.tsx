@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import { Children, cloneElement, isValidElement, useMemo } from 'react';
 
-import Checkbox from '../checkbox/checkbox';
-import HStack from '../hstack/hstack';
-import Stack from '../stack/stack';
+import Checkbox from '../checkbox/checkbox.tsx';
+import HStack from '../hstack/hstack.tsx';
+import Stack from '../stack/stack.tsx';
 
 interface IFormGroup {
   /** Input label message. */
@@ -21,12 +21,12 @@ interface IFormGroup {
 const FormGroup: React.FC<IFormGroup> = (props) => {
   const { children, errors = [], labelText, labelTitle, hintText } = props;
   const formFieldId: string = useMemo(() => `field-${crypto.randomUUID()}`, []);
-  const inputChildren = React.Children.toArray(children);
+  const inputChildren = Children.toArray(children);
   const hasError = errors?.length > 0;
 
   let firstChild;
-  if (React.isValidElement(inputChildren[0])) {
-    firstChild = React.cloneElement(
+  if (isValidElement(inputChildren[0])) {
+    firstChild = cloneElement(
       inputChildren[0],
       // @ts-ignore
       { id: formFieldId },

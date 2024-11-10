@@ -1,23 +1,21 @@
+import helpIcon from '@tabler/icons/outline/help.svg';
 import clsx from 'clsx';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import { Link, NavLink , Redirect } from 'react-router-dom';
-import { logIn, verifyCredentials } from 'soapbox/actions/auth';
-import { fetchInstance } from 'soapbox/actions/instance';
-import { openModal } from 'soapbox/actions/modals';
-import { openSidebar } from 'soapbox/actions/sidebar';
-import SiteLogo from 'soapbox/components/site-logo';
-import { Avatar, Button, Counter, Form, HStack, IconButton, Input, Tooltip } from 'soapbox/components/ui';
-import Search from 'soapbox/features/compose/components/search';
-import { useAppDispatch, useFeatures, useInstance, useOwnAccount, useRegistrationStatus } from 'soapbox/hooks';
-import { useIsMobile } from 'soapbox/hooks/useIsMobile';
-import { useSettingsNotifications } from 'soapbox/hooks/useSettingsNotifications';
+import { Link, Redirect } from 'react-router-dom';
 
-import { useInstanceV1 } from 'soapbox/api/hooks/instance/useInstanceV1';
-import { useInstanceV2 } from 'soapbox/api/hooks/instance/useInstanceV2';
+import { logIn, verifyCredentials } from 'soapbox/actions/auth.ts';
+import { fetchInstance } from 'soapbox/actions/instance.ts';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { openSidebar } from 'soapbox/actions/sidebar.ts';
+import SiteLogo from 'soapbox/components/site-logo.tsx';
+import { Avatar, Button, Counter, Form, HStack, IconButton, Input, Tooltip } from 'soapbox/components/ui/index.ts';
+import Search from 'soapbox/features/compose/components/search.tsx';
+import { useAppDispatch, useFeatures, useInstance, useOwnAccount, useRegistrationStatus } from 'soapbox/hooks/index.ts';
+import { useIsMobile } from 'soapbox/hooks/useIsMobile.ts';
+import { useSettingsNotifications } from 'soapbox/hooks/useSettingsNotifications.ts';
 
-
-import ProfileDropdown from './profile-dropdown';
+import ProfileDropdown from './profile-dropdown.tsx';
 
 import type { AxiosError } from 'axios';
 
@@ -34,15 +32,6 @@ const Navbar = () => {
   const intl = useIntl();
   const features = useFeatures();
   const instance = useInstance();
-
-  const v2 = useInstanceV2();
-  const v1 = useInstanceV1({ enabled: v2.isError });
-
-  // Access the original v1 properties when v2 is in error state
-  const isSuccess = instance.isSuccess ?? false;
-  const title = v2.instance ? v2.instance.title : v1.instance?.title;
-
-
   const { isOpen } = useRegistrationStatus();
   const { account } = useOwnAccount();
   const node = useRef(null);
@@ -132,7 +121,7 @@ const Navbar = () => {
             )}
           </HStack>
 
-          {isSuccess && (
+          {instance.isSuccess && (
             <HStack space={3} alignItems='center' className='absolute inset-y-0 right-0 pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0'>
               {account ? (
                 <div className='relative hidden items-center lg:flex'>
@@ -175,7 +164,7 @@ const Navbar = () => {
                       <Link to='/reset-password'>
                         <Tooltip text={intl.formatMessage(messages.forgotPassword)}>
                           <IconButton
-                            src={require('@tabler/icons/outline/help.svg')}
+                            src={helpIcon}
                             className='cursor-pointer bg-transparent text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200'
                             iconClassName='h-5 w-5'
                           />
@@ -232,7 +221,7 @@ const Navbar = () => {
                 className='mr-5 pb-2 font-normal dark:text-gray-100'
                 activeClassName='border-b-4 border-primary-500' 
               >
-                <FormattedMessage id='team_tab' defaultMessage='{site_title}' values={{ site_title: title }} />
+                <FormattedMessage id='tabs_bar.team' defaultMessage='Team' />
               </NavLink>
               <NavLink 
                 to='/timeline/global' 
@@ -240,13 +229,15 @@ const Navbar = () => {
                 className='mr-5 pb-2 font-normal dark:text-gray-100'
                 activeClassName='border-b-4 border-primary-500' 
               >
-                <FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />
+                <FormattedMessage id='tabs_bar.country' defaultMessage='country' />
               </NavLink>
-              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>Teams</a>
+              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>All Teams</a>
             </div>
           </HStack>
         </div>
       </div>
+
+
     </nav>
   );
 };

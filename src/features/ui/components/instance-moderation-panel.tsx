@@ -1,12 +1,13 @@
-import React from 'react';
+import dotsVerticalIcon from '@tabler/icons/outline/dots-vertical.svg';
+import editIcon from '@tabler/icons/outline/edit.svg';
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
 
-import { openModal } from 'soapbox/actions/modals';
-import DropdownMenu from 'soapbox/components/dropdown-menu';
-import { Widget } from 'soapbox/components/ui';
-import InstanceRestrictions from 'soapbox/features/federation-restrictions/components/instance-restrictions';
-import { useAppSelector, useAppDispatch, useOwnAccount } from 'soapbox/hooks';
-import { makeGetRemoteInstance } from 'soapbox/selectors';
+import { openModal } from 'soapbox/actions/modals.ts';
+import DropdownMenu from 'soapbox/components/dropdown-menu/index.ts';
+import { Widget } from 'soapbox/components/ui/index.ts';
+import InstanceRestrictions from 'soapbox/features/federation-restrictions/components/instance-restrictions.tsx';
+import { useAppSelector, useAppDispatch, useOwnAccount } from 'soapbox/hooks/index.ts';
+import { makeGetRemoteInstance } from 'soapbox/selectors/index.ts';
 
 const getRemoteInstance = makeGetRemoteInstance();
 
@@ -35,7 +36,7 @@ const InstanceModerationPanel: React.FC<IInstanceModerationPanel> = ({ host }) =
     return [{
       text: intl.formatMessage(messages.editFederation),
       action: handleEditFederation,
-      icon: require('@tabler/icons/outline/edit.svg'),
+      icon: editIcon,
     }];
   };
 
@@ -45,7 +46,7 @@ const InstanceModerationPanel: React.FC<IInstanceModerationPanel> = ({ host }) =
     <Widget
       title={<FormattedMessage id='remote_instance.federation_panel.heading' defaultMessage='Federation Restrictions' />}
       action={account?.admin ? (
-        <DropdownMenu items={menu} src={require('@tabler/icons/outline/dots-vertical.svg')} />
+        <DropdownMenu items={menu} src={dotsVerticalIcon} />
       ) : undefined}
     >
       <InstanceRestrictions remoteInstance={remoteInstance} />

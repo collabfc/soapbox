@@ -1,14 +1,12 @@
-import React from 'react';
+import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper.tsx';
+import { useSoapboxConfig } from 'soapbox/hooks/index.ts';
 
-import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper';
-import { useSoapboxConfig } from 'soapbox/hooks';
+import { getAcct } from '../utils/accounts.ts';
 
-import { getAcct } from '../utils/accounts';
+import { HStack, Text } from './ui/index.ts';
+import VerificationBadge from './verification-badge.tsx';
 
-import { HStack, Text } from './ui';
-import VerificationBadge from './verification-badge';
-
-import type { Account } from 'soapbox/schemas';
+import type { Account } from 'soapbox/schemas/index.ts';
 
 interface IDisplayName {
   account: Pick<Account, 'id' | 'acct' | 'fqn' | 'verified' | 'display_name_html'>;

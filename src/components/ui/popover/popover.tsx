@@ -11,9 +11,9 @@ import {
   useTransitionStyles,
 } from '@floating-ui/react';
 import clsx from 'clsx';
-import React, { useRef, useState } from 'react';
+import { cloneElement, useRef, useState } from 'react';
 
-import Portal from '../portal/portal';
+import Portal from '../portal/portal.tsx';
 
 interface IPopover {
   children: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
@@ -78,7 +78,7 @@ const Popover: React.FC<IPopover> = (props) => {
 
   return (
     <>
-      {React.cloneElement(children, {
+      {cloneElement(children, {
         ref: refs.setReference,
         ...getReferenceProps(),
         className: clsx(children.props.className, referenceElementClassName),

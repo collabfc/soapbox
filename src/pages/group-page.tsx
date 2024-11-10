@@ -1,20 +1,23 @@
-import React, { useMemo } from 'react';
+import banIcon from '@tabler/icons/outline/ban.svg';
+import eyeOffIcon from '@tabler/icons/outline/eye-off.svg';
+import trashIcon from '@tabler/icons/outline/trash.svg';
+import { useMemo } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 import { useRouteMatch } from 'react-router-dom';
 
-import { useGroup, useGroupMembershipRequests } from 'soapbox/api/hooks';
-import { Column, Icon, Layout, Stack, Text, Tabs } from 'soapbox/components/ui';
-import GroupHeader from 'soapbox/features/group/components/group-header';
-import LinkFooter from 'soapbox/features/ui/components/link-footer';
+import { useGroup, useGroupMembershipRequests } from 'soapbox/api/hooks/index.ts';
+import { Column, Icon, Layout, Stack, Text, Tabs } from 'soapbox/components/ui/index.ts';
+import GroupHeader from 'soapbox/features/group/components/group-header.tsx';
+import LinkFooter from 'soapbox/features/ui/components/link-footer.tsx';
 import {
   CtaBanner,
   GroupMediaPanel,
   SignUpPanel,
   SuggestedGroupsPanel,
-} from 'soapbox/features/ui/util/async-components';
-import { useFeatures, useOwnAccount } from 'soapbox/hooks';
+} from 'soapbox/features/ui/util/async-components.ts';
+import { useFeatures, useOwnAccount } from 'soapbox/hooks/index.ts';
 
-import type { Group } from 'soapbox/schemas';
+import type { Group } from 'soapbox/schemas/index.ts';
 
 const messages = defineMessages({
   all: { id: 'group.tabs.all', defaultMessage: 'All' },
@@ -34,7 +37,7 @@ const DeletedBlankslate = () => (
   <Stack space={4} className='py-10' alignItems='center'>
     <div className='rounded-full bg-danger-200 p-3 dark:bg-danger-400/20'>
       <Icon
-        src={require('@tabler/icons/outline/trash.svg')}
+        src={trashIcon}
         className='size-6 text-danger-600 dark:text-danger-400'
       />
     </div>
@@ -52,7 +55,7 @@ const PrivacyBlankslate = () => (
   <Stack space={4} className='py-10' alignItems='center'>
     <div className='rounded-full bg-gray-200 p-3 dark:bg-gray-800'>
       <Icon
-        src={require('@tabler/icons/outline/eye-off.svg')}
+        src={eyeOffIcon}
         className='size-6 text-gray-600 dark:text-gray-600'
       />
     </div>
@@ -70,7 +73,7 @@ const BlockedBlankslate = ({ group }: { group: Group }) => (
   <Stack space={4} className='py-10' alignItems='center'>
     <div className='rounded-full bg-danger-200 p-3 dark:bg-danger-400/20'>
       <Icon
-        src={require('@tabler/icons/outline/ban.svg')}
+        src={banIcon}
         className='size-6 text-danger-600 dark:text-danger-400'
       />
     </div>

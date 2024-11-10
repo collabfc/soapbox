@@ -1,10 +1,10 @@
-import React from 'react';
+import chartBarIcon from '@tabler/icons/outline/chart-bar.svg';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { addPoll, removePoll } from 'soapbox/actions/compose';
-import { useAppDispatch, useCompose } from 'soapbox/hooks';
+import { addPoll, removePoll } from 'soapbox/actions/compose.ts';
+import { useAppDispatch, useCompose } from 'soapbox/hooks/index.ts';
 
-import ComposeFormButton from './compose-form-button';
+import ComposeFormButton from './compose-form-button.tsx';
 
 const messages = defineMessages({
   add_poll: { id: 'poll_button.add_poll', defaultMessage: 'Add a poll' },
@@ -39,7 +39,7 @@ const PollButton: React.FC<IPollButton> = ({ composeId, disabled }) => {
 
   return (
     <ComposeFormButton
-      icon={require('@tabler/icons/outline/chart-bar.svg')}
+      icon={chartBarIcon}
       title={intl.formatMessage(active ? messages.remove_poll : messages.add_poll)}
       active={active}
       disabled={disabled}

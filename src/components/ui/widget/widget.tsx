@@ -1,9 +1,9 @@
-import React from 'react';
+import arrowRightIcon from '@tabler/icons/outline/arrow-right.svg';
 
-import HStack from 'soapbox/components/ui/hstack/hstack';
-import IconButton from 'soapbox/components/ui/icon-button/icon-button';
-import Stack from 'soapbox/components/ui/stack/stack';
-import Text from 'soapbox/components/ui/text/text';
+import HStack from 'soapbox/components/ui/hstack/hstack.tsx';
+import IconButton from 'soapbox/components/ui/icon-button/icon-button.tsx';
+import Stack from 'soapbox/components/ui/stack/stack.tsx';
+import Text from 'soapbox/components/ui/text/text.tsx';
 
 interface IWidgetTitle {
   /** Title text for the widget. */
@@ -42,7 +42,7 @@ const Widget: React.FC<IWidget> = ({
   title,
   children,
   onActionClick,
-  actionIcon = require('@tabler/icons/outline/arrow-right.svg'),
+  actionIcon = arrowRightIcon,
   actionTitle,
   action,
 }): JSX.Element => {

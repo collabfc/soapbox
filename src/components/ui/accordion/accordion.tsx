@@ -1,14 +1,16 @@
+import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg';
+import chevronUpIcon from '@tabler/icons/outline/chevron-up.svg';
+import dotsVerticalIcon from '@tabler/icons/outline/dots-vertical.svg';
 import clsx from 'clsx';
-import React from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import DropdownMenu from 'soapbox/components/dropdown-menu';
+import DropdownMenu from 'soapbox/components/dropdown-menu/index.ts';
 
-import HStack from '../hstack/hstack';
-import Icon from '../icon/icon';
-import Text from '../text/text';
+import HStack from '../hstack/hstack.tsx';
+import Icon from '../icon/icon.tsx';
+import Text from '../text/text.tsx';
 
-import type { Menu } from 'soapbox/components/dropdown-menu';
+import type { Menu } from 'soapbox/components/dropdown-menu/index.ts';
 
 const messages = defineMessages({
   collapse: { id: 'accordion.collapse', defaultMessage: 'Collapse' },
@@ -60,7 +62,7 @@ const Accordion: React.FC<IAccordion> = ({ headline, children, menu, expanded = 
           {menu && (
             <DropdownMenu
               items={menu}
-              src={require('@tabler/icons/outline/dots-vertical.svg')}
+              src={dotsVerticalIcon}
             />
           )}
           {action && actionIcon && (
@@ -72,7 +74,7 @@ const Accordion: React.FC<IAccordion> = ({ headline, children, menu, expanded = 
             </button>
           )}
           <Icon
-            src={expanded ? require('@tabler/icons/outline/chevron-up.svg') : require('@tabler/icons/outline/chevron-down.svg')}
+            src={expanded ? chevronUpIcon : chevronDownIcon}
             className='size-5 text-gray-700 dark:text-gray-600'
           />
         </HStack>

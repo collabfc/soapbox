@@ -1,9 +1,11 @@
+import photoPlusIcon from '@tabler/icons/outline/photo-plus.svg';
+import xIcon from '@tabler/icons/outline/x.svg';
 import clsx from 'clsx';
-import React, { useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
-import { HStack, Icon, IconButton, Text } from 'soapbox/components/ui';
-import { useDraggedFiles } from 'soapbox/hooks';
+import { HStack, Icon, IconButton, Text } from 'soapbox/components/ui/index.ts';
+import { useDraggedFiles } from 'soapbox/hooks/index.ts';
 
 const messages = defineMessages({
   title: { id: 'group.upload_banner.title', defaultMessage: 'Upload background picture' },
@@ -17,7 +19,7 @@ interface IMediaInput {
   disabled?: boolean;
 }
 
-const HeaderPicker = React.forwardRef<HTMLInputElement, IMediaInput>(({ src, onChange, onClear, accept, disabled }, ref) => {
+const HeaderPicker = forwardRef<HTMLInputElement, IMediaInput>(({ src, onChange, onClear, accept, disabled }, ref) => {
   const intl = useIntl();
 
   const picker = useRef<HTMLLabelElement>(null);
@@ -55,7 +57,7 @@ const HeaderPicker = React.forwardRef<HTMLInputElement, IMediaInput>(({ src, onC
         justifyContent='center'
       >
         <Icon
-          src={require('@tabler/icons/outline/photo-plus.svg')}
+          src={photoPlusIcon}
           className='size-4.5'
         />
 
@@ -76,7 +78,7 @@ const HeaderPicker = React.forwardRef<HTMLInputElement, IMediaInput>(({ src, onC
       {onClear && src && (
         <IconButton
           onClick={handleClear}
-          src={require('@tabler/icons/outline/x.svg')}
+          src={xIcon}
           theme='dark'
           className='absolute right-2 top-2 z-10 hover:scale-105 hover:bg-gray-900'
           iconClassName='h-5 w-5'

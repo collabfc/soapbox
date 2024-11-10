@@ -1,13 +1,14 @@
-import React from 'react';
+import alertTriangleIcon from '@tabler/icons/outline/alert-triangle.svg';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { openModal } from 'soapbox/actions/modals';
-import { nostrExtensionLogIn } from 'soapbox/actions/nostr';
-import EmojiGraphic from 'soapbox/components/emoji-graphic';
-import { Button, Stack, Modal, Text, Divider, HStack } from 'soapbox/components/ui';
-import { useNostr } from 'soapbox/contexts/nostr-context';
-import { useAppDispatch, useInstance, useSoapboxConfig } from 'soapbox/hooks';
+
+import { openModal } from 'soapbox/actions/modals.ts';
+import { nostrExtensionLogIn } from 'soapbox/actions/nostr.ts';
+import EmojiGraphic from 'soapbox/components/emoji-graphic.tsx';
+import { Button, Stack, Modal, Text, Divider, HStack } from 'soapbox/components/ui/index.ts';
+import { useNostr } from 'soapbox/contexts/nostr-context.tsx';
+import { useAppDispatch, useInstance, useSoapboxConfig } from 'soapbox/hooks/index.ts';
 
 interface IExtensionStep {
   isLogin?: boolean;
@@ -62,7 +63,7 @@ const ExtensionStep: React.FC<IExtensionStep> = ({ isLogin, onClickAlt, onClose 
 
           <Divider text='or' />
 
-          <Button theme={isLogin ? 'muted' : 'transparent'} onClick={onClickAlt} icon={require('@tabler/icons/outline/alert-triangle.svg')}>
+          <Button theme={isLogin ? 'muted' : 'transparent'} onClick={onClickAlt} icon={alertTriangleIcon}>
             {isLogin ? <FormattedMessage id='nostr_login.siwe.alt' defaultMessage='Log in with key' /> : <FormattedMessage id='nostr_signup.siwe.alt' defaultMessage={'Don\'t have an extension?'} /> }
           </Button>
 

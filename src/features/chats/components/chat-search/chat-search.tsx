@@ -1,20 +1,22 @@
+import searchIcon from '@tabler/icons/outline/search.svg';
+import xIcon from '@tabler/icons/outline/x.svg';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
-import { Icon, Input, Stack } from 'soapbox/components/ui';
-import { ChatWidgetScreens, useChatContext } from 'soapbox/contexts/chat-context';
-import { useDebounce } from 'soapbox/hooks';
-import { useChats, ChatKeys } from 'soapbox/queries/chats';
-import { queryClient } from 'soapbox/queries/client';
-import useAccountSearch from 'soapbox/queries/search';
-import toast from 'soapbox/toast';
+import { Icon, Input, Stack } from 'soapbox/components/ui/index.ts';
+import { ChatWidgetScreens, useChatContext } from 'soapbox/contexts/chat-context.tsx';
+import { useDebounce } from 'soapbox/hooks/index.ts';
+import { useChats, ChatKeys } from 'soapbox/queries/chats.ts';
+import { queryClient } from 'soapbox/queries/client.ts';
+import useAccountSearch from 'soapbox/queries/search.ts';
+import toast from 'soapbox/toast.tsx';
 
-import Blankslate from './blankslate';
-import EmptyResultsBlankslate from './empty-results-blankslate';
-import Results from './results';
+import Blankslate from './blankslate.tsx';
+import EmptyResultsBlankslate from './empty-results-blankslate.tsx';
+import Results from './results.tsx';
 
 const messages = defineMessages({
   placeholder: { id: 'chat_search.placeholder', defaultMessage: 'Type a name' },
@@ -101,7 +103,7 @@ const ChatSearch = (props: IChatSearch) => {
           append={
             <button onClick={clearValue}>
               <Icon
-                src={hasSearchValue ? require('@tabler/icons/outline/x.svg') : require('@tabler/icons/outline/search.svg')}
+                src={hasSearchValue ? xIcon : searchIcon}
                 className='size-4 text-gray-700 dark:text-gray-600'
                 aria-hidden='true'
               />

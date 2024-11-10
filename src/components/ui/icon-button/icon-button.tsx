@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import React from 'react';
+import { forwardRef } from 'react';
 
-import SvgIcon from '../icon/svg-icon';
-import Text from '../text/text';
+import SvgIcon from '../icon/svg-icon.tsx';
+import Text from '../text/text.tsx';
 
 interface IIconButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Class name for the <svg> icon. */
@@ -18,7 +18,7 @@ interface IIconButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /** A clickable icon. */
-const IconButton = React.forwardRef((props: IIconButton, ref: React.ForwardedRef<HTMLButtonElement>): JSX.Element => {
+const IconButton = forwardRef((props: IIconButton, ref: React.ForwardedRef<HTMLButtonElement>): JSX.Element => {
   const { src, className, iconClassName, text, theme = 'seamless', ...filteredProps } = props;
 
   return (

@@ -1,10 +1,10 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { deleteAccount } from 'soapbox/actions/security';
-import { Button, Card, CardBody, CardHeader, CardTitle, Form, FormActions, FormGroup, Input, Stack, Text } from 'soapbox/components/ui';
-import { useAppDispatch, useFeatures } from 'soapbox/hooks';
-import toast from 'soapbox/toast';
+import { deleteAccount } from 'soapbox/actions/security.ts';
+import { Button, Card, CardBody, CardHeader, CardTitle, Form, FormActions, FormGroup, Input, Stack, Text } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch, useFeatures } from 'soapbox/hooks/index.ts';
+import toast from 'soapbox/toast.tsx';
 
 const messages = defineMessages({
   passwordFieldLabel: { id: 'security.fields.password.label', defaultMessage: 'Password' },
@@ -21,16 +21,16 @@ const DeleteAccount = () => {
   const dispatch = useAppDispatch();
   const features = useFeatures();
 
-  const [password, setPassword] = React.useState('');
-  const [isLoading, setLoading] = React.useState(false);
+  const [password, setPassword] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
-  const handleInputChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     event.persist();
 
     setPassword(event.target.value);
   }, []);
 
-  const handleSubmit = React.useCallback(() => {
+  const handleSubmit = useCallback(() => {
     setLoading(true);
     dispatch(deleteAccount(password)).then(() => {
       setPassword('');

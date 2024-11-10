@@ -1,10 +1,10 @@
-import React from 'react';
+import { useMemo, useEffect } from 'react';
 import { Helmet as ReactHelmet } from 'react-helmet';
 
-import { useStatContext } from 'soapbox/contexts/stat-context';
-import { useAppSelector, useInstance, useSettings } from 'soapbox/hooks';
-import { RootState } from 'soapbox/store';
-import FaviconService from 'soapbox/utils/favicon-service';
+import { useStatContext } from 'soapbox/contexts/stat-context.tsx';
+import { useAppSelector, useInstance, useSettings } from 'soapbox/hooks/index.ts';
+import { RootState } from 'soapbox/store.ts';
+import FaviconService from 'soapbox/utils/favicon-service.ts';
 
 FaviconService.initFaviconService();
 
@@ -25,7 +25,7 @@ const Helmet: React.FC<IHelmet> = ({ children }) => {
   const unreadCount = useAppSelector((state) => getNotifTotals(state) + unreadChatsCount);
   const { demetricator } = useSettings();
 
-  const hasUnreadNotifications = React.useMemo(() => !(unreadCount < 1 || demetricator), [unreadCount, demetricator]);
+  const hasUnreadNotifications = useMemo(() => !(unreadCount < 1 || demetricator), [unreadCount, demetricator]);
 
   const addCounter = (string: string) => {
     return hasUnreadNotifications ? `(${unreadCount}) ${string}` : string;
@@ -39,7 +39,7 @@ const Helmet: React.FC<IHelmet> = ({ children }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateFaviconBadge();
   }, [unreadCount, demetricator]);
 

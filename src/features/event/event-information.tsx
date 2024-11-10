@@ -1,19 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import calendarIcon from '@tabler/icons/outline/calendar.svg';
+import linkIcon from '@tabler/icons/outline/link.svg';
+import mapPinIcon from '@tabler/icons/outline/map-pin.svg';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
-import { openModal } from 'soapbox/actions/modals';
-import { fetchStatus } from 'soapbox/actions/statuses';
-import MissingIndicator from 'soapbox/components/missing-indicator';
-import StatusContent from 'soapbox/components/status-content';
-import StatusMedia from 'soapbox/components/status-media';
-import TranslateButton from 'soapbox/components/translate-button';
-import { HStack, Icon, Stack, Text } from 'soapbox/components/ui';
-import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container';
-import { useAppDispatch, useAppSelector, useSettings, useSoapboxConfig } from 'soapbox/hooks';
-import { makeGetStatus } from 'soapbox/selectors';
-import { defaultMediaVisibility } from 'soapbox/utils/status';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { fetchStatus } from 'soapbox/actions/statuses.ts';
+import MissingIndicator from 'soapbox/components/missing-indicator.tsx';
+import StatusContent from 'soapbox/components/status-content.tsx';
+import StatusMedia from 'soapbox/components/status-media.tsx';
+import TranslateButton from 'soapbox/components/translate-button.tsx';
+import { HStack, Icon, Stack, Text } from 'soapbox/components/ui/index.ts';
+import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container.tsx';
+import { useAppDispatch, useAppSelector, useSettings, useSoapboxConfig } from 'soapbox/hooks/index.ts';
+import { makeGetStatus } from 'soapbox/selectors/index.ts';
+import { defaultMediaVisibility } from 'soapbox/utils/status.ts';
 
-import type { Status as StatusEntity } from 'soapbox/types/entities';
+import type { Status as StatusEntity } from 'soapbox/types/entities.ts';
 
 type RouteParams = { statusId: string };
 
@@ -61,16 +64,16 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
     if (!event.location) return null;
 
     const text = [
-      <React.Fragment key='event-name'>
+      <Fragment key='event-name'>
         {event.location.get('name')}
-      </React.Fragment>,
+      </Fragment>,
     ];
 
     if (event.location.get('street')?.trim()) {
       text.push (
-        <React.Fragment key='event-street'>
+        <Fragment key='event-street'>
           <br />{event.location.get('street')}
-        </React.Fragment>,
+        </Fragment>,
       );
     }
 
@@ -78,21 +81,21 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
 
     if (address) {
       text.push(
-        <React.Fragment key='event-address'>
+        <Fragment key='event-address'>
           <br />
           {address}
-        </React.Fragment>,
+        </Fragment>,
       );
     }
 
     if (tileServer && event.location.get('latitude')) {
       text.push(
-        <React.Fragment key='event-map'>
+        <Fragment key='event-map'>
           <br />
           <a href='#' className='text-primary-600 hover:underline dark:text-accent-blue' onClick={handleShowMap}>
             <FormattedMessage id='event.show_on_map' defaultMessage='Show on map' />
           </a>
-        </React.Fragment>,
+        </Fragment>,
       );
     }
 
@@ -102,7 +105,7 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
           <FormattedMessage id='event.location' defaultMessage='Location' />
         </Text>
         <HStack space={2} alignItems='center'>
-          <Icon src={require('@tabler/icons/outline/map-pin.svg')} />
+          <Icon src={mapPinIcon} />
           <Text>{text}</Text>
         </HStack>
       </Stack>
@@ -125,7 +128,7 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
           <FormattedMessage id='event.date' defaultMessage='Date' />
         </Text>
         <HStack space={2} alignItems='center'>
-          <Icon src={require('@tabler/icons/outline/calendar.svg')} />
+          <Icon src={calendarIcon} />
           <Text>
             <FormattedDate
               value={startDate}
@@ -165,7 +168,7 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
 
         {status.event.links.map(link => (
           <HStack space={2} alignItems='center'>
-            <Icon src={require('@tabler/icons/outline/link.svg')} />
+            <Icon src={linkIcon} />
             <a href={link.remote_url || link.url} className='text-primary-600 hover:underline dark:text-accent-blue' target='_blank'>
               {(link.remote_url || link.url).replace(/^https?:\/\//, '')}
             </a>

@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import xIcon from '@tabler/icons/outline/x.svg';
+import { useEffect } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
-import { fetchAliases, removeFromAliases } from 'soapbox/actions/aliases';
-import Icon from 'soapbox/components/icon';
-import ScrollableList from 'soapbox/components/scrollable-list';
-import { CardHeader, CardTitle, Column, HStack, Text } from 'soapbox/components/ui';
-import { useAppDispatch, useAppSelector, useFeatures, useOwnAccount } from 'soapbox/hooks';
+import { fetchAliases, removeFromAliases } from 'soapbox/actions/aliases.ts';
+import Icon from 'soapbox/components/icon.tsx';
+import ScrollableList from 'soapbox/components/scrollable-list.tsx';
+import { CardHeader, CardTitle, Column, HStack, Text } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch, useAppSelector, useFeatures, useOwnAccount } from 'soapbox/hooks/index.ts';
 
-import Account from './components/account';
-import Search from './components/search';
+import Account from './components/account.tsx';
+import Search from './components/search.tsx';
 
 const messages = defineMessages({
   heading: { id: 'column.aliases', defaultMessage: 'Account aliases' },
@@ -79,7 +80,7 @@ const Aliases = () => {
                 <Text tag='span'>{alias}</Text>
               </div>
               <div className='flex items-center' role='button' tabIndex={0} onClick={handleFilterDelete} data-value={alias} aria-label={intl.formatMessage(messages.delete)}>
-                <Icon className='mr-1.5' src={require('@tabler/icons/outline/x.svg')} />
+                <Icon className='mr-1.5' src={xIcon} />
                 <Text weight='bold' theme='muted'><FormattedMessage id='aliases.aliases_list_delete' defaultMessage='Unlink alias' /></Text>
               </div>
             </HStack>

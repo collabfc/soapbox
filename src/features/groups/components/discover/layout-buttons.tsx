@@ -1,7 +1,8 @@
+import layoutGridIcon from '@tabler/icons/outline/layout-grid.svg';
+import layoutListIcon from '@tabler/icons/outline/layout-list.svg';
 import clsx from 'clsx';
-import React from 'react';
 
-import { HStack, Icon } from 'soapbox/components/ui';
+import { HStack, Icon } from 'soapbox/components/ui/index.ts';
 
 enum GroupLayout {
   LIST = 'LIST',
@@ -20,7 +21,7 @@ const LayoutButtons = ({ layout, onSelect }: ILayoutButtons) => (
       onClick={() => onSelect(GroupLayout.LIST)}
     >
       <Icon
-        src={require('@tabler/icons/outline/layout-list.svg')}
+        src={layoutListIcon}
         className={
           clsx('size-5 text-gray-600', {
             'text-primary-600': layout === GroupLayout.LIST,
@@ -34,7 +35,7 @@ const LayoutButtons = ({ layout, onSelect }: ILayoutButtons) => (
       onClick={() => onSelect(GroupLayout.GRID)}
     >
       <Icon
-        src={require('@tabler/icons/outline/layout-grid.svg')}
+        src={layoutGridIcon}
         className={
           clsx('size-5 text-gray-600', {
             'text-primary-600': layout === GroupLayout.GRID,

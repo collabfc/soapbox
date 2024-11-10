@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import React from 'react';
+import { forwardRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-import { Icon, Text } from './ui';
+import { Icon, Text } from './ui/index.ts';
 
 interface ISidebarNavigationLink {
   /** Notification count, if any. */
@@ -22,7 +22,7 @@ interface ISidebarNavigationLink {
 }
 
 /** Desktop sidebar navigation link. */
-const SidebarNavigationLink = React.forwardRef((props: ISidebarNavigationLink, ref: React.ForwardedRef<HTMLAnchorElement>): JSX.Element => {
+const SidebarNavigationLink = forwardRef((props: ISidebarNavigationLink, ref: React.ForwardedRef<HTMLAnchorElement>): JSX.Element => {
   const { icon, activeIcon, text, to = '', count, countMax, onClick } = props;
   const { pathname } = useLocation();
 

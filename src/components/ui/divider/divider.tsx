@@ -1,8 +1,6 @@
-import React from 'react';
+import Text from '../text/text.tsx';
 
-import Text from '../text/text';
-
-import type { Sizes as TextSizes } from '../text/text';
+import type { Sizes as TextSizes } from '../text/text.tsx';
 
 interface IDivider {
   text?: string;

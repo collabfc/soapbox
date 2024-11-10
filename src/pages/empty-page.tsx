@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { Layout } from '../components/ui';
+import { Layout } from '../components/ui/index.ts';
 
 interface IEmptyPage {
   children: React.ReactNode;

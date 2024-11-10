@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Banner, Button, HStack, Stack, Text } from 'soapbox/components/ui';
-import { useInstance, useSoapboxConfig } from 'soapbox/hooks';
+import { Banner, Button, HStack, Stack, Text } from 'soapbox/components/ui/index.ts';
+import { useInstance, useSoapboxConfig } from 'soapbox/hooks/index.ts';
 
 const acceptedGdpr = !!localStorage.getItem('soapbox:gdpr');
 

@@ -1,13 +1,13 @@
-import React from 'react';
+import plusIcon from '@tabler/icons/outline/plus.svg';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
-import { openModal } from 'soapbox/actions/modals';
-import { useRules } from 'soapbox/api/hooks/admin';
-import ScrollableList from 'soapbox/components/scrollable-list';
-import { Button, Column, HStack, Stack, Text } from 'soapbox/components/ui';
-import { useAppDispatch } from 'soapbox/hooks';
-import { AdminRule } from 'soapbox/schemas';
-import toast from 'soapbox/toast';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { useRules } from 'soapbox/api/hooks/admin/index.ts';
+import ScrollableList from 'soapbox/components/scrollable-list.tsx';
+import { Button, Column, HStack, Stack, Text } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import { AdminRule } from 'soapbox/schemas/index.ts';
+import toast from 'soapbox/toast.tsx';
 
 const messages = defineMessages({
   heading: { id: 'column.admin.rules', defaultMessage: 'Instance rules' },
@@ -85,7 +85,7 @@ const Rules: React.FC = () => {
       <Stack className='gap-4'>
         <Button
           className='sm:w-fit sm:self-end'
-          icon={require('@tabler/icons/outline/plus.svg')}
+          icon={plusIcon}
           onClick={handleCreateRule}
           theme='secondary'
           block

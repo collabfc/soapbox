@@ -1,9 +1,9 @@
-import React from 'react';
+import calendarEventIcon from '@tabler/icons/outline/calendar-event.svg';
 import { FormattedMessage } from 'react-intl';
 
-import { openModal } from 'soapbox/actions/modals';
-import { Button, Stack, Text } from 'soapbox/components/ui';
-import { useAppDispatch } from 'soapbox/hooks';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { Button, Stack, Text } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/index.ts';
 
 const NewEventPanel = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const NewEventPanel = () => {
       </Stack>
 
       <Button
-        icon={require('@tabler/icons/outline/calendar-event.svg')}
+        icon={calendarEventIcon}
         onClick={createEvent}
         theme='secondary'
         block

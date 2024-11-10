@@ -1,16 +1,17 @@
+import mapPinIcon from '@tabler/icons/outline/map-pin.svg';
+import userIcon from '@tabler/icons/outline/user.svg';
 import clsx from 'clsx';
-import React from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
-import EventActionButton from 'soapbox/features/event/components/event-action-button';
-import EventDate from 'soapbox/features/event/components/event-date';
-import { useAppSelector } from 'soapbox/hooks';
+import EventActionButton from 'soapbox/features/event/components/event-action-button.tsx';
+import EventDate from 'soapbox/features/event/components/event-date.tsx';
+import { useAppSelector } from 'soapbox/hooks/index.ts';
 
-import Icon from './icon';
-import { Button, HStack, Stack, Text } from './ui';
-import VerificationBadge from './verification-badge';
+import Icon from './icon.tsx';
+import { Button, HStack, Stack, Text } from './ui/index.ts';
+import VerificationBadge from './verification-badge.tsx';
 
-import type { Status as StatusEntity } from 'soapbox/types/entities';
+import type { Status as StatusEntity } from 'soapbox/types/entities.ts';
 
 const messages = defineMessages({
   eventBanner: { id: 'event.banner', defaultMessage: 'Event banner' },
@@ -67,7 +68,7 @@ const EventPreview: React.FC<IEventPreview> = ({ status, className, hideAction, 
 
         <div className='flex flex-wrap gap-x-2 gap-y-1 text-gray-700 dark:text-gray-600'>
           <HStack alignItems='center' space={2}>
-            <Icon src={require('@tabler/icons/outline/user.svg')} />
+            <Icon src={userIcon} />
             <HStack space={1} alignItems='center' grow>
               <span dangerouslySetInnerHTML={{ __html: account.display_name_html }} />
               {account.verified && <VerificationBadge />}
@@ -78,7 +79,7 @@ const EventPreview: React.FC<IEventPreview> = ({ status, className, hideAction, 
 
           {event.location && (
             <HStack alignItems='center' space={2}>
-              <Icon src={require('@tabler/icons/outline/map-pin.svg')} />
+              <Icon src={mapPinIcon} />
               <span>
                 {event.location.get('name')}
               </span>

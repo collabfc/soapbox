@@ -1,9 +1,10 @@
+import checkIcon from '@tabler/icons/outline/check.svg';
+import circleCheckIcon from '@tabler/icons/outline/circle-check.svg';
 import clsx from 'clsx';
-import React from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Motion, presets, spring } from 'react-motion';
 
-import { HStack, Icon, Text } from '../ui';
+import { HStack, Icon, Text } from 'soapbox/components/ui/index.ts';
 
 import type {
   Poll as PollEntity,
@@ -86,7 +87,7 @@ const PollOptionText: React.FC<IPollOptionText> = ({ poll, option, index, active
             aria-label={option.title}
           >
             {active && (
-              <Icon src={require('@tabler/icons/outline/check.svg')} className='size-4 text-white dark:text-primary-900' />
+              <Icon src={checkIcon} className='size-4 text-white dark:text-primary-900' />
             )}
           </span>
         </div>
@@ -143,7 +144,7 @@ const PollOption: React.FC<IPollOption> = (props): JSX.Element | null => {
             <HStack space={2} alignItems='center' className='relative'>
               {voted ? (
                 <Icon
-                  src={require('@tabler/icons/outline/circle-check.svg')}
+                  src={circleCheckIcon}
                   alt={intl.formatMessage(messages.voted)}
                   className='size-4 text-primary-600 dark:fill-white dark:text-primary-800'
                 />

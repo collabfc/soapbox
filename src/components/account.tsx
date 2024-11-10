@@ -1,20 +1,21 @@
-import React, { useRef, useState } from 'react';
+import pencilIcon from '@tabler/icons/outline/pencil.svg';
+import { useRef, useState } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
 
-import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper';
-import VerificationBadge from 'soapbox/components/verification-badge';
-import ActionButton from 'soapbox/features/ui/components/action-button';
-import { useAppSelector } from 'soapbox/hooks';
-import { getAcct } from 'soapbox/utils/accounts';
-import { displayFqn } from 'soapbox/utils/state';
+import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper.tsx';
+import VerificationBadge from 'soapbox/components/verification-badge.tsx';
+import ActionButton from 'soapbox/features/ui/components/action-button.tsx';
+import { useAppSelector } from 'soapbox/hooks/index.ts';
+import { getAcct } from 'soapbox/utils/accounts.ts';
+import { displayFqn } from 'soapbox/utils/state.ts';
 
-import Badge from './badge';
-import RelativeTimestamp from './relative-timestamp';
-import { Avatar, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui';
+import Badge from './badge.tsx';
+import RelativeTimestamp from './relative-timestamp.tsx';
+import { Avatar, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui/index.ts';
 
-import type { StatusApprovalStatus } from 'soapbox/normalizers/status';
-import type { Account as AccountSchema } from 'soapbox/schemas';
+import type { StatusApprovalStatus } from 'soapbox/normalizers/status.ts';
+import type { Account as AccountSchema } from 'soapbox/schemas/index.ts';
 
 interface IInstanceFavicon {
   account: AccountSchema;
@@ -275,7 +276,7 @@ const Account = ({
                   <>
                     <Text tag='span' theme='muted' size='sm'>&middot;</Text> {/* eslint-disable-line formatjs/no-literal-string-in-jsx */}
 
-                    <Icon className='size-5 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/outline/pencil.svg')} />
+                    <Icon className='size-5 text-gray-700 dark:text-gray-600' src={pencilIcon} />
                   </>
                 ) : null}
 

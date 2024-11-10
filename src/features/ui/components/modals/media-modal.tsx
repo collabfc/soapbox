@@ -1,27 +1,33 @@
+import arrowLeftIcon from '@tabler/icons/outline/arrow-left.svg';
+import arrowRightIcon from '@tabler/icons/outline/arrow-right.svg';
+import arrowsMaximizeIcon from '@tabler/icons/outline/arrows-maximize.svg';
+import arrowsMinimizeIcon from '@tabler/icons/outline/arrows-minimize.svg';
+import downloadIcon from '@tabler/icons/outline/download.svg';
+import xIcon from '@tabler/icons/outline/x.svg';
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import ReactSwipeableViews from 'react-swipeable-views';
 
-import { fetchNext, fetchStatusWithContext } from 'soapbox/actions/statuses';
-import ExtendedVideoPlayer from 'soapbox/components/extended-video-player';
-import MissingIndicator from 'soapbox/components/missing-indicator';
-import StatusActionBar from 'soapbox/components/status-action-bar';
-import { Icon, IconButton, HStack, Stack } from 'soapbox/components/ui';
-import Audio from 'soapbox/features/audio';
-import PlaceholderStatus from 'soapbox/features/placeholder/components/placeholder-status';
-import Thread from 'soapbox/features/status/components/thread';
-import Video from 'soapbox/features/video';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks';
-import { userTouching } from 'soapbox/is-mobile';
-import { makeGetStatus } from 'soapbox/selectors';
+import { fetchNext, fetchStatusWithContext } from 'soapbox/actions/statuses.ts';
+import ExtendedVideoPlayer from 'soapbox/components/extended-video-player.tsx';
+import MissingIndicator from 'soapbox/components/missing-indicator.tsx';
+import StatusActionBar from 'soapbox/components/status-action-bar.tsx';
+import { Icon, IconButton, HStack, Stack } from 'soapbox/components/ui/index.ts';
+import Audio from 'soapbox/features/audio/index.tsx';
+import PlaceholderStatus from 'soapbox/features/placeholder/components/placeholder-status.tsx';
+import Thread from 'soapbox/features/status/components/thread.tsx';
+import Video from 'soapbox/features/video/index.tsx';
+import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import { userTouching } from 'soapbox/is-mobile.ts';
+import { makeGetStatus } from 'soapbox/selectors/index.ts';
 
-import ImageLoader from '../image-loader';
+import ImageLoader from '../image-loader.tsx';
 
 import type { List as ImmutableList } from 'immutable';
-import type { Attachment, Status } from 'soapbox/types/entities';
+import type { Attachment, Status } from 'soapbox/types/entities.ts';
 
 const messages = defineMessages({
   close: { id: 'lightbox.close', defaultMessage: 'Close' },
@@ -255,7 +261,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
           >
             <IconButton
               title={intl.formatMessage(messages.close)}
-              src={require('@tabler/icons/outline/x.svg')}
+              src={xIcon}
               onClick={onClose}
               theme='dark'
               className='!p-1.5 hover:scale-105 hover:bg-gray-900'
@@ -264,7 +270,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
 
             <HStack alignItems='center' space={2}>
               <IconButton
-                src={require('@tabler/icons/outline/download.svg')}
+                src={downloadIcon}
                 theme='dark'
                 className='!p-1.5 hover:scale-105 hover:bg-gray-900'
                 iconClassName='h-5 w-5'
@@ -273,7 +279,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
 
               {status && (
                 <IconButton
-                  src={isFullScreen ? require('@tabler/icons/outline/arrows-minimize.svg') : require('@tabler/icons/outline/arrows-maximize.svg')}
+                  src={isFullScreen ? arrowsMinimizeIcon : arrowsMaximizeIcon}
                   title={intl.formatMessage(isFullScreen ? messages.minimize : messages.expand)}
                   theme='dark'
                   className='hidden !p-1.5 hover:scale-105 hover:bg-gray-900 xl:block'
@@ -296,7 +302,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
                   onClick={handlePrevClick}
                   aria-label={intl.formatMessage(messages.previous)}
                 >
-                  <Icon src={require('@tabler/icons/outline/arrow-left.svg')} className='size-5' />
+                  <Icon src={arrowLeftIcon} className='size-5' />
                 </button>
               </div>
             )}
@@ -318,7 +324,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
                   onClick={handleNextClick}
                   aria-label={intl.formatMessage(messages.next)}
                 >
-                  <Icon src={require('@tabler/icons/outline/arrow-right.svg')} className='size-5' />
+                  <Icon src={arrowRightIcon} className='size-5' />
                 </button>
               </div>
             )}

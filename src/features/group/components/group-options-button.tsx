@@ -1,16 +1,21 @@
-import React, { useMemo } from 'react';
+import dotsIcon from '@tabler/icons/outline/dots.svg';
+import flagIcon from '@tabler/icons/outline/flag.svg';
+import logoutIcon from '@tabler/icons/outline/logout.svg';
+import shareIcon from '@tabler/icons/outline/share.svg';
+import volume3Icon from '@tabler/icons/outline/volume-3.svg';
+import { useMemo } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { openModal } from 'soapbox/actions/modals';
-import { initReport, ReportableEntities } from 'soapbox/actions/reports';
-import { useLeaveGroup, useMuteGroup, useUnmuteGroup } from 'soapbox/api/hooks';
-import DropdownMenu, { Menu } from 'soapbox/components/dropdown-menu';
-import { IconButton } from 'soapbox/components/ui';
-import { useAppDispatch, useOwnAccount } from 'soapbox/hooks';
-import { GroupRoles } from 'soapbox/schemas/group-member';
-import toast from 'soapbox/toast';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { initReport, ReportableEntities } from 'soapbox/actions/reports.ts';
+import { useLeaveGroup, useMuteGroup, useUnmuteGroup } from 'soapbox/api/hooks/index.ts';
+import DropdownMenu, { Menu } from 'soapbox/components/dropdown-menu/index.ts';
+import { IconButton } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch, useOwnAccount } from 'soapbox/hooks/index.ts';
+import { GroupRoles } from 'soapbox/schemas/group-member.ts';
+import toast from 'soapbox/toast.tsx';
 
-import type { Account, Group } from 'soapbox/types/entities';
+import type { Account, Group } from 'soapbox/types/entities.ts';
 
 const messages = defineMessages({
   confirmationConfirm: { id: 'confirmations.leave_group.confirm', defaultMessage: 'Leave' },
@@ -98,7 +103,7 @@ const GroupOptionsButton = ({ group }: IGroupActionButton) => {
     if (canShare) {
       items.push({
         text: intl.formatMessage(messages.share),
-        icon: require('@tabler/icons/outline/share.svg'),
+        icon: shareIcon,
         action: handleShare,
       });
     }
@@ -106,7 +111,7 @@ const GroupOptionsButton = ({ group }: IGroupActionButton) => {
     if (isInGroup) {
       items.push({
         text: isMuting ? intl.formatMessage(messages.unmute) : intl.formatMessage(messages.mute),
-        icon: require('@tabler/icons/outline/volume-3.svg'),
+        icon: volume3Icon,
         action: isMuting ? handleUnmute : handleMute,
       });
     }
@@ -114,7 +119,7 @@ const GroupOptionsButton = ({ group }: IGroupActionButton) => {
     if (isMember || isAdmin) {
       items.push({
         text: intl.formatMessage(messages.report),
-        icon: require('@tabler/icons/outline/flag.svg'),
+        icon: flagIcon,
         action: () => dispatch(initReport(ReportableEntities.GROUP, account as Account, { group })),
       });
     }
@@ -123,7 +128,7 @@ const GroupOptionsButton = ({ group }: IGroupActionButton) => {
       items.push(null);
       items.push({
         text: intl.formatMessage(messages.leave),
-        icon: require('@tabler/icons/outline/logout.svg'),
+        icon: logoutIcon,
         action: handleLeave,
       });
     }
@@ -138,7 +143,7 @@ const GroupOptionsButton = ({ group }: IGroupActionButton) => {
   return (
     <DropdownMenu items={menu} placement='bottom'>
       <IconButton
-        src={require('@tabler/icons/outline/dots.svg')}
+        src={dotsIcon}
         theme='secondary'
         iconClassName='h-5 w-5'
         className='self-stretch px-2.5'

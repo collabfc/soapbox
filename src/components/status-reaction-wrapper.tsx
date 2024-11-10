@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, cloneElement } from 'react';
 
-import { simpleEmojiReact } from 'soapbox/actions/emoji-reacts';
-import { openModal } from 'soapbox/actions/modals';
-import { EmojiSelector, Portal } from 'soapbox/components/ui';
-import { useAppDispatch, useAppSelector, useOwnAccount, useSoapboxConfig } from 'soapbox/hooks';
-import { userTouching } from 'soapbox/is-mobile';
-import { getReactForStatus } from 'soapbox/utils/emoji-reacts';
+import { simpleEmojiReact } from 'soapbox/actions/emoji-reacts.ts';
+import { openModal } from 'soapbox/actions/modals.ts';
+import { EmojiSelector, Portal } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch, useAppSelector, useOwnAccount, useSoapboxConfig } from 'soapbox/hooks/index.ts';
+import { userTouching } from 'soapbox/is-mobile.ts';
+import { getReactForStatus } from 'soapbox/utils/emoji-reacts.ts';
 
 interface IStatusReactionWrapper {
   statusId: string;
@@ -100,7 +100,7 @@ const StatusReactionWrapper: React.FC<IStatusReactionWrapper> = ({ statusId, chi
 
   return (
     <div className='relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {React.cloneElement(children, {
+      {cloneElement(children, {
         onClick: handleClick,
         ref: setReferenceElement,
       })}

@@ -1,9 +1,10 @@
+import photoOffIcon from '@tabler/icons/outline/photo-off.svg';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import StillImage, { IStillImage } from 'soapbox/components/still-image';
+import StillImage, { IStillImage } from 'soapbox/components/still-image.tsx';
 
-import Icon from '../icon/icon';
+import Icon from '../icon/icon.tsx';
 
 const AVATAR_SIZE = 42;
 
@@ -20,7 +21,7 @@ const Avatar = (props: IAvatar) => {
 
   const handleLoadFailure = () => setIsAvatarMissing(true);
 
-  const style: React.CSSProperties = React.useMemo(() => ({
+  const style: React.CSSProperties = useMemo(() => ({
     width: size,
     height: size,
   }), [size]);
@@ -35,7 +36,7 @@ const Avatar = (props: IAvatar) => {
         className={clsx('flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-900', className)}
       >
         <Icon
-          src={require('@tabler/icons/outline/photo-off.svg')}
+          src={photoOffIcon}
           className='size-4 text-gray-500 dark:text-gray-700'
         />
       </div>

@@ -1,15 +1,16 @@
-import React from 'react';
+import xIcon from '@tabler/icons/outline/x.svg';
+import { useMemo, useState } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
-import { patchMe } from 'soapbox/actions/me';
-import { Button, Stack, Text, FormGroup, Input } from 'soapbox/components/ui';
-import IconButton from 'soapbox/components/ui/icon-button/icon-button';
-import { useAppDispatch, useOwnAccount } from 'soapbox/hooks';
-import toast from 'soapbox/toast';
+import { patchMe } from 'soapbox/actions/me.ts';
+import IconButton from 'soapbox/components/ui/icon-button/icon-button.tsx';
+import { Button, Stack, Text, FormGroup, Input } from 'soapbox/components/ui/index.ts';
+import { useAppDispatch, useOwnAccount } from 'soapbox/hooks/index.ts';
+import toast from 'soapbox/toast.tsx';
 
 import type { AxiosError } from 'axios';
 
-const closeIcon = require('@tabler/icons/outline/x.svg');
+const closeIcon = xIcon;
 
 const messages = defineMessages({
   usernamePlaceholder: { id: 'onboarding.display_name.placeholder', defaultMessage: 'Eg. John Smith' },
@@ -26,15 +27,15 @@ const DisplayNameStep: React.FC<IDisplayNameStep> = ({ onClose, onNext }) => {
   const dispatch = useAppDispatch();
 
   const { account } = useOwnAccount();
-  const [value, setValue] = React.useState<string>(account?.display_name || '');
-  const [isSubmitting, setSubmitting] = React.useState<boolean>(false);
-  const [errors, setErrors] = React.useState<string[]>([]);
+  const [value, setValue] = useState<string>(account?.display_name || '');
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const trimmedValue = value.trim();
   const isValid = trimmedValue.length > 0;
   const isDisabled = !isValid || value.length > 30;
 
-  const hintText = React.useMemo(() => {
+  const hintText = useMemo(() => {
     const charsLeft = 30 - value.length;
     const suffix = charsLeft === 1 ? 'character remaining' : 'characters remaining';
 
