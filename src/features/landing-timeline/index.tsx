@@ -8,7 +8,6 @@ import { Column } from 'soapbox/components/ui/index.ts';
 import { useAppSelector, useAppDispatch, useInstance, useTheme } from 'soapbox/hooks/index.ts';
 import { useIsMobile } from 'soapbox/hooks/useIsMobile.ts';
 
-import AboutPage from '../about/index.tsx';
 import Timeline from '../ui/components/timeline.tsx';
 
 import { SiteBanner } from './components/site-banner.tsx';

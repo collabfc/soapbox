@@ -2,7 +2,7 @@ import helpIcon from '@tabler/icons/outline/help.svg';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, NavLink, Redirect } from 'react-router-dom';
 
 import { logIn, verifyCredentials } from 'soapbox/actions/auth.ts';
 import { fetchInstance } from 'soapbox/actions/instance.ts';
@@ -107,10 +107,12 @@ const Navbar = () => {
               'justify-start': !account,
             })}
           >
-            <Link key='logo' to='/' data-preview-title-id='column.home' className='ml-4 flex shrink-0 items-center'>
-              <SiteLogo alt='Logo' className='h-5 w-auto cursor-pointer' />
-              <span className='hidden'><FormattedMessage id='tabs_bar.home' defaultMessage='Home' /></span>
-            </Link>
+            <a href='https://www.collabfc.com' key='logo' data-preview-title-id='column.home' className='ml-1 flex shrink-0 items-center'>
+              <SiteLogo alt='Logo' className='h-9 w-auto cursor-pointer' />
+              <span className='hidden'>
+                <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
+              </span>
+            </a>
 
             {account && (
               <div className='hidden flex-1 items-center justify-center px-2 lg:ml-6 lg:flex lg:justify-start'>
@@ -221,7 +223,7 @@ const Navbar = () => {
                 className='mr-5 pb-2 font-normal dark:text-gray-100'
                 activeClassName='border-b-4 border-primary-500' 
               >
-                <FormattedMessage id='tabs_bar.team' defaultMessage='Team' />
+                <FormattedMessage id='team_tab' defaultMessage='{site_title}' values={{ site_title: instance.instance.title }} />
               </NavLink>
               <NavLink 
                 to='/timeline/global' 
@@ -229,9 +231,10 @@ const Navbar = () => {
                 className='mr-5 pb-2 font-normal dark:text-gray-100'
                 activeClassName='border-b-4 border-primary-500' 
               >
-                <FormattedMessage id='tabs_bar.country' defaultMessage='country' />
+                <FormattedMessage id='tabs_bar.country' defaultMessage='Country' />
               </NavLink>
-              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>All Teams</a>
+              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>Teams</a>
+              <a href='https://www.collabfc.com/#about' className='mr-5 pb-2 font-normal dark:text-gray-100'>About</a>
             </div>
           </HStack>
         </div>
