@@ -4,8 +4,12 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { fetchListSuggestions, clearListSuggestions, changeListSuggestions } from 'soapbox/actions/lists.ts';
 import Icon from 'soapbox/components/icon.tsx';
-import { Button, Form, HStack, Input } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useAppDispatch } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import Form from 'soapbox/components/ui/form.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Input from 'soapbox/components/ui/input.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 const messages = defineMessages({
   search: { id: 'lists.search', defaultMessage: 'Search among people you follow' },

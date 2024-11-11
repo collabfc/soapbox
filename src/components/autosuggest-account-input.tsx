@@ -4,10 +4,10 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 
 import { accountSearch } from 'soapbox/actions/accounts.ts';
 import AutosuggestInput, { AutoSuggestion } from 'soapbox/components/autosuggest-input.tsx';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 
 import type { Menu } from 'soapbox/components/dropdown-menu/index.ts';
-import type { InputThemes } from 'soapbox/components/ui/input/input.tsx';
+import type { InputThemes } from 'soapbox/components/ui/input.tsx';
 
 const noOp = () => { };
 

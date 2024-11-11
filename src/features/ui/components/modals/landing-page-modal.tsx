@@ -3,8 +3,12 @@ import clsx from 'clsx';
 import { defineMessages, useIntl } from 'react-intl';
 
 import SiteLogo from 'soapbox/components/site-logo.tsx';
-import { Text, Button, Icon, Modal } from 'soapbox/components/ui/index.ts';
-import { useRegistrationStatus, useSoapboxConfig } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Modal from 'soapbox/components/ui/modal.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useRegistrationStatus } from 'soapbox/hooks/useRegistrationStatus.ts';
+import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 
 const messages = defineMessages({
   download: { id: 'landing_page_modal.download', defaultMessage: 'Download' },

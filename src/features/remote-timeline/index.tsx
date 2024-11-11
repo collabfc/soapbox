@@ -6,9 +6,14 @@ import { useHistory } from 'react-router-dom';
 import { expandRemoteTimeline } from 'soapbox/actions/timelines.ts';
 import { useRemoteStream } from 'soapbox/api/hooks/index.ts';
 import IconButton from 'soapbox/components/icon-button.tsx';
-import { Column, HStack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useAppDispatch, useSettings, useTheme } from 'soapbox/hooks/index.ts';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { useIsMobile } from 'soapbox/hooks/useIsMobile.ts';
+import { useSettings } from 'soapbox/hooks/useSettings.ts';
+import { useTheme } from 'soapbox/hooks/useTheme.ts';
 
 import Timeline from '../ui/components/timeline.tsx';
 

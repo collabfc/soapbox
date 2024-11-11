@@ -5,8 +5,13 @@ import { Redirect } from 'react-router-dom';
 
 import { useBookmarkFolders } from 'soapbox/api/hooks/index.ts';
 import List, { ListItem } from 'soapbox/components/list.tsx';
-import { Column, Emoji, HStack, Icon, Spinner, Stack } from 'soapbox/components/ui/index.ts';
-import { useFeatures } from 'soapbox/hooks/index.ts';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import Emoji from 'soapbox/components/ui/emoji.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 
 import NewFolderForm from './components/new-folder-form.tsx';
 

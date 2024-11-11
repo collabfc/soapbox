@@ -5,8 +5,14 @@ import { useHistory } from 'react-router-dom';
 import { fetchFilters, deleteFilter } from 'soapbox/actions/filters.ts';
 import RelativeTimestamp from 'soapbox/components/relative-timestamp.tsx';
 import ScrollableList from 'soapbox/components/scrollable-list.tsx';
-import { Button, Column, HStack, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector, useFeatures } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 import toast from 'soapbox/toast.tsx';
 
 const messages = defineMessages({

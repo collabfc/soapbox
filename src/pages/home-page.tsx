@@ -4,6 +4,10 @@ import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { uploadCompose } from 'soapbox/actions/compose.ts';
+import Avatar from 'soapbox/components/ui/avatar.tsx';
+import { Card, CardBody } from 'soapbox/components/ui/card.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Layout from 'soapbox/components/ui/layout.tsx';
 import LinkFooter from 'soapbox/features/ui/components/link-footer.tsx';
 import {
   WhoToFollowPanel,
@@ -16,10 +20,15 @@ import {
   CtaBanner,
   AnnouncementsPanel,
 } from 'soapbox/features/ui/util/async-components.ts';
-import { useAppSelector, useOwnAccount, useFeatures, useSoapboxConfig, useDraggedFiles, useAppDispatch } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useDraggedFiles } from 'soapbox/hooks/useDraggedFiles.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 import { useIsMobile } from 'soapbox/hooks/useIsMobile.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
+import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 
-import { Avatar, Card, CardBody, HStack, Layout } from '../components/ui/index.ts';
+
 import ComposeForm from '../features/compose/components/compose-form.tsx';
 
 interface IHomePage {

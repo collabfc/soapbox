@@ -4,8 +4,16 @@ import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { fetchMfa } from 'soapbox/actions/mfa.ts';
 import CopyableInput from 'soapbox/components/copyable-input.tsx';
 import List, { ListItem } from 'soapbox/components/list.tsx';
-import { Card, CardBody, CardHeader, CardTitle, Column, Counter, FormGroup, Text } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector, useFeatures, useInstance, useOwnAccount } from 'soapbox/hooks/index.ts';
+import { Card, CardBody, CardHeader, CardTitle } from 'soapbox/components/ui/card.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import Counter from 'soapbox/components/ui/counter.tsx';
+import FormGroup from 'soapbox/components/ui/form-group.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
+import { useInstance } from 'soapbox/hooks/useInstance.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
 import { useSettingsNotifications } from 'soapbox/hooks/useSettingsNotifications.ts';
 
 import Preferences from '../preferences/index.tsx';

@@ -15,9 +15,10 @@ import {
   submitSearch,
 } from 'soapbox/actions/search.ts';
 import AutosuggestAccountInput from 'soapbox/components/autosuggest-account-input.tsx';
-import SvgIcon from 'soapbox/components/ui/icon/svg-icon.tsx';
-import { Input } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import Input from 'soapbox/components/ui/input.tsx';
+import SvgIcon from 'soapbox/components/ui/svg-icon.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { selectAccount } from 'soapbox/selectors/index.ts';
 import { AppDispatch, RootState } from 'soapbox/store.ts';
 

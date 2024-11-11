@@ -6,9 +6,15 @@ import { FormattedMessage } from 'react-intl';
 import { bookmark } from 'soapbox/actions/interactions.ts';
 import { useBookmarkFolders } from 'soapbox/api/hooks/index.ts';
 import { RadioGroup, RadioItem } from 'soapbox/components/radio.tsx';
-import { Emoji, HStack, Icon, Modal, Spinner, Stack } from 'soapbox/components/ui/index.ts';
+import Emoji from 'soapbox/components/ui/emoji.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Modal from 'soapbox/components/ui/modal.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
 import NewFolderForm from 'soapbox/features/bookmark-folders/components/new-folder-form.tsx';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { makeGetStatus } from 'soapbox/selectors/index.ts';
 
 import type { Status as StatusEntity } from 'soapbox/types/entities.ts';

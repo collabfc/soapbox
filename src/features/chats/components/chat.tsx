@@ -4,8 +4,9 @@ import { MutableRefObject, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { uploadMedia } from 'soapbox/actions/media.ts';
-import { Stack } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { normalizeAttachment } from 'soapbox/normalizers/index.ts';
 import { IChat, useChatActions } from 'soapbox/queries/chats.ts';
 import toast from 'soapbox/toast.tsx';

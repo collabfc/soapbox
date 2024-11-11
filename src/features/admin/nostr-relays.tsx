@@ -2,9 +2,13 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
-import { Button, Column, Form, FormActions, Stack } from 'soapbox/components/ui/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import FormActions from 'soapbox/components/ui/form-actions.tsx';
+import Form from 'soapbox/components/ui/form.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
 import RelayEditor, { RelayData } from 'soapbox/features/nostr-relays/components/relay-editor.tsx';
-import { useApi } from 'soapbox/hooks/index.ts';
+import { useApi } from 'soapbox/hooks/useApi.ts';
 
 import { useAdminNostrRelays } from './hooks/useAdminNostrRelays.ts';
 

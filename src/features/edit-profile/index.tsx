@@ -5,27 +5,29 @@ import { updateNotificationSettings } from 'soapbox/actions/accounts.ts';
 import { patchMe } from 'soapbox/actions/me.ts';
 import BirthdayInput from 'soapbox/components/birthday-input.tsx';
 import List, { ListItem } from 'soapbox/components/list.tsx';
-import {
-  Button,
-  Column,
-  Form,
-  FormActions,
-  FormGroup,
-  HStack,
-  Input,
-  Streamfield,
-  Textarea,
-  Toggle,
-} from 'soapbox/components/ui/index.ts';
+import { Button } from 'soapbox/components/ui/button.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import FormActions from 'soapbox/components/ui/form-actions.tsx';
+import FormGroup from 'soapbox/components/ui/form-group.tsx';
+import Form from 'soapbox/components/ui/form.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Input from 'soapbox/components/ui/input.tsx';
+import Streamfield from 'soapbox/components/ui/streamfield.tsx';
+import Textarea from 'soapbox/components/ui/textarea.tsx';
+import Toggle from 'soapbox/components/ui/toggle.tsx';
 import { useImageField } from 'soapbox/hooks/forms/index.ts';
-import { useAppDispatch, useOwnAccount, useFeatures, useInstance, useAppSelector } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
+import { useInstance } from 'soapbox/hooks/useInstance.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
 import toast from 'soapbox/toast.tsx';
 import { isDefaultAvatar, isDefaultHeader } from 'soapbox/utils/accounts.ts';
 
 import AvatarPicker from './components/avatar-picker.tsx';
 import HeaderPicker from './components/header-picker.tsx';
 
-import type { StreamfieldComponent } from 'soapbox/components/ui/streamfield/streamfield.tsx';
+import type { StreamfieldComponent } from 'soapbox/components/ui/streamfield.tsx';
 import type { Account } from 'soapbox/schemas/index.ts';
 
 const nonDefaultAvatar = (url: string | undefined) => url && isDefaultAvatar(url) ? undefined : url;

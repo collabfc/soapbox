@@ -4,8 +4,11 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { changeComposeSpoilerness, changeComposeSpoilerText } from 'soapbox/actions/compose.ts';
 import AutosuggestInput, { IAutosuggestInput } from 'soapbox/components/autosuggest-input.tsx';
-import { Divider, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useCompose } from 'soapbox/hooks/index.ts';
+import Divider from 'soapbox/components/ui/divider.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useCompose } from 'soapbox/hooks/useCompose.ts';
 
 const messages = defineMessages({
   title: { id: 'compose_form.spoiler_title', defaultMessage: 'Sensitive content' },

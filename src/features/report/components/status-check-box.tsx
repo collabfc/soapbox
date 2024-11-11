@@ -3,8 +3,9 @@ import { Suspense } from 'react';
 
 import { toggleStatusReport } from 'soapbox/actions/reports.ts';
 import StatusContent from 'soapbox/components/status-content.tsx';
-import { Toggle } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import Toggle from 'soapbox/components/ui/toggle.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 import { MediaGallery, Video, Audio } from '../../ui/util/async-components.ts';
 

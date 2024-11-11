@@ -3,8 +3,17 @@ import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { remoteInteraction } from 'soapbox/actions/interactions.ts';
-import { Button, Form, Input, Modal, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useAppDispatch, useFeatures, useInstance, useRegistrationStatus } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import Form from 'soapbox/components/ui/form.tsx';
+import Input from 'soapbox/components/ui/input.tsx';
+import Modal from 'soapbox/components/ui/modal.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
+import { useInstance } from 'soapbox/hooks/useInstance.ts';
+import { useRegistrationStatus } from 'soapbox/hooks/useRegistrationStatus.ts';
 import { selectAccount } from 'soapbox/selectors/index.ts';
 import toast from 'soapbox/toast.tsx';
 

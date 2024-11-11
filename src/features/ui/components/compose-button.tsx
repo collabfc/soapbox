@@ -4,8 +4,10 @@ import { useLocation, useRouteMatch } from 'react-router-dom';
 import { groupComposeModal } from 'soapbox/actions/compose.ts';
 import { openModal } from 'soapbox/actions/modals.ts';
 import { useGroupLookup } from 'soapbox/api/hooks/index.ts';
-import { Avatar, Button, HStack } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import Avatar from 'soapbox/components/ui/avatar.tsx';
+import Button from 'soapbox/components/ui/button.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 
 const ComposeButton = () => {
   const location = useLocation();

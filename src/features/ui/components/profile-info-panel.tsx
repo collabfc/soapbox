@@ -9,8 +9,12 @@ import { usePatronUser } from 'soapbox/api/hooks/index.ts';
 import Badge from 'soapbox/components/badge.tsx';
 import Markup from 'soapbox/components/markup.tsx';
 import { dateFormatOptions } from 'soapbox/components/relative-timestamp.tsx';
-import { Icon, HStack, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useSoapboxConfig } from 'soapbox/hooks/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 import { capitalize } from 'soapbox/utils/strings.ts';
 
 import ProfileFamiliarFollowers from './profile-familiar-followers.tsx';

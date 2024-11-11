@@ -5,9 +5,15 @@ import { useRef, useState } from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 import { patchMe } from 'soapbox/actions/me.ts';
-import IconButton from 'soapbox/components/ui/icon-button/icon-button.tsx';
-import { Button, Stack, Text, Avatar, Icon, Spinner } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useOwnAccount } from 'soapbox/hooks/index.ts';
+import Avatar from 'soapbox/components/ui/avatar.tsx';
+import Button from 'soapbox/components/ui/button.tsx';
+import IconButton from 'soapbox/components/ui/icon-button.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
 import toast from 'soapbox/toast.tsx';
 import { isDefaultAvatar } from 'soapbox/utils/accounts.ts';
 import resizeImage from 'soapbox/utils/resize-image.ts';

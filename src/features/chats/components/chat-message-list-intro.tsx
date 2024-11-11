@@ -5,9 +5,15 @@ import { useHistory } from 'react-router-dom';
 
 import { openModal } from 'soapbox/actions/modals.ts';
 import Link from 'soapbox/components/link.tsx';
-import { Avatar, Button, HStack, Icon, Stack, Text } from 'soapbox/components/ui/index.ts';
+import Avatar from 'soapbox/components/ui/avatar.tsx';
+import Button from 'soapbox/components/ui/button.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
 import { useChatContext } from 'soapbox/contexts/chat-context.tsx';
-import { useAppDispatch, useFeatures } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 import { useChatActions } from 'soapbox/queries/chats.ts';
 import { secondsToDays } from 'soapbox/utils/numbers.tsx';
 

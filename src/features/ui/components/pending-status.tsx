@@ -3,11 +3,13 @@ import clsx from 'clsx';
 import Account from 'soapbox/components/account.tsx';
 import StatusContent from 'soapbox/components/status-content.tsx';
 import StatusReplyMentions from 'soapbox/components/status-reply-mentions.tsx';
-import { Card, HStack, Stack } from 'soapbox/components/ui/index.ts';
+import { Card } from 'soapbox/components/ui/card.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
 import PlaceholderCard from 'soapbox/features/placeholder/components/placeholder-card.tsx';
 import PlaceholderMediaGallery from 'soapbox/features/placeholder/components/placeholder-media-gallery.tsx';
 import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container.tsx';
-import { useAppSelector } from 'soapbox/hooks/index.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 import { buildStatus } from '../util/pending-status-builder.ts';
 

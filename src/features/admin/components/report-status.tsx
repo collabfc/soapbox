@@ -7,8 +7,9 @@ import { deleteStatusModal } from 'soapbox/actions/moderation.tsx';
 import DropdownMenu from 'soapbox/components/dropdown-menu/index.ts';
 import StatusContent from 'soapbox/components/status-content.tsx';
 import StatusMedia from 'soapbox/components/status-media.tsx';
-import { HStack, Stack } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 
 import type { AdminReport, Status } from 'soapbox/types/entities.ts';
 

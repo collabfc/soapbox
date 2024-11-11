@@ -4,8 +4,12 @@ import { FormattedDate, FormattedMessage, defineMessages, useIntl } from 'react-
 import { openModal } from 'soapbox/actions/modals.ts';
 import { useAnnouncements } from 'soapbox/api/hooks/admin/useAnnouncements.ts';
 import ScrollableList from 'soapbox/components/scrollable-list.tsx';
-import { Button, Column, HStack, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 import { AdminAnnouncement } from 'soapbox/schemas/index.ts';
 import toast from 'soapbox/toast.tsx';
 

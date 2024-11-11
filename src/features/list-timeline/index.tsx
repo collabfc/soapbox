@@ -7,9 +7,13 @@ import { openModal } from 'soapbox/actions/modals.ts';
 import { expandListTimeline } from 'soapbox/actions/timelines.ts';
 import { useListStream } from 'soapbox/api/hooks/index.ts';
 import MissingIndicator from 'soapbox/components/missing-indicator.tsx';
-import { Column, Button, Spinner } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector, useTheme } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { useIsMobile } from 'soapbox/hooks/useIsMobile.ts';
+import { useTheme } from 'soapbox/hooks/useTheme.ts';
 
 import Timeline from '../ui/components/timeline.tsx';
 

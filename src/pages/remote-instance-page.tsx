@@ -1,13 +1,13 @@
+import Layout from 'soapbox/components/ui/layout.tsx';
 import LinkFooter from 'soapbox/features/ui/components/link-footer.tsx';
 import {
   PromoPanel,
   InstanceInfoPanel,
   InstanceModerationPanel,
 } from 'soapbox/features/ui/util/async-components.ts';
-import { useAppSelector, useOwnAccount } from 'soapbox/hooks/index.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
 import { federationRestrictionsDisclosed } from 'soapbox/utils/state.ts';
-
-import { Layout } from '../components/ui/index.ts';
 
 interface IRemoteInstancePage {
   params?: {

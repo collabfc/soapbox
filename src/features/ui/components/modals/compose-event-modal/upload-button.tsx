@@ -3,8 +3,9 @@ import { useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import Icon from 'soapbox/components/icon.tsx';
-import { HStack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppSelector } from 'soapbox/hooks/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 interface IUploadButton {
   disabled?: boolean;

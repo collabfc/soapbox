@@ -4,8 +4,15 @@ import { defineMessages, FormattedDate, useIntl } from 'react-intl';
 
 import { openModal } from 'soapbox/actions/modals.ts';
 import { fetchOAuthTokens, revokeOAuthTokenById } from 'soapbox/actions/security.ts';
-import { Button, Card, CardBody, CardHeader, CardTitle, Column, HStack, Spinner, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import { Card, CardBody, CardHeader, CardTitle } from 'soapbox/components/ui/card.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { Token } from 'soapbox/reducers/security.ts';
 
 const messages = defineMessages({

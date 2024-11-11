@@ -18,9 +18,12 @@ import { openModal } from 'soapbox/actions/modals.ts';
 import AudioPlaceHolder from 'soapbox/assets/images/audio-placeholder.png';
 import VideoPlaceHolder from 'soapbox/assets/images/video-placeholder.png';
 import Blurhash from 'soapbox/components/blurhash.tsx';
-import { HStack, Icon, IconButton } from 'soapbox/components/ui/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import IconButton from 'soapbox/components/ui/icon-button.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
 import Motion from 'soapbox/features/ui/util/optional-motion.tsx';
-import { useAppDispatch, useSettings } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useSettings } from 'soapbox/hooks/useSettings.ts';
 import { Attachment } from 'soapbox/types/entities.ts';
 
 export const MIMETYPE_ICONS: Record<string, string> = {

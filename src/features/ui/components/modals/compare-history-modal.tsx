@@ -5,8 +5,13 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { fetchHistory } from 'soapbox/actions/history.ts';
 import AttachmentThumbs from 'soapbox/components/attachment-thumbs.tsx';
-import { HStack, Modal, Spinner, Stack, Text } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Modal from 'soapbox/components/ui/modal.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 import type { StatusEdit as StatusEditEntity } from 'soapbox/types/entities.ts';
 

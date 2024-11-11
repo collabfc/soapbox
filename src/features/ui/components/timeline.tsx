@@ -6,8 +6,9 @@ import { defineMessages } from 'react-intl';
 import { dequeueTimeline, scrollTopTimeline } from 'soapbox/actions/timelines.ts';
 import ScrollTopButton from 'soapbox/components/scroll-top-button.tsx';
 import StatusList, { IStatusList } from 'soapbox/components/status-list.tsx';
-import { Portal } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useAppDispatch } from 'soapbox/hooks/index.ts';
+import Portal from 'soapbox/components/ui/portal.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { makeGetStatusIds } from 'soapbox/selectors/index.ts';
 
 const messages = defineMessages({

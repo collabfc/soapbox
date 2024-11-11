@@ -1,3 +1,4 @@
+import Layout from 'soapbox/components/ui/layout.tsx';
 import LinkFooter from 'soapbox/features/ui/components/link-footer.tsx';
 import {
   WhoToFollowPanel,
@@ -5,9 +6,8 @@ import {
   SignUpPanel,
   CtaBanner,
 } from 'soapbox/features/ui/util/async-components.ts';
-import { useAppSelector, useFeatures } from 'soapbox/hooks/index.ts';
-
-import { Layout } from '../components/ui/index.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 
 interface IDefaultPage {
   children: React.ReactNode;

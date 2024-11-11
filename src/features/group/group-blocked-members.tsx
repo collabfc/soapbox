@@ -5,8 +5,12 @@ import { fetchGroupBlocks, groupUnblock } from 'soapbox/actions/groups.ts';
 import { useAccount, useGroup } from 'soapbox/api/hooks/index.ts';
 import Account from 'soapbox/components/account.tsx';
 import ScrollableList from 'soapbox/components/scrollable-list.tsx';
-import { Button, Column, HStack, Spinner } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import Button from 'soapbox/components/ui/button.tsx';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import toast from 'soapbox/toast.tsx';
 
 import ColumnForbidden from '../ui/components/column-forbidden.tsx';

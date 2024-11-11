@@ -7,10 +7,16 @@ import { useHistory } from 'react-router-dom';
 import { openModal } from 'soapbox/actions/modals.ts';
 import DropdownMenu from 'soapbox/components/dropdown-menu/index.ts';
 import RelativeTimestamp from 'soapbox/components/relative-timestamp.tsx';
-import { Avatar, HStack, IconButton, Stack, Text } from 'soapbox/components/ui/index.ts';
+import Avatar from 'soapbox/components/ui/avatar.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import IconButton from 'soapbox/components/ui/icon-button.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
 import VerificationBadge from 'soapbox/components/verification-badge.tsx';
 import { useChatContext } from 'soapbox/contexts/chat-context.tsx';
-import { useAppDispatch, useAppSelector, useFeatures } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 import { IChat, useChatActions } from 'soapbox/queries/chats.ts';
 
 import type { Menu } from 'soapbox/components/dropdown-menu/index.ts';

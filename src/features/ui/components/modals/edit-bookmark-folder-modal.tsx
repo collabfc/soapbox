@@ -6,11 +6,16 @@ import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
 import { closeModal } from 'soapbox/actions/modals.ts';
 import { useBookmarkFolder, useUpdateBookmarkFolder } from 'soapbox/api/hooks/index.ts';
-import { Emoji, HStack, Icon, Input, Modal } from 'soapbox/components/ui/index.ts';
+import Emoji from 'soapbox/components/ui/emoji.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Input from 'soapbox/components/ui/input.tsx';
+import Modal from 'soapbox/components/ui/modal.tsx';
 import EmojiPickerDropdown from 'soapbox/features/emoji/components/emoji-picker-dropdown.tsx';
 import { messages as emojiMessages } from 'soapbox/features/emoji/containers/emoji-picker-dropdown-container.tsx';
 import { useTextField } from 'soapbox/hooks/forms/index.ts';
-import { useAppDispatch, useClickOutside } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useClickOutside } from 'soapbox/hooks/useClickOutside.ts';
 import toast from 'soapbox/toast.tsx';
 
 import type { Emoji as EmojiType } from 'soapbox/features/emoji/index.ts';

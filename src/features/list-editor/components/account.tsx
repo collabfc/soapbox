@@ -4,9 +4,10 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { removeFromListEditor, addToListEditor } from 'soapbox/actions/lists.ts';
 import IconButton from 'soapbox/components/icon-button.tsx';
-import { HStack } from 'soapbox/components/ui/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
 import AccountContainer from 'soapbox/containers/account-container.tsx';
-import { useAppSelector, useAppDispatch } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 const messages = defineMessages({
   remove: { id: 'lists.account.remove', defaultMessage: 'Remove from list' },

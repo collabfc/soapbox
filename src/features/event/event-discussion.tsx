@@ -8,10 +8,11 @@ import { fetchStatusWithContext, fetchNext } from 'soapbox/actions/statuses.ts';
 import MissingIndicator from 'soapbox/components/missing-indicator.tsx';
 import ScrollableList from 'soapbox/components/scrollable-list.tsx';
 import Tombstone from 'soapbox/components/tombstone.tsx';
-import { Stack } from 'soapbox/components/ui/index.ts';
+import Stack from 'soapbox/components/ui/stack.tsx';
 import PlaceholderStatus from 'soapbox/features/placeholder/components/placeholder-status.tsx';
 import PendingStatus from 'soapbox/features/ui/components/pending-status.tsx';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { makeGetStatus } from 'soapbox/selectors/index.ts';
 
 import ComposeForm from '../compose/components/compose-form.tsx';

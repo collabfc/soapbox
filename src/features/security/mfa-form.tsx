@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import { fetchMfa } from 'soapbox/actions/mfa.ts';
-import { Column, Stack } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useAppDispatch } from 'soapbox/hooks/index.ts';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 import DisableOtpForm from './mfa/disable-otp-form.tsx';
 import EnableOtpForm from './mfa/enable-otp-form.tsx';

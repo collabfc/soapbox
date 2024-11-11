@@ -4,9 +4,10 @@ import { Virtuoso } from 'react-virtuoso';
 
 import { fetchChats } from 'soapbox/actions/chats.ts';
 import PullToRefresh from 'soapbox/components/pull-to-refresh.tsx';
-import { Spinner, Stack } from 'soapbox/components/ui/index.ts';
+import Spinner from 'soapbox/components/ui/spinner.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
 import PlaceholderChat from 'soapbox/features/placeholder/components/placeholder-chat.tsx';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 import { useChats } from 'soapbox/queries/chats.ts';
 
 import ChatListItem from './chat-list-item.tsx';

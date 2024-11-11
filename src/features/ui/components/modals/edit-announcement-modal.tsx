@@ -3,9 +3,16 @@ import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 
 import { closeModal } from 'soapbox/actions/modals.ts';
 import { useAnnouncements } from 'soapbox/api/hooks/admin/useAnnouncements.ts';
-import { Datetime } from 'soapbox/components/ui/datetime/datetime.tsx';
-import { Form, FormGroup, HStack, Modal, Stack, Text, Textarea, Toggle } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import { Datetime } from 'soapbox/components/ui/datetime.tsx';
+import FormGroup from 'soapbox/components/ui/form-group.tsx';
+import Form from 'soapbox/components/ui/form.tsx';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import Modal from 'soapbox/components/ui/modal.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import Textarea from 'soapbox/components/ui/textarea.tsx';
+import Toggle from 'soapbox/components/ui/toggle.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 import toast from 'soapbox/toast.tsx';
 
 import type { AdminAnnouncement } from 'soapbox/schemas/index.ts';

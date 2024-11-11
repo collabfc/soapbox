@@ -6,7 +6,12 @@ import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 import { useRouteMatch } from 'react-router-dom';
 
 import { useGroup, useGroupMembershipRequests } from 'soapbox/api/hooks/index.ts';
-import { Column, Icon, Layout, Stack, Text, Tabs } from 'soapbox/components/ui/index.ts';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Layout from 'soapbox/components/ui/layout.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
+import Tabs from 'soapbox/components/ui/tabs.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
 import GroupHeader from 'soapbox/features/group/components/group-header.tsx';
 import LinkFooter from 'soapbox/features/ui/components/link-footer.tsx';
 import {
@@ -15,7 +20,8 @@ import {
   SignUpPanel,
   SuggestedGroupsPanel,
 } from 'soapbox/features/ui/util/async-components.ts';
-import { useFeatures, useOwnAccount } from 'soapbox/hooks/index.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
 
 import type { Group } from 'soapbox/schemas/index.ts';
 

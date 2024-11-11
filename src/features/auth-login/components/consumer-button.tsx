@@ -8,8 +8,9 @@ import keyIcon from '@tabler/icons/outline/key.svg';
 import { useIntl, defineMessages } from 'react-intl';
 
 import { prepareRequest } from 'soapbox/actions/consumer-auth.ts';
-import { IconButton, Tooltip } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch } from 'soapbox/hooks/index.ts';
+import IconButton from 'soapbox/components/ui/icon-button.tsx';
+import Tooltip from 'soapbox/components/ui/tooltip.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 import { capitalize } from 'soapbox/utils/strings.ts';
 
 const messages = defineMessages({

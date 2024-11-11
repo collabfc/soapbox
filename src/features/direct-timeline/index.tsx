@@ -5,8 +5,9 @@ import { directComposeById } from 'soapbox/actions/compose.ts';
 import { expandDirectTimeline } from 'soapbox/actions/timelines.ts';
 import { useDirectStream } from 'soapbox/api/hooks/index.ts';
 import AccountSearch from 'soapbox/components/account-search.tsx';
-import { Column } from 'soapbox/components/ui/index.ts';
-import { useAppSelector, useAppDispatch } from 'soapbox/hooks/index.ts';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 
 import Timeline from '../ui/components/timeline.tsx';
 

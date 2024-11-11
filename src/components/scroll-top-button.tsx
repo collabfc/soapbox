@@ -3,8 +3,9 @@ import throttle from 'lodash/throttle';
 import { useState, useEffect, useCallback } from 'react';
 import { useIntl, MessageDescriptor } from 'react-intl';
 
-import { Icon, Text } from 'soapbox/components/ui/index.ts';
-import { useSettings } from 'soapbox/hooks/index.ts';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Text from 'soapbox/components/ui/text.tsx';
+import { useSettings } from 'soapbox/hooks/useSettings.ts';
 
 interface IScrollTopButton {
   /** Callback when clicked, and also when scrolled to the top. */

@@ -2,8 +2,12 @@ import { useState, useEffect, useRef, cloneElement } from 'react';
 
 import { simpleEmojiReact } from 'soapbox/actions/emoji-reacts.ts';
 import { openModal } from 'soapbox/actions/modals.ts';
-import { EmojiSelector, Portal } from 'soapbox/components/ui/index.ts';
-import { useAppDispatch, useAppSelector, useOwnAccount, useSoapboxConfig } from 'soapbox/hooks/index.ts';
+import EmojiSelector from 'soapbox/components/ui/emoji-selector.tsx';
+import Portal from 'soapbox/components/ui/portal.tsx';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
+import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 import { userTouching } from 'soapbox/is-mobile.ts';
 import { getReactForStatus } from 'soapbox/utils/emoji-reacts.ts';
 

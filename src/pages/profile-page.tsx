@@ -2,7 +2,9 @@ import { FormattedMessage } from 'react-intl';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { useAccountLookup } from 'soapbox/api/hooks/index.ts';
-import { Column, Layout, Tabs } from 'soapbox/components/ui/index.ts';
+import { Column } from 'soapbox/components/ui/column.tsx';
+import Layout from 'soapbox/components/ui/layout.tsx';
+import Tabs from 'soapbox/components/ui/tabs.tsx';
 import Header from 'soapbox/features/account/components/header.tsx';
 import LinkFooter from 'soapbox/features/ui/components/link-footer.tsx';
 import {
@@ -15,7 +17,9 @@ import {
   PinnedAccountsPanel,
   AccountNotePanel,
 } from 'soapbox/features/ui/util/async-components.ts';
-import { useAppSelector, useFeatures, useSoapboxConfig } from 'soapbox/hooks/index.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
+import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
+import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 import { getAcct } from 'soapbox/utils/accounts.ts';
 
 interface IProfilePage {

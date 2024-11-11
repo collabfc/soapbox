@@ -15,12 +15,16 @@ import { fetchNext, fetchStatusWithContext } from 'soapbox/actions/statuses.ts';
 import ExtendedVideoPlayer from 'soapbox/components/extended-video-player.tsx';
 import MissingIndicator from 'soapbox/components/missing-indicator.tsx';
 import StatusActionBar from 'soapbox/components/status-action-bar.tsx';
-import { Icon, IconButton, HStack, Stack } from 'soapbox/components/ui/index.ts';
+import HStack from 'soapbox/components/ui/hstack.tsx';
+import IconButton from 'soapbox/components/ui/icon-button.tsx';
+import Icon from 'soapbox/components/ui/icon.tsx';
+import Stack from 'soapbox/components/ui/stack.tsx';
 import Audio from 'soapbox/features/audio/index.tsx';
 import PlaceholderStatus from 'soapbox/features/placeholder/components/placeholder-status.tsx';
 import Thread from 'soapbox/features/status/components/thread.tsx';
 import Video from 'soapbox/features/video/index.tsx';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks/index.ts';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { userTouching } from 'soapbox/is-mobile.ts';
 import { makeGetStatus } from 'soapbox/selectors/index.ts';
 
