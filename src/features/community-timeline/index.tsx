@@ -44,7 +44,7 @@ const CommunityTimeline = () => {
     <Column className='-mt-3 sm:mt-0' label={instance.domain} transparent={!isMobile}>
       <PullToRefresh onRefresh={handleRefresh}>
         <Timeline
-          className='black:p-0 black:sm:p-5'
+          className='black:p-1 black:sm:p-5'
           scrollKey={`${timelineId}_timeline`}
           timelineId={`${timelineId}${onlyMedia ? ':media' : ''}`}
           prefix='home'
