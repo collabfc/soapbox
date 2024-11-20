@@ -36,18 +36,21 @@ interface IStatusActionButton extends React.ButtonHTMLAttributes<HTMLButtonEleme
   color?: Color;
   filled?: boolean;
   emoji?: EmojiReaction;
-  text?: React.ReactNode;
   theme?: 'default' | 'inverse';
 }
 
 const StatusActionButton = forwardRef<HTMLButtonElement, IStatusActionButton>((props, ref): JSX.Element => {
-  const { icon, className, iconClassName, active, color, filled = false, count = 0, emoji, text, theme = 'default', ...filteredProps } = props;
+  const { icon, className, iconClassName, active, color, filled = false, count = 0, emoji, theme = 'default', ...filteredProps } = props;
 
   const renderIcon = () => {
     if (emoji) {
       return (
-        <span className='flex size-6 items-center justify-center'>
-          <Emoji className='size-full p-0.5' emoji={emoji.name} src={emoji.url} />
+        <span className='flex size-6 items-center justify-center p-0.5'>
+          {emoji.url ? (
+            <img src={emoji.url} alt={emoji.name} className='w-full' />
+          ) : (
+            <Emoji size={18} emoji={emoji.name} />
+          )}
         </span>
       );
     } else {
@@ -66,13 +69,7 @@ const StatusActionButton = forwardRef<HTMLButtonElement, IStatusActionButton>((p
   };
 
   const renderText = () => {
-    if (text) {
-      return (
-        <Text tag='span' theme='inherit' size='sm'>
-          {text}
-        </Text>
-      );
-    } else if (count) {
+    if (count) {
       return (
         <StatusActionCounter count={count} />
       );
@@ -84,7 +81,7 @@ const StatusActionButton = forwardRef<HTMLButtonElement, IStatusActionButton>((p
       ref={ref}
       type='button'
       className={clsx(
-        'flex items-center rounded-full p-1 rtl:space-x-reverse',
+        'flex items-center space-x-1 rounded-full p-1 rtl:space-x-reverse',
         'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:ring-offset-0',
         {
           'text-gray-600 hover:text-gray-600 dark:hover:text-white bg-white dark:bg-transparent': theme === 'default',
@@ -93,8 +90,6 @@ const StatusActionButton = forwardRef<HTMLButtonElement, IStatusActionButton>((p
           'hover:text-gray-600 dark:hover:text-white': !filteredProps.disabled,
           'text-accent-300 hover:text-accent-300 dark:hover:text-accent-300': active && !emoji && color === COLORS.accent,
           'text-success-600 hover:text-success-600 dark:hover:text-success-600': active && !emoji && color === COLORS.success,
-          'space-x-1': !text,
-          'space-x-2': text,
         },
         className,
       )}

@@ -3,16 +3,17 @@ import dotsIcon from '@tabler/icons/outline/dots.svg';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
+import { chooseEmoji } from 'soapbox/actions/emojis.ts';
 import { closeModal, openModal } from 'soapbox/actions/modals.ts';
 import EmojiComponent from 'soapbox/components/ui/emoji.tsx';
 import HStack from 'soapbox/components/ui/hstack.tsx';
 import IconButton from 'soapbox/components/ui/icon-button.tsx';
-import EmojiPickerDropdown, { getFrequentlyUsedEmojis } from 'soapbox/features/emoji/components/emoji-picker-dropdown.tsx';
+import EmojiPickerDropdown from 'soapbox/features/emoji/components/emoji-picker-dropdown.tsx';
 import emojiData from 'soapbox/features/emoji/data.ts';
 import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
-import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { useClickOutside } from 'soapbox/hooks/useClickOutside.ts';
 import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
+import { useFrequentlyUsedEmojis } from 'soapbox/hooks/useFrequentlyUsedEmojis.ts';
 import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 import { userTouching } from 'soapbox/is-mobile.ts';
 
@@ -40,7 +41,9 @@ const EmojiButton: React.FC<IEmojiButton> = ({ emoji, className, onClick, tabInd
 
   return (
     <button className={clsx(className)} onClick={handleClick} tabIndex={tabIndex}>
-      <EmojiComponent className='size-6 duration-100 hover:scale-110' emoji={emoji} />
+      <div className='flex items-center justify-center duration-100 hover:scale-110'>
+        <EmojiComponent size={24} emoji={emoji} />
+      </div>
     </button>
   );
 };
@@ -71,7 +74,7 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
 }): JSX.Element => {
   const { allowedEmoji } = useSoapboxConfig();
   const { customEmojiReacts } = useFeatures();
-  const shortcodes = useAppSelector((state) => getFrequentlyUsedEmojis(state));
+  const frequentlyUsedEmojis = useFrequentlyUsedEmojis();
 
   const dispatch = useAppDispatch();
   const [expanded, setExpanded] = useState(false);
@@ -96,6 +99,25 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
     }
   };
 
+  const handleReact = (emoji: string) => {
+    // Reverse lookup...
+    // This is hell.
+    const data = Object.values(emojiData.emojis).find((e) => e.skins.some((s) => s.native === emoji));
+    const skin = data?.skins.find((s) => s.native === emoji);
+
+    if (data && skin) {
+      dispatch(chooseEmoji({
+        id: data.id,
+        colons: `:${data.id}:`,
+        custom: false,
+        native: skin.native,
+        unified: skin.unified,
+      }));
+    }
+
+    onReact(emoji);
+  };
+
   const handlePickEmoji = (emoji: Emoji) => {
     onReact(emoji.custom ? emoji.id : emoji.native, emoji.custom ? emoji.imageUrl : undefined);
   };
@@ -116,7 +138,8 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
     onClose?.();
   });
 
-  const recentEmojis = shortcodes.reduce<string[]>((results, shortcode) => {
+  /** Frequently used emojis converted from shortcodes to native. */
+  const frequentNative = frequentlyUsedEmojis.reduce<string[]>((results, shortcode) => {
     const emoji = emojiData.emojis[shortcode]?.skins[0]?.native;
     if (emoji) {
       results.push(emoji);
@@ -124,7 +147,8 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
     return results;
   }, []);
 
-  const emojis = new Set([...recentEmojis, ...allowedEmoji]);
+  /** Set of native emojis to display in the selector. */
+  const emojis = new Set([...frequentNative, ...allowedEmoji]);
 
   return (
     <div
@@ -155,7 +179,7 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
             <EmojiButton
               key={i}
               emoji={emoji}
-              onClick={onReact}
+              onClick={handleReact}
               tabIndex={visible ? 0 : -1}
             />
           ))}

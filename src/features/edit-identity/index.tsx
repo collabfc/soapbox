@@ -129,7 +129,7 @@ const EditIdentity: React.FC<IEditIdentity> = () => {
                         {(account.source?.nostr?.nip05 === identifier && account.acct !== identifier) && (
                           <Tooltip text={intl.formatMessage(messages.unverified)}>
                             <div>
-                              <Emoji className='size-4' emoji='⚠️' />
+                              <Emoji emoji='⚠️' />
                             </div>
                           </Tooltip>
                         )}
@@ -174,7 +174,7 @@ const EditIdentity: React.FC<IEditIdentity> = () => {
   );
 };
 
-const UsernameInput: React.FC<React.ComponentProps<typeof Input>> = (props) => {
+export const UsernameInput: React.FC<React.ComponentProps<typeof Input>> = (props) => {
   const intl = useIntl();
   const { instance } = useInstance();
 

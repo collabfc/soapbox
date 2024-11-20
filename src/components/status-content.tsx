@@ -1,11 +1,11 @@
 import chevronRightIcon from '@tabler/icons/outline/chevron-right.svg';
 import clsx from 'clsx';
-import parse, { Element, type HTMLReactParserOptions, domToReact, type DOMNode } from 'html-react-parser';
+import graphemesplit from 'graphemesplit';
+import parse, { Element, type HTMLReactParserOptions, domToReact, type DOMNode, Text as DOMText } from 'html-react-parser';
 import { useState, useRef, useLayoutEffect, useMemo, memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import Icon from 'soapbox/components/icon.tsx';
-import { onlyEmoji as isOnlyEmoji } from 'soapbox/utils/rich-content.ts';
 
 import { getTextDirection } from '../utils/rtl.ts';
 
@@ -49,9 +49,13 @@ const StatusContent: React.FC<IStatusContent> = ({
   textSize = 'md',
 }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [onlyEmoji, setOnlyEmoji] = useState(false);
 
   const node = useRef<HTMLDivElement>(null);
+
+  const isOnlyEmoji = useMemo(() => {
+    const textContent = new DOMParser().parseFromString(status.content, 'text/html').body.textContent ?? '';
+    return Boolean(/^\p{Extended_Pictographic}+$/u.test(textContent) && (graphemesplit(textContent).length <= BIG_EMOJI_LIMIT));
+  }, [status.content]);
 
   const maybeSetCollapsed = (): void => {
     if (!node.current) return;
@@ -63,23 +67,13 @@ const StatusContent: React.FC<IStatusContent> = ({
     }
   };
 
-  const maybeSetOnlyEmoji = (): void => {
-    if (!node.current) return;
-    const only = isOnlyEmoji(node.current, BIG_EMOJI_LIMIT, true);
-
-    if (only !== onlyEmoji) {
-      setOnlyEmoji(only);
-    }
-  };
-
   useLayoutEffect(() => {
     maybeSetCollapsed();
-    maybeSetOnlyEmoji();
   });
 
   const parsedHtml = useMemo((): string => {
-    return translatable && status.translation ? status.translation.get('content')! : status.contentHtml;
-  }, [status.contentHtml, status.translation]);
+    return translatable && status.translation ? status.translation.get('content')! : status.content;
+  }, [status.content, status.translation]);
 
   if (status.content.length === 0) {
     return null;
@@ -93,6 +87,30 @@ const StatusContent: React.FC<IStatusContent> = ({
     replace(domNode) {
       if (domNode instanceof Element && ['script', 'iframe'].includes(domNode.name)) {
         return null;
+      }
+
+      if (domNode instanceof DOMText) {
+        const parts: Array<string | JSX.Element> = [];
+
+        const textNodes = domNode.data.split(/:\w+:/);
+        const shortcodes = [...domNode.data.matchAll(/:(\w+):/g)];
+
+        for (let i = 0; i < textNodes.length; i++) {
+          parts.push(textNodes[i]);
+
+          if (shortcodes[i]) {
+            const [text, shortcode] = shortcodes[i];
+            const customEmoji = status.emojis.find((e) => e.shortcode === shortcode);
+
+            if (customEmoji) {
+              parts.push(<img key={i} src={customEmoji.url} alt={shortcode} className='inline-block h-[1em]' />);
+            } else {
+              parts.push(text);
+            }
+          }
+        }
+
+        return <>{parts}</>;
       }
 
       if (domNode instanceof Element && domNode.name === 'a') {
@@ -149,7 +167,7 @@ const StatusContent: React.FC<IStatusContent> = ({
     'cursor-pointer': onClick,
     'whitespace-normal': withSpoiler,
     'max-h-[300px]': collapsed,
-    'leading-normal big-emoji': onlyEmoji,
+    'leading-normal !text-4xl': isOnlyEmoji,
   });
 
   if (onClick) {
@@ -184,7 +202,7 @@ const StatusContent: React.FC<IStatusContent> = ({
         tabIndex={0}
         key='content'
         className={clsx(baseClassName, {
-          'leading-normal big-emoji': onlyEmoji,
+          'leading-normal !text-4xl': isOnlyEmoji,
         })}
         direction={direction}
         lang={status.language || undefined}

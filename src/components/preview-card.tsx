@@ -5,7 +5,7 @@ import zoomInIcon from '@tabler/icons/outline/zoom-in.svg';
 import clsx from 'clsx';
 import he from 'he';
 import { List as ImmutableList } from 'immutable';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Blurhash from 'soapbox/components/blurhash.tsx';
 import HStack from 'soapbox/components/ui/hstack.tsx';
@@ -41,6 +41,8 @@ const PreviewCard: React.FC<IPreviewCard> = ({
   onOpenMedia,
   horizontal,
 }): JSX.Element => {
+  const ref = useRef<HTMLElement>(null);
+
   const [width, setWidth] = useState(defaultWidth);
   const [embedded, setEmbedded] = useState(false);
 
@@ -52,6 +54,14 @@ const PreviewCard: React.FC<IPreviewCard> = ({
 
   const trimmedTitle = he.decode(trim(card.title, maxTitle));
   const trimmedDescription = trim(card.description, maxDescription);
+
+  useEffect(() => {
+    if (ref.current) {
+      const { offsetWidth } = ref.current;
+      cacheWidth?.(offsetWidth);
+      setWidth(offsetWidth);
+    }
+  }, [ref.current]);
 
   const handlePhotoClick = () => {
     const attachment = normalizeAttachment({
@@ -79,16 +89,6 @@ const PreviewCard: React.FC<IPreviewCard> = ({
     }
   };
 
-  const setRef: React.RefCallback<HTMLElement> = c => {
-    if (c) {
-      if (cacheWidth) {
-        cacheWidth(c.offsetWidth);
-      }
-
-      setWidth(c.offsetWidth);
-    }
-  };
-
   const renderVideo = () => {
     const content = { __html: addAutoPlay(card.html) };
     const ratio = getRatio(card);
@@ -96,7 +96,6 @@ const PreviewCard: React.FC<IPreviewCard> = ({
 
     return (
       <div
-        ref={setRef}
         className='relative w-full flex-none overflow-hidden'
         dangerouslySetInnerHTML={content}
         style={{ height }}
@@ -221,7 +220,7 @@ const PreviewCard: React.FC<IPreviewCard> = ({
     }
 
     return (
-      <div className={className} ref={setRef}>
+      <div className={className} ref={ref as React.RefObject<HTMLDivElement>}>
         {embed}
         {description}
       </div>
@@ -249,7 +248,7 @@ const PreviewCard: React.FC<IPreviewCard> = ({
       className={clsx(className, 'cursor-pointer hover:bg-gray-100 hover:no-underline dark:hover:bg-primary-800/30')}
       target='_blank'
       rel='nofollow noopener'
-      ref={setRef}
+      ref={ref as React.RefObject<HTMLAnchorElement>}
       onClick={e => e.stopPropagation()}
     >
       {embed}
