@@ -14,13 +14,16 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 const { NODE_ENV, PORT } = process.env;
 
 export default defineConfig(() => {
+  const isProduction = NODE_ENV === 'production';
+  const domain = 'https://lounge.collabfc.com';
   const config: UserConfig = {
+    base: isProduction ? `${domain}/` : '/',
     build: {
       assetsDir: 'packs',
       assetsInlineLimit: 0,
       rollupOptions: {
         output: {
-          assetFileNames: 'packs/assets/[name]-[hash].[ext]',
+          assetFileNames: 'packs/assets/[name]-[hash].[ext]', 
           chunkFileNames: 'packs/js/[name]-[hash].js',
           entryFileNames: 'packs/[name]-[hash].js',
         },
@@ -118,12 +121,12 @@ export default defineConfig(() => {
 function buildCSP(env: string | undefined): string {
   const csp = [
     "default-src 'none'",
-    "script-src 'self' 'wasm-unsafe-eval'",
-    "style-src 'self' 'unsafe-inline'",
-    "frame-src 'self' https:",
-    "font-src 'self'",
+    "script-src https://lounge.collabfc.com 'self' 'wasm-unsafe-eval'",
+    "style-src https://lounge.collabfc.com 'self' 'unsafe-inline' ",
+    "frame-src https://lounge.collabfc.com 'self' https:",
+    "font-src https://lounge.collabfc.com 'self'",
     "base-uri 'self'",
-    "manifest-src 'self'",
+    "manifest-src https://lounge.collabfc.com 'self'",
   ];
 
   if (env === 'development') {
