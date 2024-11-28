@@ -13,6 +13,7 @@ import {
 } from 'soapbox/actions/profile-hover-card.ts';
 import { useAccount, usePatronUser } from 'soapbox/api/hooks/index.ts';
 import Badge from 'soapbox/components/badge.tsx';
+import Markup from 'soapbox/components/markup.tsx';
 import { Card, CardBody } from 'soapbox/components/ui/card.tsx';
 import HStack from 'soapbox/components/ui/hstack.tsx';
 import Icon from 'soapbox/components/ui/icon.tsx';
@@ -102,7 +103,6 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
   });
 
   if (!account) return null;
-  const accountBio = { __html: account.note_emojified };
   const memberSinceDate = intl.formatDate(account.created_at, { month: 'long', year: 'numeric' });
   const followedBy = me !== account.id && account.relationship?.followed_by === true;
 
@@ -145,7 +145,7 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
             ) : null}
 
             {account.note.length > 0 && (
-              <Text size='sm' dangerouslySetInnerHTML={accountBio} />
+              <Markup size='sm' emojis={account.emojis} html={{ __html: account.note }} />
             )}
           </Stack>
 

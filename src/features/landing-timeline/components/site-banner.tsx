@@ -28,8 +28,8 @@ const SiteBanner: React.FC = () => {
 
       <Markup
         size='md'
-        dangerouslySetInnerHTML={{ __html: description }}
         direction={getTextDirection(description)}
+        html={{ __html: description }}
       />
 
       <div className='container mx-auto'>
