@@ -114,9 +114,9 @@ const StatusDetails: React.FC<IStatusDetails> = (props) => {
 
   const titleMessage = (): string => {  
     if (status && status.card) {
-      return  '' + status.account.display_name + ' on CollabFC: "' + status.card.title + '"' ;
+      return  '' + status.card.title + '' ;
     }  else if (status && status.search_index) {
-      return  '' + status.account.display_name + ' on CollabFC: "' +  status.search_index + '"' ;
+      return  '' +  status.search_index + '' ;
     } else if (status && status.visibility === 'direct') {
       return intl.formatMessage(messages.titleDirect);
     }
