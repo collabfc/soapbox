@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import debounce from 'lodash/debounce';
+import { debounce } from 'es-toolkit';
 import { useRef, useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -89,7 +89,7 @@ const StatusList: React.FC<IStatusList> = ({
     if (onLoadMore && maxId) {
       onLoadMore(maxId.replace('末suggestions-', ''));
     }
-  }, 300, { leading: true }), [onLoadMore, lastStatusId, statusIds.last()]);
+  }, 300, { edges: ['leading'] }), [onLoadMore, lastStatusId, statusIds.last()]);
 
   const selectChild = (index: number) => {
     node.current?.scrollIntoView({
@@ -129,7 +129,6 @@ const StatusList: React.FC<IStatusList> = ({
         contextType={timelineId}
         showGroup={showGroup}
         variant={divideType === 'border' ? 'slim' : 'rounded'}
-        fromBookmarks={other.scrollKey === 'bookmarked_statuses'}
       />
     );
   };
