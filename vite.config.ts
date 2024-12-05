@@ -106,6 +106,7 @@ export default defineConfig(() => {
         { find: 'soapbox', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
       ],
     },
+    // @ts-ignore
     test: {
       globals: true,
       environment: 'jsdom',
