@@ -217,7 +217,7 @@ const Navbar = () => {
       </div>
       <div className='mx-auto mt-3 max-w-7xl px-4 sm:px-8 md:px-10 lg:px-12 file:dark:border-gray-800'>
         <div className='relative flex h-8 justify-between'>
-          <HStack space={3} alignItems='center' className=''>
+          <HStack space={3} alignItems='center' className='whitespace-nowrap'>
             <div className='relative flex items-center'>
               <NavLink 
                 to='/' 
@@ -244,8 +244,7 @@ const Navbar = () => {
               >
                 <FormattedMessage id='tabs_bar.country' defaultMessage='Country' />
               </NavLink>
-              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'>Teams</a>
-              <a href='https://www.collabfc.com/#about' className='mr-5 pb-2 font-normal dark:text-gray-100'>About</a>
+              <a href='https://www.collabfc.com/#teams' className='mr-5 pb-2 font-normal dark:text-gray-100'><FormattedMessage id='tabs_bar.teams' defaultMessage='All Teams' /></a>
             </div>
           </HStack>
         </div>

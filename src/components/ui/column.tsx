@@ -104,7 +104,7 @@ const Column = forwardRef<HTMLDivElement, IColumn>((props, ref): JSX.Element => 
               'rounded-t-3xl': !isScrolled && !transparent,
               'sticky top-12 z-10 bg-white/90 dark:bg-primary-900/90 black:bg-black/90 backdrop-blur lg:top-16': !transparent,
               'p-4 sm:p-0 sm:pb-4 black:p-4': transparent,
-              '-mt-4 p-4': size !== 'lg' && !transparent,
+              '-mt-0 py-3': size !== 'lg' && !transparent,
               '-mt-4 p-4 sm:-mt-6 sm:-mx-6 sm:p-6': size === 'lg' && !transparent,
             })}
             action={action}

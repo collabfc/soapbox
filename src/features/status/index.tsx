@@ -1,4 +1,4 @@
-import { debounce } from 'es-toolkit';
+import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Redirect } from 'react-router-dom';
@@ -82,7 +82,7 @@ const StatusDetails: React.FC<IStatusDetails> = (props) => {
         setNext(next);
       }).catch(() => { });
     }
-  }, 300, { edges: ['leading'] }), [next, status]);
+  }, 300, { leading: true }), [next, status]);
 
   const handleRefresh = () => {
     return fetchData();
@@ -114,9 +114,9 @@ const StatusDetails: React.FC<IStatusDetails> = (props) => {
 
   const titleMessage = (): string => {  
     if (status && status.card) {
-      return  '' + status.card.title + '' ;
+      return  '' + status.account.display_name + ' on CollabFC: "' + status.card.title + '"' ;
     }  else if (status && status.search_index) {
-      return  '' +  status.search_index + '' ;
+      return  '' + status.account.display_name + ' on CollabFC: "' +  status.search_index + '"' ;
     } else if (status && status.visibility === 'direct') {
       return intl.formatMessage(messages.titleDirect);
     }

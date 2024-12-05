@@ -23,7 +23,7 @@ export default defineConfig(() => {
       assetsInlineLimit: 0,
       rollupOptions: {
         output: {
-          assetFileNames: 'packs/assets/[name]-[hash].[ext]', 
+          assetFileNames: 'packs/assets/[name]-[hash].[ext]',
           chunkFileNames: 'packs/js/[name]-[hash].js',
           entryFileNames: 'packs/[name]-[hash].js',
         },

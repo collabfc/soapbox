@@ -1553,5 +1553,24 @@
   "video.pause": "Pausa",
   "video.play": "Avvia",
   "video.unmute": "Riattiva sonoro",
-  "who_to_follow.title": "Chi potresti seguire"
+  "who_to_follow.title": "Chi potresti seguire",
+  "siteBanner.bannerTitle": "{title} Centro Squadra CollabFC.",
+  "siteBanner.aboutTitle": "Informazioni su CollabFC",
+  "siteBanner.aboutDescription": "CollabFC funziona in modo un po' diverso rispetto alla maggior parte dei social network. Ogni squadra di calcio ha il proprio centro squadra dedicato, con un feed e un gruppo di utenti propri. Questi centri sono collegati tra loro per formare l'intera piattaforma. Ti unisci a una squadra e pubblichi nel suo centro squadra, ma puoi anche interagire con gli utenti di altri centri squadra.",
+  "siteBanner.localTimeline": "La Cronologia di {title}",
+  "siteBanner.localTimelineDescription": "ti mostra tutti i post creati dagli utenti di questo centro squadra.",
+  "siteBanner.leagueTimeline": "La Cronologia Nazionale",
+  "siteBanner.leagueTimelineDescription": "è dove puoi leggere tutti gli altri post di tutte le altre squadre; puoi seguire questi utenti e rispondere ai loro post.",
+  "siteBanner.seeAllTeams": "Vedi Tutte le Squadre",
+  "siteBanner.findOutMore": "sulla nostra pagina principale e scopri di più",
+  "siteBanner.aboutPlatform": "sulla piattaforma",
+  "tabs_bar.country": "Paese",
+  "tabs_bar.teams": "Tutte le squadre",
+  "tabs_bar.about": "Chi siamo",
+  "threadLogin.title": "Cos'è Collab FC? Unisciti a noi!",
+  "threadLogin.intro": "CollabFC è una piattaforma di social media unica, costruita attorno a una raccolta di hub digitali per squadre. Questo è l'hub di {siteTitle}.",
+  "threadLogin.engagement": "Ogni hub di squadra è uno spazio dedicato ai tifosi di un club, ma i fan di altri club possono anche commentare i post.",
+  "threadLogin.expansion": "Attualmente abbiamo 78 hub di squadre europee e prevediamo di espanderci fino a 200. Stiamo cercando fan che moderino l'hub della propria squadra. Visita la nostra pagina principale per vedere l'elenco completo delle squadre.",
+  "threadLogin.goal": "Consentendo l'auto-moderazione, vogliamo ridurre lo spam, migliorare la qualità dei post e creare una piattaforma sociale globale per il calcio."
 }
+
