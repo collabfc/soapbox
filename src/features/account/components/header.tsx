@@ -19,7 +19,6 @@ import userCheckIcon from '@tabler/icons/outline/user-check.svg';
 import userXIcon from '@tabler/icons/outline/user-x.svg';
 import userIcon from '@tabler/icons/outline/user.svg';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { List as ImmutableList } from 'immutable';
 import { nip19 } from 'nostr-tools';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
@@ -33,6 +32,7 @@ import { initMuteModal } from 'soapbox/actions/mutes.ts';
 import { initReport, ReportableEntities } from 'soapbox/actions/reports.ts';
 import { setSearchAccount } from 'soapbox/actions/search.ts';
 import { getSettings } from 'soapbox/actions/settings.ts';
+import { HTTPError } from 'soapbox/api/HTTPError.ts';
 import { useFollow } from 'soapbox/api/hooks/index.ts';
 import Badge from 'soapbox/components/badge.tsx';
 import DropdownMenu, { Menu } from 'soapbox/components/dropdown-menu/index.ts';
@@ -121,9 +121,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
   const createAndNavigateToChat = useMutation({
     mutationFn: (accountId: string) => getOrCreateChatByAccountId(accountId),
-    onError: (error: AxiosError) => {
-      const data = error.response?.data as any;
-      toast.error(data?.error);
+    onError: (error) => {
+      if (error instanceof HTTPError) {
+        toast.showAlertForError(error);
+      }
     },
     onSuccess: async (response) => {
       const data = await response.json();
@@ -266,7 +267,7 @@ const Header: React.FC<IHeader> = ({ account }) => {
       type: 'image',
       url: account.avatar,
     });
-    dispatch(openModal('MEDIA', { media: ImmutableList.of(avatar), index: 0 }));
+    dispatch(openModal('MEDIA', { media: ImmutableList.of(avatar).toJS(), index: 0 }));
   };
 
   const handleAvatarClick: React.MouseEventHandler = (e) => {
@@ -281,7 +282,7 @@ const Header: React.FC<IHeader> = ({ account }) => {
       type: 'image',
       url: account.header,
     });
-    dispatch(openModal('MEDIA', { media: ImmutableList.of(header), index: 0 }));
+    dispatch(openModal('MEDIA', { media: ImmutableList.of(header).toJS(), index: 0 }));
   };
 
   const handleHeaderClick: React.MouseEventHandler = (e) => {

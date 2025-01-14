@@ -7,7 +7,7 @@ import { useIntl, FormattedMessage, defineMessages } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
 
 import { mentionCompose, replyCompose } from 'soapbox/actions/compose.ts';
-import { toggleFavourite, toggleReblog } from 'soapbox/actions/interactions.ts';
+import { toggleFavourite } from 'soapbox/actions/interactions.ts';
 import { openModal } from 'soapbox/actions/modals.ts';
 import { toggleStatusHidden, unfilterStatus } from 'soapbox/actions/statuses.ts';
 import TranslateButton from 'soapbox/components/translate-button.tsx';
@@ -19,7 +19,9 @@ import AccountContainer from 'soapbox/containers/account-container.tsx';
 import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container.tsx';
 import { HotKeys } from 'soapbox/features/ui/components/hotkeys.tsx';
 import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
+import { useReblog } from 'soapbox/hooks/useReblog.ts';
 import { useSettings } from 'soapbox/hooks/useSettings.ts';
+import { Status as StatusEntity } from 'soapbox/schemas/index.ts';
 import { emojifyText } from 'soapbox/utils/emojify.tsx';
 import { defaultMediaVisibility, textForScreenReader, getActualStatus } from 'soapbox/utils/status.ts';
 
@@ -32,7 +34,7 @@ import SensitiveContentOverlay from './statuses/sensitive-content-overlay.tsx';
 import StatusInfo from './statuses/status-info.tsx';
 import Tombstone from './tombstone.tsx';
 
-import type { Status as StatusEntity } from 'soapbox/types/entities.ts';
+import type { Status as LegacyStatus } from 'soapbox/types/entities.ts';
 
 // Defined in components/scrollable-list
 export type ScrollPosition = { height: number; top: number };
@@ -44,7 +46,7 @@ const messages = defineMessages({
 export interface IStatus {
   id?: string;
   avatarSize?: number;
-  status: StatusEntity;
+  status: LegacyStatus;
   onClick?: () => void;
   muted?: boolean;
   hidden?: boolean;
@@ -60,6 +62,10 @@ export interface IStatus {
   accountAction?: React.ReactElement;
 }
 
+/**
+ * Legacy Status accepting a the full entity in immutable.
+ * @deprecated Use the PureStatus component.
+ */
 const Status: React.FC<IStatus> = (props) => {
   const {
     status,
@@ -97,6 +103,8 @@ const Status: React.FC<IStatus> = (props) => {
   const group = actualStatus.group;
 
   const filtered = (status.filtered.size || actualStatus.filtered.size) > 0;
+
+  const { toggleReblog } = useReblog();
 
   // Track height changes we know about to compensate scrolling.
   useEffect(() => {
@@ -146,7 +154,7 @@ const Status: React.FC<IStatus> = (props) => {
       if (firstAttachment.type === 'video') {
         dispatch(openModal('VIDEO', { status, media: firstAttachment, time: 0 }));
       } else {
-        dispatch(openModal('MEDIA', { status, media: status.media_attachments, index: 0 }));
+        dispatch(openModal('MEDIA', { status: status.toJS(), media: status.media_attachments.toJS(), index: 0 }));
       }
     }
   };
@@ -161,11 +169,11 @@ const Status: React.FC<IStatus> = (props) => {
   };
 
   const handleHotkeyBoost = (e?: KeyboardEvent): void => {
-    const modalReblog = () => dispatch(toggleReblog(actualStatus));
+    const modalReblog = () => toggleReblog(actualStatus.id);
     if ((e && e.shiftKey) || !boostModal) {
       modalReblog();
     } else {
-      dispatch(openModal('BOOST', { status: actualStatus, onReblog: modalReblog }));
+      dispatch(openModal('BOOST', { status: actualStatus.toJS(), onReblog: modalReblog }));
     }
   };
 
@@ -461,7 +469,7 @@ const Status: React.FC<IStatus> = (props) => {
                   {(quote || actualStatus.card || actualStatus.media_attachments.size > 0) && (
                     <Stack space={4}>
                       <StatusMedia
-                        status={actualStatus}
+                        status={actualStatus.toJS() as StatusEntity}
                         muted={muted}
                         onClick={handleClick}
                         showMedia={showMedia}

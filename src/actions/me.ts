@@ -7,7 +7,6 @@ import api from '../api/index.ts';
 import { verifyCredentials } from './auth.ts';
 import { importFetchedAccount } from './importer/index.ts';
 
-import type { RawAxiosRequestHeaders } from 'axios';
 import type { Account } from 'soapbox/schemas/index.ts';
 import type { AppDispatch, RootState } from 'soapbox/store.ts';
 import type { APIEntity } from 'soapbox/types/entities.ts';
@@ -54,18 +53,14 @@ const fetchMe = () =>
       .catch(error => dispatch(fetchMeFail(error)));
   };
 
-const patchMe = (params: Record<string, any>, isFormData = false) =>
+const patchMe = (params: Record<string, any> | FormData) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(patchMeRequest());
 
-    const headers: RawAxiosRequestHeaders = isFormData ? {
-      'Content-Type': 'multipart/form-data',
-    } : {};
-
     return api(getState)
-      .patch('/api/v1/accounts/update_credentials', params, { headers })
-      .then(response => {
-        dispatch(patchMeSuccess(response.data));
+      .patch('/api/v1/accounts/update_credentials', params)
+      .then((response) => response.json()).then((data) => {
+        dispatch(patchMeSuccess(data));
       }).catch(error => {
         dispatch(patchMeFail(error));
         throw error;

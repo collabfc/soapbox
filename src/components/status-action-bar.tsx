@@ -36,7 +36,7 @@ import { blockAccount } from 'soapbox/actions/accounts.ts';
 import { launchChat } from 'soapbox/actions/chats.ts';
 import { directCompose, mentionCompose, quoteCompose, replyCompose } from 'soapbox/actions/compose.ts';
 import { editEvent } from 'soapbox/actions/events.ts';
-import { pinToGroup, toggleBookmark, toggleDislike, toggleFavourite, togglePin, toggleReblog, unpinFromGroup } from 'soapbox/actions/interactions.ts';
+import { pinToGroup, toggleDislike, toggleFavourite, togglePin, unpinFromGroup } from 'soapbox/actions/interactions.ts';
 import { openModal } from 'soapbox/actions/modals.ts';
 import { deleteStatusModal, toggleStatusSensitivityModal } from 'soapbox/actions/moderation.tsx';
 import { initMuteModal } from 'soapbox/actions/mutes.ts';
@@ -44,7 +44,7 @@ import { initReport, ReportableEntities } from 'soapbox/actions/reports.ts';
 import { deleteStatus, editStatus, toggleMuteStatus } from 'soapbox/actions/statuses.ts';
 import { deleteFromTimelines } from 'soapbox/actions/timelines.ts';
 import { useDeleteGroupStatus } from 'soapbox/api/hooks/groups/useDeleteGroupStatus.ts';
-import { useBlockGroupMember, useGroup, useGroupRelationship, useMuteGroup, useUnmuteGroup } from 'soapbox/api/hooks/index.ts';
+import { useBlockGroupMember, useBookmark, useGroup, useGroupRelationship, useMuteGroup, useUnmuteGroup } from 'soapbox/api/hooks/index.ts';
 import DropdownMenu from 'soapbox/components/dropdown-menu/index.ts';
 import StatusActionButton from 'soapbox/components/status-action-button.tsx';
 import StatusReactionWrapper from 'soapbox/components/status-reaction-wrapper.tsx';
@@ -53,17 +53,17 @@ import { useAppDispatch } from 'soapbox/hooks/useAppDispatch.ts';
 import { useAppSelector } from 'soapbox/hooks/useAppSelector.ts';
 import { useFeatures } from 'soapbox/hooks/useFeatures.ts';
 import { useOwnAccount } from 'soapbox/hooks/useOwnAccount.ts';
+import { useReblog } from 'soapbox/hooks/useReblog.ts';
 import { useSettings } from 'soapbox/hooks/useSettings.ts';
-import { useSoapboxConfig } from 'soapbox/hooks/useSoapboxConfig.ts';
 import { GroupRoles } from 'soapbox/schemas/group-member.ts';
+import { Status as StatusEntity } from 'soapbox/schemas/index.ts';
 import toast from 'soapbox/toast.tsx';
 import copy from 'soapbox/utils/copy.ts';
-import { getReactForStatus, reduceEmoji } from 'soapbox/utils/emoji-reacts.ts';
 
 import GroupPopover from './groups/popover/group-popover.tsx';
 
 import type { Menu } from 'soapbox/components/dropdown-menu/index.ts';
-import type { Group, Status } from 'soapbox/types/entities.ts';
+import type { Group, Status as LegacyStatus } from 'soapbox/types/entities.ts';
 
 const messages = defineMessages({
   adminAccount: { id: 'status.admin_account', defaultMessage: 'Moderate @{name}' },
@@ -73,6 +73,8 @@ const messages = defineMessages({
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   blockConfirm: { id: 'confirmations.block.confirm', defaultMessage: 'Block' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
+  bookmarkAdded: { id: 'status.bookmarked', defaultMessage: 'Bookmark added.' },
+  bookmarkRemoved: { id: 'status.unbookmarked', defaultMessage: 'Bookmark removed.' },
   cancel_reblog_private: { id: 'status.cancel_reblog_private', defaultMessage: 'Un-repost' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be reposted' },
   chat: { id: 'status.chat', defaultMessage: 'Chat with @{name}' },
@@ -138,11 +140,12 @@ const messages = defineMessages({
   unmuteSuccess: { id: 'group.unmute.success', defaultMessage: 'Unmuted the group' },
   unpin: { id: 'status.unpin', defaultMessage: 'Unpin from profile' },
   unpinFromGroup: { id: 'status.unpin_to_group', defaultMessage: 'Unpin from Group' },
+  view: { id: 'toast.view', defaultMessage: 'View' },
   zap: { id: 'status.zap', defaultMessage: 'Zap' },
 });
 
 interface IStatusActionBar {
-  status: Status;
+  status: LegacyStatus;
   expandable?: boolean;
   space?: 'sm' | 'md' | 'lg';
   statusActionButtonTheme?: 'default' | 'inverse';
@@ -170,13 +173,13 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   const { groupRelationship } = useGroupRelationship(status.group?.id);
   const features = useFeatures();
   const { boostModal, deleteModal } = useSettings();
-  const soapboxConfig = useSoapboxConfig();
-
-  const { allowedEmoji } = soapboxConfig;
 
   const { account } = useOwnAccount();
   const isStaff = account ? account.staff : false;
   const isAdmin = account ? account.admin : false;
+
+  const { toggleReblog } = useReblog();
+  const { bookmark, unbookmark } = useBookmark();
 
   if (!status) {
     return null;
@@ -231,16 +234,30 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   };
 
   const handleBookmarkClick: React.EventHandler<React.MouseEvent> = (e) => {
-    dispatch(toggleBookmark(status));
+    if (status.bookmarked) {
+      unbookmark(status.id).then(({ success }) => {
+        if (success) {
+          toast.success(messages.bookmarkRemoved);
+        }
+      }).catch(null);
+    } else {
+      bookmark(status.id).then(({ success }) => {
+        if (success) {
+          toast.success(messages.bookmarkAdded, {
+            actionLink: '/bookmarks/all', actionLabel: messages.view,
+          });
+        }
+      }).catch(null);
+    }
   };
 
   const handleReblogClick: React.EventHandler<React.MouseEvent> = e => {
     if (me) {
-      const modalReblog = () => dispatch(toggleReblog(status));
+      const modalReblog = () => toggleReblog(status.id);
       if ((e && e.shiftKey) || !boostModal) {
         modalReblog();
       } else {
-        dispatch(openModal('BOOST', { status, onReblog: modalReblog }));
+        dispatch(openModal('BOOST', { status: status.toJS(), onReblog: modalReblog }));
       }
     } else {
       onOpenUnauthorizedModal('REBLOG');
@@ -367,7 +384,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   };
 
   const handleConversationMuteClick: React.EventHandler<React.MouseEvent> = (e) => {
-    dispatch(toggleMuteStatus(status));
+    dispatch(toggleMuteStatus(status.toJS() as StatusEntity));
   };
 
   const handleCopy: React.EventHandler<React.MouseEvent> = (e) => {
@@ -662,14 +679,15 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   const reblogCount = status.reblogs_count;
   const favouriteCount = status.favourites_count;
 
-  const emojiReactCount = status.reactions ? reduceEmoji(
-    status.reactions,
-    favouriteCount,
-    status.favourited,
-    allowedEmoji,
-  ).reduce((acc, cur) => acc + (cur.count || 0), 0) : undefined;
+  const emojiReactCount = status.reactions?.reduce((acc, reaction) => acc + (reaction.count ?? 0), 0) ?? 0; // allow all emojis
 
-  const meEmojiReact = getReactForStatus(status, allowedEmoji);
+  const meEmojiReact = status.reactions?.find((emojiReact) => emojiReact.me) // allow all emojis
+  ?? (
+    status.favourited && account
+      ? { count: 1, me: status.account.id === account.id, name: '👍' }
+      : undefined
+  );
+
   const meEmojiName = meEmojiReact?.name as keyof typeof reactMessages | undefined;
 
   const reactMessages = {
@@ -783,7 +801,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
               filled
               color='accent'
               active={Boolean(meEmojiName)}
-              count={emojiReactCount}
+              count={emojiReactCount + favouriteCount}
               emoji={meEmojiReact}
               theme={statusActionButtonTheme}
             />
@@ -836,7 +854,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
           />
         )}
 
-        <DropdownMenu items={menu} status={status}>
+        <DropdownMenu items={menu} status={status.toJS() as StatusEntity}>
           <StatusActionButton
             title={intl.formatMessage(messages.more)}
             icon={dotsIcon}

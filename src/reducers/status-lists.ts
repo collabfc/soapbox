@@ -15,14 +15,6 @@ import {
 import { STATUS_CREATE_SUCCESS } from 'soapbox/actions/statuses.ts';
 
 import {
-  BOOKMARKED_STATUSES_FETCH_REQUEST,
-  BOOKMARKED_STATUSES_FETCH_SUCCESS,
-  BOOKMARKED_STATUSES_FETCH_FAIL,
-  BOOKMARKED_STATUSES_EXPAND_REQUEST,
-  BOOKMARKED_STATUSES_EXPAND_SUCCESS,
-  BOOKMARKED_STATUSES_EXPAND_FAIL,
-} from '../actions/bookmarks.ts';
-import {
   RECENT_EVENTS_FETCH_REQUEST,
   RECENT_EVENTS_FETCH_SUCCESS,
   RECENT_EVENTS_FETCH_FAIL,
@@ -47,8 +39,6 @@ import {
 import {
   FAVOURITE_SUCCESS,
   UNFAVOURITE_SUCCESS,
-  BOOKMARK_SUCCESS,
-  UNBOOKMARK_SUCCESS,
   PIN_SUCCESS,
   UNPIN_SUCCESS,
 } from '../actions/interactions.ts';
@@ -81,7 +71,6 @@ type StatusList = ReturnType<typeof StatusListRecord>;
 
 const initialState: State = ImmutableMap({
   favourites: StatusListRecord(),
-  bookmarks: StatusListRecord(),
   pins: StatusListRecord(),
   scheduled_statuses: StatusListRecord(),
   recent_events: StatusListRecord(),
@@ -156,24 +145,10 @@ export default function statusLists(state = initialState, action: AnyAction) {
       return normalizeList(state, `favourites:${action.accountId}`, action.statuses, action.next);
     case ACCOUNT_FAVOURITED_STATUSES_EXPAND_SUCCESS:
       return appendToList(state, `favourites:${action.accountId}`, action.statuses, action.next);
-    case BOOKMARKED_STATUSES_FETCH_REQUEST:
-    case BOOKMARKED_STATUSES_EXPAND_REQUEST:
-      return setLoading(state, 'bookmarks', true);
-    case BOOKMARKED_STATUSES_FETCH_FAIL:
-    case BOOKMARKED_STATUSES_EXPAND_FAIL:
-      return setLoading(state, 'bookmarks', false);
-    case BOOKMARKED_STATUSES_FETCH_SUCCESS:
-      return normalizeList(state, 'bookmarks', action.statuses, action.next);
-    case BOOKMARKED_STATUSES_EXPAND_SUCCESS:
-      return appendToList(state, 'bookmarks', action.statuses, action.next);
     case FAVOURITE_SUCCESS:
       return prependOneToList(state, 'favourites', action.status);
     case UNFAVOURITE_SUCCESS:
       return removeOneFromList(state, 'favourites', action.status);
-    case BOOKMARK_SUCCESS:
-      return prependOneToList(state, 'bookmarks', action.response);
-    case UNBOOKMARK_SUCCESS:
-      return removeOneFromList(state, 'bookmarks', action.status);
     case PINNED_STATUSES_FETCH_SUCCESS:
       return normalizeList(state, 'pins', action.statuses, action.next);
     case PIN_SUCCESS:

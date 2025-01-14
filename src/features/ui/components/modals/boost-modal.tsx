@@ -6,8 +6,7 @@ import Modal from 'soapbox/components/ui/modal.tsx';
 import Stack from 'soapbox/components/ui/stack.tsx';
 import Text from 'soapbox/components/ui/text.tsx';
 import ReplyIndicator from 'soapbox/features/compose/components/reply-indicator.tsx';
-
-import type { Status as StatusEntity } from 'soapbox/types/entities.ts';
+import { Status as StatusEntity } from 'soapbox/schemas/index.ts';
 
 const messages = defineMessages({
   cancel_reblog: { id: 'status.cancel_reblog_private', defaultMessage: 'Un-repost' },
