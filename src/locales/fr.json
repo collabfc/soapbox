@@ -1470,10 +1470,10 @@
   "tabs_bar.country": "Pays",
   "tabs_bar.teams": "Toutes les équipes",
   "tabs_bar.about": "À propos",
-  "threadLogin.pitch": "Qu'est-ce que Collab FC ? Rejoignez-nous !",
-  "threadLogin.intro": "CollabFC est une plateforme de médias sociaux unique composée d'une collection de hubs d'équipes numériques. Ceci est le hub de {siteTitle}.",
-  "threadLogin.engagement": "Chaque hub d'équipe est un espace dédié aux supporters d'un club, mais les fans d'autres clubs peuvent également commenter les publications.",
+  "thread_login.pitch": "Qu'est-ce que Collab FC ? Rejoignez-nous !",
+  "thread_login.intro": "CollabFC est une plateforme de médias sociaux unique composée d'une collection de hubs d'équipes numériques. Ceci est le hub de {siteTitle}.",
+  "thread_login.engagement": "Chaque hub d'équipe est un espace dédié aux supporters d'un club, mais les fans d'autres clubs peuvent également commenter les publications.",
   "thread_login.expansion": "Actuellement, nous avons 78 hubs d'équipes européennes et prévoyons d'en développer 200. Nous recherchons des fans pour modérer le hub de leur propre club. Si vous êtes intéressé, visitez {link} pour voir la liste complète des clubs.",
   "thread_login.link": "notre page principale",
-  "threadLogin.goal": "En permettant l'auto-modération, nous visons à réduire les spams, améliorer la qualité des publications et créer une plateforme sociale mondiale pour le football."
+  "thread_login.goal": "En permettant l'auto-modération, nous visons à réduire les spams, améliorer la qualité des publications et créer une plateforme sociale mondiale pour le football."
 }

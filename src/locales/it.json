@@ -1567,10 +1567,11 @@
   "tabs_bar.country": "Paese",
   "tabs_bar.teams": "Tutte le squadre",
   "tabs_bar.about": "Chi siamo",
-  "threadLogin.title": "Cos'è Collab FC? Unisciti a noi!",
-  "threadLogin.intro": "CollabFC è una piattaforma di social media unica, costruita attorno a una raccolta di hub digitali per squadre. Questo è l'hub di {siteTitle}.",
-  "threadLogin.engagement": "Ogni hub di squadra è uno spazio dedicato ai tifosi di un club, ma i fan di altri club possono anche commentare i post.",
-  "threadLogin.expansion": "Attualmente abbiamo 78 hub di squadre europee e prevediamo di espanderci fino a 200. Stiamo cercando fan che moderino l'hub della propria squadra. Visita la nostra pagina principale per vedere l'elenco completo delle squadre.",
-  "threadLogin.goal": "Consentendo l'auto-moderazione, vogliamo ridurre lo spam, migliorare la qualità dei post e creare una piattaforma sociale globale per il calcio."
+  "thread_login.pitch": "Cos'è Collab FC? Unisciti a noi!",
+  "thread_login.intro": "CollabFC è una piattaforma di social media unica, costruita attorno a una raccolta di hub digitali per squadre. Questo è l'hub di {siteTitle}.",
+  "thread_login.engagement": "Ogni hub di squadra è uno spazio dedicato ai tifosi di un club, ma i fan di altri club possono anche commentare i post.",
+  "thread_login.expansion": "Attualmente abbiamo 78 hub di squadre europee e prevediamo di espanderci fino a 200. Stiamo cercando fan che moderino l'hub della propria squadra. Se sei interessato, visita {link} per vedere l'elenco completo delle squadre.",
+  "thread_login.link": "la nostra pagina principale",
+  "thread_login.goal": "Consentendo l'auto-moderazione, vogliamo ridurre lo spam, migliorare la qualità dei post e creare una piattaforma sociale globale per il calcio."
 }
 

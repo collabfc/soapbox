@@ -1,4 +1,5 @@
 import { FormattedMessage } from 'react-intl';
+
 import Button from 'soapbox/components/ui/button.tsx';
 import { Card, CardTitle } from 'soapbox/components/ui/card.tsx';
 import Stack from 'soapbox/components/ui/stack.tsx';
@@ -19,7 +20,7 @@ const ThreadLoginCta: React.FC = () => {
       <Card className='mb-6 px-6 py-8 text-start' variant='rounded'>
         <Stack>
           <div className='mb-4'>
-            <CardTitle title={<FormattedMessage id='thread_login.pitch' defaultMessage='What is Collab FC, come and join us' />} />
+            <CardTitle title={<FormattedMessage id='thread_login.pitch' defaultMessage='What is Collab FC? Come and join us!' />} />
           </div>
           <div className='space-y-3'>
             <Text>

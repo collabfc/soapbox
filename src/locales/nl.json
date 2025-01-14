@@ -421,10 +421,10 @@
   "tabs_bar.country": "Land",
   "tabs_bar.teams": "Alle Teams",
   "tabs_bar.about": "Over ons",
-  "threadLogin.title": "Wat is Collab FC? Doe mee en sluit je bij ons aan!",
-  "threadLogin.intro": "CollabFC is een uniek social media platform opgebouwd uit een verzameling digitale team-hubs. Dit is de {siteTitle}-hub.",
-  "threadLogin.engagement": "Elke team-hub is een thuisbasis voor de supporters van een club, maar fans van andere clubs kunnen ook reageren op berichten.",
+  "thread_login.pitch": "Wat is Collab FC? Doe mee en sluit je bij ons aan!",
+  "thread_login.intro": "CollabFC is een uniek social media platform opgebouwd uit een verzameling digitale team-hubs. Dit is de {siteTitle}-hub.",
+  "thread_login.engagement": "Elke team-hub is een thuisbasis voor de supporters van een club, maar fans van andere clubs kunnen ook reageren op berichten.",
   "thread_login.expansion": "We hebben momenteel 78 Europese team-hubs en zijn van plan dit uit te breiden naar 200. We zoeken fans die hun eigen club-hub willen modereren. Als je geïnteresseerd bent, bezoek dan {link} voor de volledige lijst van clubs.",
   "thread_login.link": "onze hoofdpagina",
-  "threadLogin.goal": "Door zelfmoderatie willen we spam verminderen, de kwaliteit van berichten verbeteren en een levendig wereldwijd voetbalnetwerk creëren."
+  "thread_login.goal": "Door zelfmoderatie willen we spam verminderen, de kwaliteit van berichten verbeteren en een levendig wereldwijd voetbalnetwerk creëren."
 }
